@@ -303,7 +303,7 @@
                      setobj.objectId = sobjID;
                      
                      setobj.set_artist=setid[@"set_artist"];
-                     setobj.set_audio_link=setid[@"set_audio_link"];
+                     setobj.set_audio_link=setid[@"setf_audio_link"];
                      setobj.set_id=setid[@"setid"];
                      setobj.set_title=setid[@"set_title"];
                      setobj.created_at=setid[@"dateCreated"];
@@ -318,7 +318,7 @@
                     tobjr.objectId = sobjID;
                     
                     tobjr.set_artist=setid[@"set_artist"];
-                    tobjr.set_audio_link=setid[@"set_audio_link"];
+                    tobjr.set_audio_link=setid[@"setf_audio_link"];
                     tobjr.set_id=setid[@"setid"];
                     tobjr.set_title=setid[@"set_title"];
                     tobjr.created_at=setid[@"dateCreated"];

@@ -71,8 +71,8 @@
         // meter.backgroundColor = [UIColor blueColor];
     }else{
         //audioPlayer.meteringEnabled = NO;
-        [[AppDelegate sharedInstance].audioPlayer pause];
-        [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
+        //[[AppDelegate sharedInstance].audioPlayer pause];
+        //[AppDelegate sharedInstance].audioPlayer.volume = 0.0;
         //meter.backgroundColor = [UIColor clearColor];
     }
 
@@ -167,7 +167,7 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
     [FBSDKAppEvents activateApp];
-           [[AppDelegate sharedInstance].audioPlayer stop];
+          // [[AppDelegate sharedInstance].audioPlayer stop];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

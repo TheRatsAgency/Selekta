@@ -109,6 +109,7 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"nowplaying"];
     [[NSUserDefaults standardUserDefaults] setObject:@"on" forKey:@"switch"];
+      [[NSUserDefaults standardUserDefaults] setObject:@"on" forKey:@"switch1"];
 
     [[NSUserDefaults standardUserDefaults] synchronize];
     

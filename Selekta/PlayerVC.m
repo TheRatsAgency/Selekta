@@ -121,7 +121,7 @@
 
     animationFramesc = [[NSArray alloc] init];
   
-   
+    [self saveTracksSet1];
     
  if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
     UISwipeGestureRecognizer *rightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipeHandle:)];

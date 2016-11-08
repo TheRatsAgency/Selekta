@@ -178,6 +178,8 @@
 -(void) getSingleSetInfoWithID:(NSString *)setID completion:(void (^)(NSError *error, FDataSnapshot *accounts))completion{
     Firebase *ref = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/sets/%@", FIREBASE_URL, setID]];
     
+      NSLog(@"Snapshot = %@", ref);
+    
     [ref observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         
         NSLog(@"Snapshot = %@", snapshot.value);
@@ -238,7 +240,7 @@
     
     [ref observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         
-        //NSLog(@"Snapshot = %@", snapshot);
+        NSLog(@"Snapshot = %@", snapshot);
         
         if( completion ){
             completion(nil, snapshot);

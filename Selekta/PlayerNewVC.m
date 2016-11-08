@@ -164,6 +164,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    //[self saveTracksSet1];
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     
@@ -291,14 +292,14 @@
         [self->coverImg sd_setImageWithURL:[NSURL URLWithString:url1] placeholderImage:[UIImage imageNamed:@""]];
         
         self->settitle.text = accountInfo.value[@"set_title"];
-        self->trackurl = accountInfo.value[@"set_audio_link"];
+        self->trackurl = accountInfo.value[@"setf_audio_link"];
 
         NSLog(@"trackurl %@",self->trackurl);
 
         self->artist = accountInfo.value[@"set_artist"];
 
-        trackurl = accountInfo.value[@"set_audio_link"];
-        [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
+        trackurl = accountInfo.value[@"setf_audio_link"];
+       
         
         
         
@@ -311,10 +312,15 @@
         if([isplayed isEqualToString:@"2"]){
             
             //do nothing
-            
+            // [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
+            NSInteger sliderval = [[NSUserDefaults standardUserDefaults] integerForKey:@"sliderval"];
+            slider.value = sliderval;
             [self observers];
+            slider.maximumValue = 1000;
+          
+            //slider.value = [res.firstObject.track_start integerValue];
             
-            if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
+            /*if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
                 
                 slider.maximumValue = 1000;
                 
@@ -325,12 +331,14 @@
                 [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
  
             }else{
-
+                NSLog(@"track start %ld",[res.firstObject.track_start integerValue]);
                 [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
                 
-            }
+            }*/
             
         }else if([isplayed isEqualToString:@"0"]){
+            
+             [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
             
             [self observers];
             
@@ -347,6 +355,7 @@
             }
             
         }else{
+             [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
             
             [self observers];
             
@@ -374,7 +383,7 @@
         
         if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
             
-            UISwipeGestureRecognizer *rightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipeHandle:)];
+            UISwipeGestureRecognizer *rightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipeHandle:)];
             
             rightRecognizer.delegate=self;
             
@@ -382,7 +391,7 @@
 
             [self.view addGestureRecognizer:rightRecognizer];
             
-            UISwipeGestureRecognizer *leftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipeHandle:)];
+            UISwipeGestureRecognizer *leftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipeHandle:)];
             
             leftRecognizer.delegate=self;
             
@@ -610,7 +619,74 @@
     
     NSString *switchon1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"switch1"];
     
+    RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
     
+    NSString *isplayed = [[NSUserDefaults standardUserDefaults] objectForKey:@"nowplaying"];
+    
+    if([isplayed isEqualToString:@"2"]){
+        
+        //do nothing
+        NSInteger sliderval = [[NSUserDefaults standardUserDefaults] integerForKey:@"sliderval"];
+        slider.value = sliderval;
+        [self observers];
+        slider.maximumValue = 1000;
+        //[res.firstObject.track_start integerValue];
+        
+        /*if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
+            
+            slider.maximumValue = 1000;
+            
+            slider.value = [res.firstObject.track_start integerValue];
+            
+            [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
+            
+            [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
+            
+        }else{
+            
+            [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
+            
+        }*/
+        
+    }else if([isplayed isEqualToString:@"0"]){
+        
+        [self observers];
+        
+        if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
+            
+            slider.maximumValue = 1000;
+            
+            slider.value = [res.firstObject.track_start integerValue];
+            
+            [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
+            
+            [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
+            
+        }
+        
+    }else{
+        
+        [self observers];
+        
+        [self initTracks];
+        
+        if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
+            
+            slider.maximumValue = 1000;
+            
+            slider.value = [res.firstObject.track_start integerValue];
+            
+            NSLog(@"track start %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"trackstart"]);
+            
+            [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
+            
+            NSLog(@"slider value %f",slider.value);
+            
+            [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
+            
+        }
+        
+    }
     
     if([switchon1 isEqualToString:@"on"]){
         
@@ -705,6 +781,9 @@
         
         [[AppDelegate sharedInstance].audioPlayer resume];
         
+        [AppDelegate sharedInstance].audioPlayer.volume = [[[NSUserDefaults standardUserDefaults] objectForKey:@"volume"] doubleValue];
+        
+        
         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
         
         [animatedImageView startAnimating];
@@ -717,6 +796,7 @@
     {
         
         [[AppDelegate sharedInstance].audioPlayer pause];
+        [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
         
         [playButton setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
 
@@ -725,7 +805,7 @@
     
     
     
-    NSString *switchon1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"switch1"];
+    /*NSString *switchon1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"switch1"];
     
     
     
@@ -741,7 +821,7 @@
         
         [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
 
-    }
+    }*/
     
 }
 
@@ -877,7 +957,7 @@
         
         slider.maximumValue = [AppDelegate sharedInstance].audioPlayer.duration;
         
-        
+        [[NSUserDefaults standardUserDefaults] setInteger: [AppDelegate sharedInstance].audioPlayer.progress forKey:@"sliderval"];
         
         label.text = @"";
         
@@ -899,7 +979,7 @@
         
         slider.value = [AppDelegate sharedInstance].audioPlayer.progress;
         
-        
+         [[NSUserDefaults standardUserDefaults] setInteger: [AppDelegate sharedInstance].audioPlayer.progress forKey:@"sliderval"];
         
         label.text = [NSString stringWithFormat:@"%@ - %@", [self formatTimeFromSeconds:[AppDelegate sharedInstance].audioPlayer.progress], [self formatTimeFromSeconds:[AppDelegate sharedInstance].audioPlayer.duration]];
         
@@ -916,7 +996,7 @@
         slider.maximumValue =  [AppDelegate sharedInstance].audioPlayer.duration;
         
         
-        
+         [[NSUserDefaults standardUserDefaults] setInteger: [AppDelegate sharedInstance].audioPlayer.progress forKey:@"sliderval"];
         label.text =  [NSString stringWithFormat:@"Live stream %@", [self formatTimeFromSeconds:[AppDelegate sharedInstance].audioPlayer.progress]];
         
     }
@@ -2022,8 +2102,8 @@
         
         
         RLMResults<TracksRealm *> *res = [TracksRealm objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
-        
-        
+        NSLog(@"res %@",res);
+    
         
         if(res.count>0){
             
@@ -2043,7 +2123,7 @@
                 
                 st.set_artist=accountInfo.value[@"set_artist"];
                 
-                st.set_audio_link=accountInfo.value[@"set_audio_link"];
+                st.set_audio_link=accountInfo.value[@"setf_audio_link"];
                 
                 st.set_id=accountInfo.value[@"setid"];
                 
@@ -2455,7 +2535,7 @@
             
             
             
-            [self savetoRecent];
+            //[self savetoRecent];
             
             [self showTrackData];
             
@@ -2482,9 +2562,687 @@
 }
 
 -(IBAction)goFwd:(id)sender{
+    
+    //
+    int recentid = ([trackid integerValue] + 1);
+    
+    NSString *validid =[NSString stringWithFormat:@"%d",recentid];
+    
+    RLMResults<TracksRealm *> *res = [TracksRealm objectsWhere:@"trackID = %@ and set_id = %@",validid,setid];
+    
+    
+    
+    if(res.count>0){
+        
+        
+        
+        trackid = validid;
+        
+        trackTitle.text = res.firstObject.track_name;
+        
+        slider.value = res.firstObject.track_start;
+        
+        [[AppDelegate sharedInstance].audioPlayer seekToTime:slider.value];
+        
+        
+        
+        NSLog(@"track artist %@",res.firstObject.track_artist);
+        
+        
+        
+        trackRecord.text = res.firstObject.track_artist;
+        
+        
+        
+        trackAlbum.text = res.firstObject.track_label;
+        
+        
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] setObject:self->setid forKey:@"recentset"];
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",validid] forKey:@"recentid"];
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+        
+        
+        
+        
+        
+        MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
+        
+        
+        
+        
+        
+        
+        
+        NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
+        
+        
+        
+        
+        
+        
+        
+        MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"cover"]];
+        
+        
+        
+        
+        
+        
+        
+        [songInfo setObject:trackTitle.text forKey:MPMediaItemPropertyTitle];
+        
+        
+        
+        [songInfo setObject:res.firstObject.track_artist forKey:MPMediaItemPropertyArtist];
+        
+        
+        
+        [songInfo setObject:res.firstObject.track_label forKey:MPMediaItemPropertyAlbumTitle];
+        
+        
+        
+        [songInfo setObject:[NSNumber numberWithDouble:slider.value] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+        
+        
+        
+        [songInfo setObject:[NSNumber numberWithDouble:200] forKey:MPMediaItemPropertyPlaybackDuration];
+        
+        
+        
+        [songInfo setObject:[NSNumber numberWithDouble:([AppDelegate sharedInstance].audioPlayer.state == STKAudioPlayerStatePaused ? 0.0f : 1.0f)] forKey:MPNowPlayingInfoPropertyPlaybackRate];
+        
+        
+        
+        [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
+        
+        
+        
+        
+        
+        
+        
+        [playingInfoCenter setNowPlayingInfo:songInfo];
+        
+        
+        
+        
+        
+        RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
+        
+        
+        
+        if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
+            
+            
+            
+            animationFrames = [NSArray arrayWithObjects:
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill2.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill3.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill4.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill5.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill6.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill7.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill8.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill9.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill10.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill11.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill12.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill13.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill14.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill15.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill16.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill17.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill18.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill19.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill20.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill21.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill22.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill23.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill24.png"],
+                               
+                               nil];
+            
+            
+            animationFramesc = [NSArray arrayWithObjects:
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White1.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White2.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White3.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White4.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White5.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White6.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White7.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White8.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White9.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White10.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White11.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White12.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White13.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White14.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White15.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White16.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White17.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White18.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White19.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White20.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White21.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White22.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White23.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White24.png"],
+                                
+                                //[UIImage imageNamed:@"selektaRecordSpin_White2.png"],
+                                
+                                nil];
+            
+            
+            
+            
+            if(res.count>0){
+                
+                
+                
+                animatedImageView.animationImages = animationFramesc;
+                
+                
+                
+                animatedImageView.hidden = false;
+                
+                animatedImageView.animationDuration = 2.0;
+                
+                [animatedImageView startAnimating];
+                
+                //animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White1.png"];
+                
+                //[GiFHUD setGifWithImageName:@"selektarecordanimationwhite-version.gif"];
+                
+                
+                
+            }else{
+                
+                animatedImageView.animationImages = animationFrames;
+                
+                
+                
+                animatedImageView.hidden = false;
+                
+                animatedImageView.animationDuration = 2.0;
+                
+                [animatedImageView startAnimating];
+                
+                //animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"];
+                
+                //[GiFHUD setGifWithImageName:@"selektarecordanimationnoBack.gif"];
+                
+                
+                
+            }
+            
+            
+            
+            //[GiFHUD show];
+            
+            
+            
+            playButton.hidden = true;
+            
+            nextButton.hidden = true;
+            
+            prevButton.hidden = true;
+            
+            crateBtn.hidden = true;
+            
+            
+            
+            
+            
+        }else{
+            
+            animatedImageView.hidden = true;
+            
+            
+            
+            playButton.hidden = false;
+            
+            nextButton.hidden = false;
+            
+            prevButton.hidden = false;
+            
+            crateBtn.hidden = true;
+            
+            
+            
+            // [GiFHUD dismiss];
+            
+            /*if(res.count>0){
+             
+             
+             
+             [crateBtn setImage:[UIImage imageNamed:@"crateon.png"] forState:UIControlStateNormal];
+             
+             }else{
+             
+             [crateBtn setImage:[UIImage imageNamed:@"crateoff.png"] forState:UIControlStateNormal];
+             
+             }*/
+            
+        }
+        
+        
+        
+    }else{
+        
+        
+        
+    }
 }
 
 -(IBAction)goBck:(id)sender{
+    int recentid = ([trackid integerValue] - 1);
+    
+    NSString *validid =[NSString stringWithFormat:@"%d",recentid];
+    
+    RLMResults<TracksRealm *> *res = [TracksRealm objectsWhere:@"trackID = %@ and set_id = %@",validid,setid];
+    
+    
+    
+    if(res.count>0){
+        
+        
+        
+        trackid = validid;
+        
+        trackTitle.text = res.firstObject.track_name;
+        
+        
+        
+        NSLog(@"track artist %@",res.firstObject.track_artist);
+        
+        slider.value = res.firstObject.track_start;
+        
+        [[AppDelegate sharedInstance].audioPlayer seekToTime:slider.value];
+        
+        
+        
+        
+        
+        trackRecord.text = res.firstObject.track_artist;
+        
+        
+        
+        trackAlbum.text = res.firstObject.track_label;
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] setObject:self->setid forKey:@"recentset"];
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",validid] forKey:@"recentid"];
+        
+        
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+        
+        
+        
+        
+        
+        MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
+        
+        
+        
+        
+        
+        
+        
+        NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
+        
+        
+        
+        
+        
+        
+        
+        MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"cover"]];
+        
+        
+        
+        
+        
+        
+        
+        [songInfo setObject:trackTitle.text forKey:MPMediaItemPropertyTitle];
+        
+        
+        
+        [songInfo setObject:res.firstObject.track_artist forKey:MPMediaItemPropertyArtist];
+        
+        
+        
+        [songInfo setObject:res.firstObject.track_label forKey:MPMediaItemPropertyAlbumTitle];
+        
+        
+        
+        [songInfo setObject:[NSNumber numberWithDouble:slider.value] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+        
+        
+        
+        [songInfo setObject:[NSNumber numberWithDouble:200] forKey:MPMediaItemPropertyPlaybackDuration];
+        
+        
+        
+        [songInfo setObject:[NSNumber numberWithDouble:([AppDelegate sharedInstance].audioPlayer.state == STKAudioPlayerStatePaused ? 0.0f : 1.0f)] forKey:MPNowPlayingInfoPropertyPlaybackRate];
+        
+        
+        
+        [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
+        
+        
+        
+        
+        
+        
+        
+        [playingInfoCenter setNowPlayingInfo:songInfo];
+        
+        
+        
+        
+        
+        RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
+        
+        
+        
+        
+        
+        
+        
+        if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
+            
+            
+            
+            animationFrames = [NSArray arrayWithObjects:
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill2.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill3.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill4.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill5.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill6.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill7.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill8.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill9.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill10.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill11.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill12.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill13.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill14.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill15.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill16.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill17.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill18.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill19.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill20.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill21.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill22.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill23.png"],
+                               
+                               [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill24.png"],
+                               
+                               nil];
+            
+            
+            animationFramesc = [NSArray arrayWithObjects:
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White1.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White2.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White3.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White4.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White5.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White6.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White7.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White8.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White9.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White10.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White11.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White12.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White13.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White14.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White15.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White16.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White17.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White18.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White19.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White20.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White21.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White22.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White23.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White24.png"],
+                                
+                                //[UIImage imageNamed:@"selektaRecordSpin_White2.png"],
+                                
+                                nil];
+            
+            
+            
+            
+            if(res.count>0){
+                
+                
+                
+                animatedImageView.animationImages = animationFramesc;
+                
+                
+                
+                animatedImageView.hidden = false;
+                
+                animatedImageView.animationDuration = 2.0;
+                
+                [animatedImageView startAnimating];
+                
+                //animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White1.png"];
+                
+                //[GiFHUD setGifWithImageName:@"selektarecordanimationwhite-version.gif"];
+                
+                
+                
+            }else{
+                
+                animatedImageView.animationImages = animationFrames;
+                
+                
+                
+                animatedImageView.hidden = false;
+                
+                animatedImageView.animationDuration = 2.0;
+                
+                [animatedImageView startAnimating];
+                
+                //animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"];
+                
+                //[GiFHUD setGifWithImageName:@"selektarecordanimationnoBack.gif"];
+                
+                
+                
+            }
+            
+            
+            //[GiFHUD show];
+            
+            playButton.hidden = true;
+            
+            nextButton.hidden = true;
+            
+            prevButton.hidden = true;
+            
+            crateBtn.hidden = true;
+            
+            
+            
+            
+            
+        }else{
+            
+            animatedImageView.hidden = true;
+            
+            
+            
+            playButton.hidden = false;
+            
+            nextButton.hidden = false;
+            
+            prevButton.hidden = false;
+            
+            crateBtn.hidden = true;
+            
+            // [GiFHUD dismiss];
+            
+            
+            
+            /*if(res.count>0){
+             
+             
+             
+             [crateBtn setImage:[UIImage imageNamed:@"crateon.png"] forState:UIControlStateNormal];
+             
+             }else{
+             
+             [crateBtn setImage:[UIImage imageNamed:@"crateoff.png"] forState:UIControlStateNormal];
+             
+             }*/
+            
+        }
+        
+        
+        
+        
+        
+    }else{
+        
+        
+        
+    }
+    
+    
+
 }
 
 -(void) saveSets{
@@ -2577,7 +3335,7 @@
                 
                 st.set_artist=accountInfo.value[@"set_artist"];
                 
-                st.set_audio_link=accountInfo.value[@"set_audio_link"];
+                st.set_audio_link=accountInfo.value[@"setf_audio_link"];
                 
                 st.set_id=accountInfo.value[@"setid"];
                 
@@ -2677,7 +3435,7 @@
         
         
         
-        self->trackurl = accountInfo.value[@"set_audio_link"];
+        self->trackurl = accountInfo.value[@"setf_audio_link"];
         
         NSLog(@"trackurl %@",self->trackurl);
         
@@ -2685,7 +3443,7 @@
         
         
         
-        trackurl = accountInfo.value[@"set_audio_link"];
+        trackurl = accountInfo.value[@"setf_audio_link"];
         
         [self initplayer];
         
@@ -3137,7 +3895,448 @@
     next2.hidden = YES;
     
     next3.hidden = YES;
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"tutorial"];
     
 }
+
+-(IBAction)goSearch:(id)sender{
+    
+    /*SearchViewController *detailsVC = [SearchViewController new];
+     
+     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
+     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
+    
+    if(isSearch == false){
+        searchView.hidden = NO;
+        self.searchField.hidden = NO;
+        [self.searchField becomeFirstResponder];
+        isSearch = true;
+        animatedImageView.hidden = true;
+    }else{
+        searchView.hidden = YES;
+        isSearch = false;
+        self.searchField.hidden = YES;
+        [self.searchField resignFirstResponder];
+    }
+}
+
+-(void) saveTracksSet1{
+    
+    NSString *setid =@"1";
+    NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
+                                                          dateStyle:NSDateFormatterShortStyle
+                                                          timeStyle:NSDateFormatterFullStyle];
+    NSLog(@"%@",dateString);
+    NSDictionary *userInfo = @{
+                               @"trackID" : @"1",
+                               @"track_start" : @"1",
+                               @"set_id" : setid,
+                               @"track_artists" : @"NGHTMRE",
+                               @"track_name" : @"ID",
+                               @"track_label" : @"",
+                               @"track_album" : @"",
+                               @"set_title" : @"Busy P's Paris Is Burning Mix",
+                               @"dateCreated" : dateString,
+                               };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo accountID:@"1" setID:setid completion:nil];
+    
+    NSDictionary *userInfo1 = @{
+                                @"trackID" : @"2",
+                                @"track_start" : @"100",
+                                @"set_id" : setid,
+                                @"track_artists" : @"Jack U",
+                                @"track_name" : @"Holla Out (Feat. Snails' Taranchyla) VIP",
+                                @"track_label" : @"",
+                                @"track_album" : @"",
+                                @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                @"dateCreated" : dateString,
+                                };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo1 accountID:@"2" setID:setid completion:nil];
+    
+    NSDictionary *userInfo3 = @{
+                                @"trackID" : @"3",
+                                @"track_start" : @"200",
+                                @"set_id" : setid,
+                                @"track_artists" : @"Valentino Kahn",
+                                @"track_name" : @"Deep Down Low (Rickyxsan’s Low AF Bootleg)",
+                                @"track_label" : @"",
+                                @"track_album" : @"",
+                                @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                @"dateCreated" : dateString,
+                                };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo3 accountID:@"3" setID:setid completion:nil];
+    
+    NSDictionary *userInfo4 = @{
+                                @"trackID" : @"4",
+                                @"track_start" : @"300",
+                                @"set_id" : setid,
+                                @"track_artists" : @"Warrior",
+                                @"track_name" : @"The End (Carnage  Breaux Festival Trap Remix)",
+                                @"track_label" : @"",
+                                @"track_album" : @"",
+                                @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                @"dateCreated" : dateString,
+                                };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo4 accountID:@"4" setID:setid completion:nil];
+    
+    NSDictionary *userInfo5 = @{
+                                @"trackID" : @"5",
+                                @"track_start" : @"400",
+                                @"set_id" : setid,
+                                @"track_artists" : @"Eptic",
+                                @"track_name" : @"Move That Dope (Woolymammoth  Quix Remix)",
+                                @"track_label" : @"",
+                                @"track_album" : @"",
+                                @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                @"dateCreated" : dateString,
+                                };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo5 accountID:@"5" setID:setid completion:nil];
+    
+    NSDictionary *userInfo6 = @{
+                                @"trackID" : @"6",
+                                @"track_start" : @"500",
+                                @"set_id" : setid,
+                                @"track_artists" : @"Future",
+                                @"track_name" : @"Ectoplasm",
+                                @"track_label" : @"",
+                                @"track_album" : @"",
+                                @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                @"dateCreated" : dateString,
+                                };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo6 accountID:@"6" setID:setid completion:nil];
+    
+    NSDictionary *userInfo7 = @{
+                                @"trackID" : @"7",
+                                @"track_start" : @"600",
+                                @"set_id" : setid,
+                                @"track_artists" : @"Eptic ft. Must Die",
+                                @"track_name" : @"Lean On (Ookay It’s Lit Bootleg)",
+                                @"track_label" : @"",
+                                @"track_album" : @"",
+                                @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                @"dateCreated" : dateString,
+                                };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo7 accountID:@"7" setID:setid completion:nil];
+    
+    NSDictionary *userInfo8 = @{
+                                @"trackID" : @"8",
+                                @"track_start" : @"700",
+                                @"set_id" : setid,
+                                @"track_artists" : @"Major Lazer",
+                                @"track_name" : @"We Like to Party (Slander  NGHTMRE Festival Trap Edit)",
+                                @"track_label" : @"",
+                                @"track_album" : @"",
+                                @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                @"dateCreated" : dateString,
+                                };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo8 accountID:@"8" setID:setid completion:nil];
+    
+    NSDictionary *userInfo9 = @{
+                                @"trackID" : @"9",
+                                @"track_start" : @"800",
+                                @"set_id" : setid,
+                                @"track_artists" : @"Showtek",
+                                @"track_name" : @"Solutions, with Donnis",
+                                @"track_label" : @"",
+                                @"track_album" : @"",
+                                @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                @"dateCreated" : dateString,
+                                };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo9 accountID:@"9" setID:setid completion:nil];
+    
+    NSDictionary *userInfo10 = @{
+                                 @"trackID" : @"10",
+                                 @"track_start" : @"900",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"MR. Carmack",
+                                 @"track_name" : @"Burial (Skrillex' Trollphace Remix) [G-Buck edit]",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo10 accountID:@"10" setID:setid completion:nil];
+    
+    //second
+    NSDictionary *userInfo11 = @{
+                                 @"trackID" : @"11",
+                                 @"track_start" : @"1000",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Yogi",
+                                 @"track_name" : @"Jungle Bae ft. Bunji Garlin (Sirenz Rework)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo11 accountID:@"11" setID:setid completion:nil];
+    
+    NSDictionary *userInfo12 = @{
+                                 @"trackID" : @"12",
+                                 @"track_start" : @"1050",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Jack U",
+                                 @"track_name" : @"Acrylics (RL Grime Edit)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo12 accountID:@"12" setID:setid completion:nil];
+    
+    NSDictionary *userInfo13 = @{
+                                 @"trackID" : @"13",
+                                 @"track_start" : @"1100",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"TNGHT",
+                                 @"track_name" : @"The Dopest (Cesqeaux Remix)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo13 accountID:@"13" setID:setid completion:nil];
+    
+    NSDictionary *userInfo14 = @{
+                                 @"trackID" : @"14",
+                                 @"track_start" : @"1150",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Moksi",
+                                 @"track_name" : @"Trap Queen",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo14 accountID:@"14" setID:setid completion:nil];
+    
+    NSDictionary *userInfo15 = @{
+                                 @"trackID" : @"15",
+                                 @"track_start" : @"1200",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Fetty Wap",
+                                 @"track_name" : @"Get Low (Aazar Remix)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo5 accountID:@"15" setID:setid completion:nil];
+    
+    NSDictionary *userInfo16 = @{
+                                 @"trackID" : @"16",
+                                 @"track_start" : @"1250",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Dillon Francis  DJ Snake",
+                                 @"track_name" : @"B2U ft. Ian Everson",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo16 accountID:@"16" setID:setid completion:nil];
+    
+    NSDictionary *userInfo17 = @{
+                                 @"trackID" : @"17",
+                                 @"track_start" : @"1300",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Boombox Cartel",
+                                 @"track_name" : @"Only Getting Younger (NGHTMRE/ Imanos Remix)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo17 accountID:@"17" setID:setid completion:nil];
+    
+    NSDictionary *userInfo18 = @{
+                                 @"trackID" : @"18",
+                                 @"track_start" : @"1350",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Elliphant ft. Skrillex",
+                                 @"track_name" : @"Jiggy (NGHTMRE Remix)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo18 accountID:@"18" setID:setid completion:nil];
+    
+    NSDictionary *userInfo19 = @{
+                                 @"trackID" : @"19",
+                                 @"track_start" : @"1400",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Victor Niglio",
+                                 @"track_name" : @"Dum Dee Dum (NGHTMRE Remix) [Unreleased]",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo19 accountID:@"19" setID:setid completion:nil];
+    
+    NSDictionary *userInfo20 = @{
+                                 @"trackID" : @"20",
+                                 @"track_start" : @"1450",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Keys n Krates",
+                                 @"track_name" : @"Holla Out (Feat. Snails' Taranchyla) VIP",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo20 accountID:@"20" setID:setid completion:nil];
+    
+    //third
+    NSDictionary *userInfo21 = @{
+                                 @"trackID" : @"21",
+                                 @"track_start" : @"1500",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"NGHTMRE",
+                                 @"track_name" : @"STREET",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo21 accountID:@"21" setID:setid completion:nil];
+    
+    NSDictionary *userInfo22 = @{
+                                 @"trackID" : @"22",
+                                 @"track_start" : @"1550",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"A. G. Cook",
+                                 @"track_name" : @"Beautiful (Rustie Edit)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo22 accountID:@"22" setID:setid completion:nil];
+    
+    NSDictionary *userInfo23 = @{
+                                 @"trackID" : @"23",
+                                 @"track_start" : @"1600",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"NGHTMRE",
+                                 @"track_name" : @"ID",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo23 accountID:@"23" setID:setid completion:nil];
+    
+    NSDictionary *userInfo24 = @{
+                                 @"trackID" : @"24",
+                                 @"track_start" : @"1650",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"NGHTMRE Slander",
+                                 @"track_name" : @"Gud Vibrations",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo24 accountID:@"24" setID:setid completion:nil];
+    
+    NSDictionary *userInfo25 = @{
+                                 @"trackID" : @"25",
+                                 @"track_start" : @"1700",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"NGHTMRE Slander",
+                                 @"track_name" : @"Warning",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo25 accountID:@"25" setID:setid completion:nil];
+    
+    NSDictionary *userInfo26 = @{
+                                 @"trackID" : @"26",
+                                 @"track_start" : @"1750",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Instant Party!  Breaux",
+                                 @"track_name" : @"Moon of Pejeng",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo26 accountID:@"26" setID:setid completion:nil];
+    
+    NSDictionary *userInfo27 = @{
+                                 @"trackID" : @"27",
+                                 @"track_start" : @"1800",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"The Prodigy",
+                                 @"track_name" : @"Rhythm Bomb (NGHTMRE Remix)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo27 accountID:@"27" setID:setid completion:nil];
+    
+    NSDictionary *userInfo28 = @{
+                                 @"trackID" : @"28",
+                                 @"track_start" : @"1850",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Major Lazer Dj Snake",
+                                 @"track_name" : @"Lean On (NGHTMRE Remix)",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo28 accountID:@"28" setID:setid completion:nil];
+    
+    NSDictionary *userInfo29 = @{
+                                 @"trackID" : @"29",
+                                 @"track_start" : @"1900",
+                                 @"set_id" : setid,
+                                 @"track_artists" : @"Slander NGHTMRE",
+                                 @"track_name" : @"You",
+                                 @"track_label" : @"",
+                                 @"track_album" : @"",
+                                 @"set_title" : @"Busy P's Paris Is Burning Mix",
+                                 @"dateCreated" : dateString,
+                                 };
+    
+    [[AccountsClient sharedInstance] saveTracks:userInfo29 accountID:@"29" setID:setid completion:nil];
+    
+    
+}
+
 
 @end
