@@ -19,6 +19,7 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 #import "PlayerNewVC.h"
+#import "NewCrates.h"
 
 @interface MenuViewController (){
     
@@ -59,7 +60,20 @@
     defaults = [NSUserDefaults standardUserDefaults];
     
     playerID = [defaults objectForKey:@"GLOBAL_USER_ID"];
-    
+    NSString *PhotoLink = [defaults objectForKey:@"profilePic"];
+    if( [[defaults objectForKey:@"GLOBAL_IS_FB"] boolValue] ){
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:PhotoLink]];
+        
+        //set your image on main thread.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if(data)[self.profImg setImage:[UIImage imageWithData:data]];
+            self.profImg.layer.cornerRadius = 35;
+            self.profImg.clipsToBounds = YES;
+        });
+    });
+    }
 
     [[AccountsClient sharedInstance] getSingleAccountInfoWithID:playerID completion:^(NSError *error, FDataSnapshot *accountInfo)  {
         
@@ -68,27 +82,26 @@
         if(accountInfo != (id) [NSNull null]){
 
         self.profName.text = accountInfo.value[@"name"];
-        if( [[defaults objectForKey:@"GLOBAL_IS_FB"] boolValue] ){
-            //[cell.avatar setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:person[@"picture"]]]]];
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:accountInfo.value[@"profilePic_url"]]];
-                
-                //set your image on main thread.
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    NSLog(@"profile pic url %@",accountInfo.value[@"profilePic_url"]);
-                    [self.profImg setImage:[UIImage imageWithData:data]];
-                    self.profImg.layer.cornerRadius = 36;
-                    self.profImg.clipsToBounds = YES;
-                });
-            });
-        }
+//        if( [[defaults objectForKey:@"GLOBAL_IS_FB"] boolValue] ){
+//            //[cell.avatar setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:person[@"picture"]]]]];
+//            
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:accountInfo.value[@"profilePic_url"]]];
+//                
+//                //set your image on main thread.
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    
+//                    NSLog(@"profile pic url %@",accountInfo.value[@"profilePic_url"]);
+//                    [self.profImg setImage:[UIImage imageWithData:data]];
+//                    self.profImg.layer.cornerRadius = 36;
+//                    self.profImg.clipsToBounds = YES;
+//                });
+//            });
+//        }
         }
         
     }];
     
-        
     //self.profImg.image=[UIImage imageNamed:@"molly.png"];
    
     self.navigationController.navigationBar.hidden=YES;
@@ -156,9 +169,16 @@
 -(IBAction)goCrates:(id)sender{
     
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
+    /*[[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     TableViewController *detailsVC = [TableViewController new];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NewCrates *detailsVC = [NewCrates new];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];

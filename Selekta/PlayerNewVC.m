@@ -100,6 +100,7 @@
 
 #import "SetsCell.h"
 
+#define IS_IPHONE4 ([[UIScreen mainScreen] bounds].size.width == 480 || [[UIScreen mainScreen] bounds].size.height == 480)
 
 @interface PlayerNewVC ()<UIGestureRecognizerDelegate,STKAudioPlayerDelegate>{
     IBOutlet UIImageView *bgImg, *coverImg;
@@ -118,7 +119,7 @@
     
     IBOutlet UIView *searchView;
     
-    BOOL isSearch;
+    BOOL isSearch,isPlaying;
     
     NSArray *animationFrames;
     
@@ -162,6 +163,27 @@
 }
 
 - (void)viewDidLoad {
+    
+    PlayView.hidden=YES;
+   
+    if ( IS_IPHONE4 )
+    {
+        CGRect Frame= coverImg.frame;
+        Frame.size.height-=50;
+        coverImg.frame=Frame;
+        
+        Frame= slider.frame;
+        Frame.origin.y-=50;
+        slider.frame=Frame;
+        
+        Frame= Trackview.frame;
+        Frame.origin.y-=80;
+        Trackview.frame=Frame;
+        
+        trackAlbum.font=[UIFont fontWithName:@"OpenSans" size:11];
+        trackRecord.font=[UIFont fontWithName:@"OpenSans" size:14];
+        trackTitle.font=[UIFont fontWithName:@"OpenSans" size:19];
+    }
     
     [super viewDidLoad];
     //[self saveTracksSet1];
@@ -255,17 +277,18 @@
     
     NSString *switchon1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"switch1"];
     if([switchon1 isEqualToString:@"on"]){
-        
+         isPlaying=YES;
         [[AppDelegate sharedInstance].audioPlayer resume];
         
         [AppDelegate sharedInstance].audioPlayer.volume = 0.1;
         
         
     }else{
- 
+        isPlaying=NO;
         [[AppDelegate sharedInstance].audioPlayer pause];
         
         [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
+        animatedImageView.image = [UIImage imageNamed:@"1.png"];
 
     }
     
@@ -351,6 +374,7 @@
                 [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
   
                 [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
+                 isPlaying=YES;
 
             }
             
@@ -374,6 +398,7 @@
                 NSLog(@"slider value %f",slider.value);
                 
                 [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
+                 isPlaying=YES;
                 
             }
             
@@ -532,21 +557,22 @@
 
             }
 
-            playButton.hidden = true;
-            
-            nextButton.hidden = true;
-            
-            prevButton.hidden = true;
+            PlayView.hidden=YES;
+//            playButton.hidden = true;
+//            
+//            nextButton.hidden = true;
+//            
+//            prevButton.hidden = true;
    
             
         }else{
-            
- 
-            playButton.hidden = false;
-            
-            nextButton.hidden = false;
-            
-            prevButton.hidden = false;
+            animatedImageView.hidden=YES;
+            PlayView.hidden=NO;
+//            playButton.hidden = false;
+//            
+//            nextButton.hidden = false;
+//            
+//            prevButton.hidden = false;
             
             
         }
@@ -775,10 +801,10 @@
     
 
     
-    if ([AppDelegate sharedInstance].audioPlayer.state == STKAudioPlayerStatePaused)
+    if (!isPlaying)
         
     {
-        
+         isPlaying=YES;
         [[AppDelegate sharedInstance].audioPlayer resume];
         
         [AppDelegate sharedInstance].audioPlayer.volume = [[[NSUserDefaults standardUserDefaults] objectForKey:@"volume"] doubleValue];
@@ -794,7 +820,7 @@
     else
         
     {
-        
+         isPlaying=NO;
         [[AppDelegate sharedInstance].audioPlayer pause];
         [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
         
@@ -1160,179 +1186,179 @@
     if (![AppDelegate sharedInstance].audioPlayer)
         
     {
-        
         return;
-        
     }
     
     
     
-    if ([AppDelegate sharedInstance].audioPlayer.state == STKAudioPlayerStatePaused)
+    if (!isPlaying)
         
     {
+         isPlaying=YES;
         
         [[AppDelegate sharedInstance].audioPlayer resume];
         
-        RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
-        
-        animationFrames = [NSArray arrayWithObjects:
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill2.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill3.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill4.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill5.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill6.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill7.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill8.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill9.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill10.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill11.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill12.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill13.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill14.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill15.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill16.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill17.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill18.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill19.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill20.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill21.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill22.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill23.png"],
-                           
-                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill24.png"],
-                           
-                           nil];
+      //  RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
         
         
-        animationFramesc = [NSArray arrayWithObjects:
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White1.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White2.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White3.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White4.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White5.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White6.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White7.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White8.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White9.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White10.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White11.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White12.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White13.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White14.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White15.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White16.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White17.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White18.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White19.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White20.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White21.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White22.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White23.png"],
-                            
-                            [UIImage imageNamed:@"selektaRecordSpin_White24.png"],
-                            
-                            //[UIImage imageNamed:@"selektaRecordSpin_White2.png"],
-                            
-                            nil];
+//        animationFrames = [NSArray arrayWithObjects:
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill2.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill3.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill4.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill5.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill6.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill7.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill8.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill9.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill10.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill11.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill12.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill13.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill14.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill15.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill16.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill17.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill18.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill19.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill20.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill21.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill22.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill23.png"],
+//                           
+//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill24.png"],
+//                           
+//                           nil];
+//        
+//        
+//        animationFramesc = [NSArray arrayWithObjects:
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White1.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White2.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White3.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White4.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White5.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White6.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White7.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White8.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White9.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White10.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White11.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White12.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White13.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White14.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White15.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White16.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White17.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White18.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White19.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White20.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White21.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White22.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White23.png"],
+//                            
+//                            [UIImage imageNamed:@"selektaRecordSpin_White24.png"],
+//                            
+//                            //[UIImage imageNamed:@"selektaRecordSpin_White2.png"],
+//                            
+//                            nil];
+//        
+//        
+//        
+//        if(res.count>0){
+//            
+//            
+//            
+//            animatedImageView.animationImages = animationFramesc;
+//            
+//            
+//            
+//            animatedImageView.hidden = false;
+//            
+//            animatedImageView.animationDuration = 2.0;
         
-        
-        
-        if(res.count>0){
-            
-            
-            
-            animatedImageView.animationImages = animationFramesc;
-            
-            
-            
-            animatedImageView.hidden = false;
-            
-            animatedImageView.animationDuration = 2.0;
-            
             [animatedImageView startAnimating];
             
             //[GiFHUD setGifWithImageName:@"selektaRecordSpin.gif"];
             
             
             
-        }else{
-            
-            animatedImageView.animationImages = animationFrames;
-            
-            
-            
-            animatedImageView.hidden = false;
-            
-            animatedImageView.animationDuration = 2.0;
-            
-            [animatedImageView startAnimating];
-            
-            //[GiFHUD setGifWithImageName:@"selektaRecordSpin.gif"];
-            
-            
-            
-        }
-        
-        
-        
-        //[GiFHUD show];
-        
-        
-        
-        playButton.hidden = true;
-        
-        nextButton.hidden = true;
-        
-        prevButton.hidden = true;
-        
-        //crateBtn.hidden = true;
+//        }else{
+//            
+//            animatedImageView.animationImages = animationFrames;
+//            
+//            
+//            
+//            animatedImageView.hidden = false;
+//            
+//            animatedImageView.animationDuration = 2.0;
+//            
+//            [animatedImageView startAnimating];
+//            
+//            //[GiFHUD setGifWithImageName:@"selektaRecordSpin.gif"];
+//            
+//            
+//            
+//        }
+//        
+//        
+//        
+//        //[GiFHUD show];
+//        
+//        
+//        //PlayView.hidden=YES;
+////        playButton.hidden = true;
+////        
+////        nextButton.hidden = true;
+////        
+////        prevButton.hidden = true;
+//        
+//        //crateBtn.hidden = true;
         
         
         
@@ -1341,74 +1367,74 @@
     else
         
     {
-        
+         isPlaying=NO;
         [[AppDelegate sharedInstance].audioPlayer pause];
         
         //[GiFHUD dismiss];
         
         
         
-        RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
- 
-        if(res.count>0){
-            
-            
-            
-            //animatedImageView.animationImages = animationFramesc;
-            
-            
-            
-            animatedImageView.hidden = false;
-            
-            animatedImageView.animationDuration = 2.0;
-            
+//        RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
+// 
+//        if(res.count>0){
+//            
+//            
+//            
+//            //animatedImageView.animationImages = animationFramesc;
+//            
+//            
+//            
+//            animatedImageView.hidden = false;
+//            
+//            animatedImageView.animationDuration = 2.0;
+        
             [animatedImageView stopAnimating];
             
-            animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White1.png"];
-            
-            //[GiFHUD setGifWithImageName:@"selektarecordanimationwhite-version.gif"];
-            
-            
-            
-        }else{
-            
-            //animatedImageView.animationImages = animationFrames;
-            
-            
-            
-            animatedImageView.hidden = false;
-            
-            animatedImageView.animationDuration = 2.0;
-            
-            [animatedImageView stopAnimating];
-            
-            animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"];
-            
-            //[GiFHUD setGifWithImageName:@"selektarecordanimationnoBack.gif"];
-            
-            
-            
-        }
-        
-        //[GiFHUD show];
-        
-        
-        
-        
-        
-        playButton.hidden = true;
-        
-        nextButton.hidden = true;
-        
-        prevButton.hidden = true;
-        
-        //crateBtn.hidden = true;
+//            animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White1.png"];
+//            
+//            //[GiFHUD setGifWithImageName:@"selektarecordanimationwhite-version.gif"];
+//            
+//            
+//            
+//        }else{
+//            
+//            //animatedImageView.animationImages = animationFrames;
+//            
+//            
+//            
+//            animatedImageView.hidden = false;
+//            
+//            animatedImageView.animationDuration = 2.0;
+//            
+//            [animatedImageView stopAnimating];
+//            
+//            animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"];
+//            
+//            //[GiFHUD setGifWithImageName:@"selektarecordanimationnoBack.gif"];
+//            
+//            
+//            
+//        }
+//        
+//        //[GiFHUD show];
+//        
+//        
+//        
+//        // PlayView.hidden=NO;
+//        
+////        playButton.hidden = true;
+////        
+////        nextButton.hidden = true;
+////        
+////        prevButton.hidden = true;
+//        
+//        //crateBtn.hidden = true;
         
         
         
         [playButton setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
         
-        
+        animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"];
         
         
         
@@ -1699,13 +1725,13 @@
             
             //[GiFHUD show];
             
+             PlayView.hidden=YES;
             
-            
-            playButton.hidden = true;
-            
-            nextButton.hidden = true;
-            
-            prevButton.hidden = true;
+//            playButton.hidden = true;
+//            
+//            nextButton.hidden = true;
+//            
+//            prevButton.hidden = true;
             
             crateBtn.hidden = true;
             
@@ -1718,12 +1744,12 @@
             animatedImageView.hidden = true;
             
             
-            
-            playButton.hidden = false;
-            
-            nextButton.hidden = false;
-            
-            prevButton.hidden = false;
+             PlayView.hidden=NO;
+//            playButton.hidden = false;
+//            
+//            nextButton.hidden = false;
+//            
+//            prevButton.hidden = false;
             
             crateBtn.hidden = true;
             
@@ -2040,12 +2066,13 @@
             
             
             //[GiFHUD show];
+             PlayView.hidden=YES;
             
-            playButton.hidden = true;
-            
-            nextButton.hidden = true;
-            
-            prevButton.hidden = true;
+//            playButton.hidden = true;
+//            
+//            nextButton.hidden = true;
+//            
+//            prevButton.hidden = true;
             
             crateBtn.hidden = true;
             
@@ -2057,13 +2084,13 @@
             
             animatedImageView.hidden = true;
             
+             PlayView.hidden=NO;
             
-            
-            playButton.hidden = false;
-            
-            nextButton.hidden = false;
-            
-            prevButton.hidden = false;
+//            playButton.hidden = false;
+//            
+//            nextButton.hidden = false;
+//            
+//            prevButton.hidden = false;
             
             crateBtn.hidden = true;
             
@@ -2391,12 +2418,13 @@
                     
                     
                     //[GiFHUD show];
+                     PlayView.hidden=YES;
                     
-                    playButton.hidden = true;
-                    
-                    nextButton.hidden = true;
-                    
-                    prevButton.hidden = true;
+//                    playButton.hidden = true;
+//                    
+//                    nextButton.hidden = true;
+//                    
+//                    prevButton.hidden = true;
                     
                     crateBtn.hidden = true;
                     
@@ -2409,12 +2437,13 @@
                     animatedImageView.hidden = true;
                     
                     // [GiFHUD dismiss];
+                     PlayView.hidden=NO;
                     
-                    playButton.hidden = false;
-                    
-                    nextButton.hidden = false;
-                    
-                    prevButton.hidden = false;
+//                    playButton.hidden = false;
+//                    
+//                    nextButton.hidden = false;
+//                    
+//                    prevButton.hidden = false;
                     
                     crateBtn.hidden = true;
                     
@@ -2846,13 +2875,13 @@
             
             //[GiFHUD show];
             
+             PlayView.hidden=YES;
             
-            
-            playButton.hidden = true;
-            
-            nextButton.hidden = true;
-            
-            prevButton.hidden = true;
+//            playButton.hidden = true;
+//            
+//            nextButton.hidden = true;
+//            
+//            prevButton.hidden = true;
             
             crateBtn.hidden = true;
             
@@ -2865,12 +2894,12 @@
             animatedImageView.hidden = true;
             
             
-            
-            playButton.hidden = false;
-            
-            nextButton.hidden = false;
-            
-            prevButton.hidden = false;
+             PlayView.hidden=NO;
+//            playButton.hidden = false;
+//            
+//            nextButton.hidden = false;
+//            
+//            prevButton.hidden = false;
             
             crateBtn.hidden = true;
             
@@ -3186,12 +3215,13 @@
             
             
             //[GiFHUD show];
+             PlayView.hidden=YES;
             
-            playButton.hidden = true;
-            
-            nextButton.hidden = true;
-            
-            prevButton.hidden = true;
+//            playButton.hidden = true;
+//            
+//            nextButton.hidden = true;
+//            
+//            prevButton.hidden = true;
             
             crateBtn.hidden = true;
             
@@ -3203,13 +3233,13 @@
             
             animatedImageView.hidden = true;
             
+             PlayView.hidden=NO;
             
-            
-            playButton.hidden = false;
-            
-            nextButton.hidden = false;
-            
-            prevButton.hidden = false;
+//            playButton.hidden = false;
+//            
+//            nextButton.hidden = false;
+//            
+//            prevButton.hidden = false;
             
             crateBtn.hidden = true;
             
@@ -3916,6 +3946,7 @@
         searchView.hidden = YES;
         isSearch = false;
         self.searchField.hidden = YES;
+        animatedImageView.hidden = NO;
         [self.searchField resignFirstResponder];
     }
 }

@@ -20,6 +20,7 @@
     IBOutlet UIButton* prevButton;
     IBOutlet UIButton* nextButton;
     IBOutlet UIView* meter,*touch;
+    IBOutlet UIView *PlayView,*Trackview;
 }
 + (instancetype)sharedInstance;
 

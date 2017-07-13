@@ -12,7 +12,7 @@
 #import "MenuViewController.h"
 #import "NVSlideMenuController.h"
 #import "PlayerNewVC.h"
-
+#import "MBProgressHUD.h"
 @interface SignupVC (){
     
 
@@ -51,6 +51,7 @@
 
 - (IBAction)loginWithFacebook:(id)sender {
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[LoginClient sharedInstance] facebookLoginWithReadPermissions:@[@"email",@"public_profile",@"user_friends"] fromViewController:self success:^(id result) {
 
         NSMutableDictionary *resDict = [[NSMutableDictionary alloc] initWithDictionary:result];
@@ -65,11 +66,13 @@
         [userDefaults setObject:resDict[@"id"]  forKey:@"GLOBAL_USER_ID"];
         [userDefaults setBool:YES               forKey:@"GLOBAL_IS_FB"];
         [userDefaults setBool:YES forKey:@"LOGGEDIN"];
-        [userDefaults synchronize];
         
         NSString *profPic = [[[resDict objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+         [userDefaults setObject:profPic  forKey:@"profilePic"];
+        [userDefaults synchronize];
         
         [[AccountsClient sharedInstance] isAccountExistWithID:resDict[@"id"] completion:^(NSError *error, bool isExist) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (!isExist) {
                 NSDictionary *userInfo = @{
                                            @"name" : resDict[@"name"],
@@ -91,7 +94,7 @@
         [self openMainScreen];
         
     } failure:^(NSError *error, NSDictionary *result) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"ERROR: %@", error);
     }];
     
@@ -131,7 +134,7 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please input all required fields." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
     }else{
-    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[LoginClient sharedInstance] loginWithEmail:_email.text success:^(id result) {
         
         [self.view endEditing:YES];
@@ -153,6 +156,7 @@
         NSLog(@"UID = %@", resDict[@"uid"]);
         
         [[AccountsClient sharedInstance] isAccountExistWithID:resDict[@"uid"] completion:^(NSError *error, bool isExist) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (!isExist) {
                 NSDictionary *userInfo = @{
                                            @"name" : self->_name.text,
@@ -179,7 +183,7 @@
     } failure:^(NSError *error, NSDictionary *result) {
         
         NSLog(@"ERROR: %@", error);
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSString *errorStr = [NSString stringWithFormat:@"%@", error];
         
         if ([errorStr rangeOfString:@"INVALID_EMAIL"].location != NSNotFound) {

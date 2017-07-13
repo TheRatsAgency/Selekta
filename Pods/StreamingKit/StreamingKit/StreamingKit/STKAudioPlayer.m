@@ -1981,7 +1981,6 @@ static BOOL GetHardwareCodecClassDesc(UInt32 formatId, AudioClassDescription* cl
     
     if (isRecording)
     {
-        canonicalAudioStreamBasicDescription.mChannelsPerFrame = asbd->mChannelsPerFrame;
         recordAudioStreamBasicDescription = (AudioStreamBasicDescription)
         {
             .mFormatID = kAudioFormatMPEG4AAC,

@@ -13,7 +13,7 @@
 #import "NVSlideMenuController.h"
 #import "PlayerVC.h"
 #import "PlayerNewVC.h"
-
+#import "MBProgressHUD.h"
 
 @interface SigninVC  ()
 @property (weak, nonatomic) IBOutlet UITextField *email,*password;
@@ -53,7 +53,7 @@
          [alertView show];
      }else{
     NSMutableArray *emails = [[NSMutableArray alloc] initWithObjects:_email.text, nil];
-    
+         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[AccountsClient sharedInstance] isEmailExist:emails completion:^(NSError *error, bool isExist) {
         if(isExist){
             //check Password
@@ -61,7 +61,7 @@
             [[LoginClient sharedInstance] loginWithEmail:_email.text success:^(id result) {
                 
                 [self.view endEditing:YES];
-                
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 
                 NSMutableDictionary *resDict = [[NSMutableDictionary alloc] initWithDictionary:result];
                 
@@ -86,7 +86,7 @@
                 [self openMainScreen];
                 
             } failure:^(NSError *error, NSDictionary *result) {
-                
+                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 NSLog(@"ERROR: %@", error);
                 
                 NSString *errorStr = [NSString stringWithFormat:@"%@", error];
@@ -99,6 +99,7 @@
             }];
 
         }else{
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:@"Account does not exist." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alertView show];
         }
@@ -112,6 +113,7 @@
 
 - (IBAction)loginWithFacebook:(id)sender {
     
+     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[LoginClient sharedInstance] facebookLoginWithReadPermissions:@[@"email",@"public_profile",@"user_friends"] fromViewController:self success:^(id result) {
         
         NSMutableDictionary *resDict = [[NSMutableDictionary alloc] initWithDictionary:result];
@@ -131,6 +133,7 @@
         NSString *profPic = [[[resDict objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
         
         [[AccountsClient sharedInstance] isAccountExistWithID:resDict[@"id"] completion:^(NSError *error, bool isExist) {
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (!isExist) {
                 NSDictionary *userInfo = @{
                                            @"name" : resDict[@"name"],
@@ -152,7 +155,7 @@
         [self openMainScreen];
         
     } failure:^(NSError *error, NSDictionary *result) {
-        
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"ERROR: %@", error);
     }];
     

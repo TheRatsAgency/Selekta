@@ -5,7 +5,7 @@ target 'Selekta' do
 pod "FBSDKCoreKit"
 pod "FBSDKLoginKit"
 pod "FBSDKShareKit"
-pod "AFNetworking", "~> 2.0"
+pod "AFNetworking", "~> 3.0"
 pod "UIImageViewSoftFrameAnimations"
 pod "ContactsManager"
 pod 'LGAlertView', '~> 2.0.0'

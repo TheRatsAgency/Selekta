@@ -7,7 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E763CF77A883853E21FA691 /* libPods-Selekta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34F65D66944E17C13041808C /* libPods-Selekta.a */; };
+		913A39F91ED28CB500D33037 /* NewCrates.m in Sources */ = {isa = PBXBuildFile; fileRef = 913A39F81ED28CB500D33037 /* NewCrates.m */; };
+		913A39FB1ED28D1300D33037 /* NewCrates.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913A39FA1ED28D1300D33037 /* NewCrates.xib */; };
+		91D4D4711F068568000416D9 /* crate_default_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D4D4701F068568000416D9 /* crate_default_button.png */; };
+		91D4D4731F06861A000416D9 /* single_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D4D4721F06861A000416D9 /* single_play.png */; };
+		91D6BD301ED3C511007273EA /* NewCrateObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D6BD2F1ED3C511007273EA /* NewCrateObj.m */; };
+		91D6BD321ED3FBC6007273EA /* filled_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D6BD311ED3FBC6007273EA /* filled_button.png */; };
+		91D6BD341ED3FC45007273EA /* filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D6BD331ED3FC45007273EA /* filled.png */; };
+		98A01D6E81CFBD7469C7B056 /* libPods-Selekta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1456FA2943E21750A9E83A /* libPods-Selekta.a */; };
+		B88D1D501DE59BB500BD8874 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B88D1D4E1DE59BB500BD8874 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B88D1D511DE59BB500BD8874 /* README.mdown in Sources */ = {isa = PBXBuildFile; fileRef = B88D1D4F1DE59BB500BD8874 /* README.mdown */; };
 		E20D50BF1D65E65000579069 /* GiFHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E20D50BE1D65E65000579069 /* GiFHUD.m */; };
 		E212B62C1D5382C3005B3A4A /* launchpage copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E212B62B1D5382C3005B3A4A /* launchpage copy.jpg */; };
 		E21C78731D862EEB004DBA5F /* selektaRecordSpin.gif in Resources */ = {isa = PBXBuildFile; fileRef = E21C78721D862EEB004DBA5F /* selektaRecordSpin.gif */; };
@@ -164,9 +173,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0006B29E927762BFBA0449C4 /* Pods-Selekta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Selekta.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Selekta/Pods-Selekta.debug.xcconfig"; sourceTree = "<group>"; };
-		22D05E241E4681115173DB22 /* Pods-Selekta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Selekta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Selekta/Pods-Selekta.release.xcconfig"; sourceTree = "<group>"; };
-		34F65D66944E17C13041808C /* libPods-Selekta.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Selekta.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A933948456BE1194DB507D4 /* Pods-Selekta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Selekta.release.xcconfig"; path = "Pods/Target Support Files/Pods-Selekta/Pods-Selekta.release.xcconfig"; sourceTree = "<group>"; };
+		4C1456FA2943E21750A9E83A /* libPods-Selekta.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Selekta.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7778893D77274B10B300A933 /* Pods-Selekta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Selekta.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Selekta/Pods-Selekta.debug.xcconfig"; sourceTree = "<group>"; };
+		913A39F71ED28CB500D33037 /* NewCrates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCrates.h; sourceTree = "<group>"; };
+		913A39F81ED28CB500D33037 /* NewCrates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCrates.m; sourceTree = "<group>"; };
+		913A39FA1ED28D1300D33037 /* NewCrates.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCrates.xib; sourceTree = "<group>"; };
+		91D4D4701F068568000416D9 /* crate_default_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crate_default_button.png; sourceTree = "<group>"; };
+		91D4D4721F06861A000416D9 /* single_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = single_play.png; sourceTree = "<group>"; };
+		91D6BD2E1ED3C511007273EA /* NewCrateObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCrateObj.h; sourceTree = "<group>"; };
+		91D6BD2F1ED3C511007273EA /* NewCrateObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCrateObj.m; sourceTree = "<group>"; };
+		91D6BD311ED3FBC6007273EA /* filled_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filled_button.png; sourceTree = "<group>"; };
+		91D6BD331ED3FC45007273EA /* filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filled.png; sourceTree = "<group>"; };
+		B8886F861DE4D30F00D56D56 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../MyComputer/MyProjects/Other Clients/Mathias/Sushi/SourceCode/Sushi/Sushi/Frameworks/Bolts.framework"; sourceTree = "<group>"; };
+		B8886F871DE4D30F00D56D56 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../MyComputer/MyProjects/Other Clients/Mathias/Sushi/SourceCode/Sushi/Sushi/Frameworks/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		B8886F881DE4D30F00D56D56 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../MyComputer/MyProjects/Other Clients/Mathias/Sushi/SourceCode/Sushi/Sushi/Frameworks/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
+		B8886F891DE4D30F00D56D56 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = "../../../MyComputer/MyProjects/Other Clients/Mathias/Sushi/SourceCode/Sushi/Sushi/Frameworks/FBSDKMessengerShareKit.framework"; sourceTree = "<group>"; };
+		B8886F8A1DE4D30F00D56D56 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../../MyComputer/MyProjects/Other Clients/Mathias/Sushi/SourceCode/Sushi/Sushi/Frameworks/FBSDKShareKit.framework"; sourceTree = "<group>"; };
+		B8886FBA1DE4DE1B00D56D56 /* Selekta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Selekta.entitlements; sourceTree = "<group>"; };
+		B88D1D4D1DE59BB500BD8874 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		B88D1D4E1DE59BB500BD8874 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		B88D1D4F1DE59BB500BD8874 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.mdown; sourceTree = "<group>"; };
 		E20D50BD1D65E65000579069 /* GiFHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiFHUD.h; sourceTree = "<group>"; };
 		E20D50BE1D65E65000579069 /* GiFHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiFHUD.m; sourceTree = "<group>"; };
 		E212B62B1D5382C3005B3A4A /* launchpage copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "launchpage copy.jpg"; sourceTree = "<group>"; };
@@ -390,25 +417,40 @@
 				E2F0626A1D185F28008B6168 /* libicucore.tbd in Frameworks */,
 				E2F062681D185F20008B6168 /* libc++.tbd in Frameworks */,
 				E2F062841D185F97008B6168 /* Firebase.framework in Frameworks */,
-				1E763CF77A883853E21FA691 /* libPods-Selekta.a in Frameworks */,
+				98A01D6E81CFBD7469C7B056 /* libPods-Selekta.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		98EDE8A6CAF0C5120352D892 /* Pods */ = {
+		09E14D7A72975FCD3CDBFDE4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0006B29E927762BFBA0449C4 /* Pods-Selekta.debug.xcconfig */,
-				22D05E241E4681115173DB22 /* Pods-Selekta.release.xcconfig */,
+				7778893D77274B10B300A933 /* Pods-Selekta.debug.xcconfig */,
+				1A933948456BE1194DB507D4 /* Pods-Selekta.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B88D1D4C1DE59BB500BD8874 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				B88D1D4D1DE59BB500BD8874 /* MBProgressHUD.h */,
+				B88D1D4E1DE59BB500BD8874 /* MBProgressHUD.m */,
+				B88D1D4F1DE59BB500BD8874 /* README.mdown */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		D5DDCE32BC12C12F4E76AFBC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B8886F861DE4D30F00D56D56 /* Bolts.framework */,
+				B8886F871DE4D30F00D56D56 /* FBSDKCoreKit.framework */,
+				B8886F881DE4D30F00D56D56 /* FBSDKLoginKit.framework */,
+				B8886F891DE4D30F00D56D56 /* FBSDKMessengerShareKit.framework */,
+				B8886F8A1DE4D30F00D56D56 /* FBSDKShareKit.framework */,
 				E2F062831D185F97008B6168 /* Firebase.framework */,
 				E2F062811D185F79008B6168 /* Foundation.framework */,
 				E2F0627F1D185F6D008B6168 /* UIKit.framework */,
@@ -424,7 +466,7 @@
 				E2F0626B1D185F2E008B6168 /* MessageUI.framework */,
 				E2F062691D185F28008B6168 /* libicucore.tbd */,
 				E2F062671D185F20008B6168 /* libc++.tbd */,
-				34F65D66944E17C13041808C /* libPods-Selekta.a */,
+				4C1456FA2943E21750A9E83A /* libPods-Selekta.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -468,7 +510,7 @@
 				E2F061F41D185601008B6168 /* Selekta */,
 				E2F061F31D185601008B6168 /* Products */,
 				D5DDCE32BC12C12F4E76AFBC /* Frameworks */,
-				98EDE8A6CAF0C5120352D892 /* Pods */,
+				09E14D7A72975FCD3CDBFDE4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -483,6 +525,7 @@
 		E2F061F41D185601008B6168 /* Selekta */ = {
 			isa = PBXGroup;
 			children = (
+				B8886FBA1DE4DE1B00D56D56 /* Selekta.entitlements */,
 				E2F0786B1D5FF6CC0006A811 /* VideoSplash */,
 				E22BCD4E1D1C9C550068FF16 /* Fonts */,
 				E2F062311D185ABA008B6168 /* ThirdParty */,
@@ -495,6 +538,8 @@
 				E2F061F91D185601008B6168 /* AppDelegate.m */,
 				E2EAF0441D3D0C5800083183 /* next_button copy.png */,
 				E2F061FB1D185601008B6168 /* ViewController.h */,
+				91D6BD311ED3FBC6007273EA /* filled_button.png */,
+				91D6BD331ED3FC45007273EA /* filled.png */,
 				E2F061FC1D185601008B6168 /* ViewController.m */,
 				E2F061FE1D185601008B6168 /* Main.storyboard */,
 				E2F062A81D1868BE008B6168 /* ic_search_white_48pt_3x.png */,
@@ -523,6 +568,8 @@
 		E2F0620E1D18564F008B6168 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				91D4D4701F068568000416D9 /* crate_default_button.png */,
+				91D4D4721F06861A000416D9 /* single_play.png */,
 				E21C78721D862EEB004DBA5F /* selektaRecordSpin.gif */,
 				E2FF3BD01D6F2822006BFDF1 /* Tutorial */,
 				E2F1DD8E1D68FCB6001EC3BA /* selektarecordanimationnoBack.gif */,
@@ -569,6 +616,9 @@
 				E2F062DB1D18758C008B6168 /* RecentlyPlayedViewController.xib */,
 				E2F0786E1D6028960006A811 /* PlayerNewVC.h */,
 				E2F0786F1D6028960006A811 /* PlayerNewVC.m */,
+				913A39F71ED28CB500D33037 /* NewCrates.h */,
+				913A39F81ED28CB500D33037 /* NewCrates.m */,
+				913A39FA1ED28D1300D33037 /* NewCrates.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -586,6 +636,8 @@
 				E2F0621D1D185A61008B6168 /* CrateObj.m */,
 				E2F0621E1D185A61008B6168 /* RecentlyPlayedObj.h */,
 				E2F0621F1D185A61008B6168 /* RecentlyPlayedObj.m */,
+				91D6BD2E1ED3C511007273EA /* NewCrateObj.h */,
+				91D6BD2F1ED3C511007273EA /* NewCrateObj.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -615,6 +667,7 @@
 		E2F062311D185ABA008B6168 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				B88D1D4C1DE59BB500BD8874 /* MBProgressHUD */,
 				E2F062351D185AD5008B6168 /* SDWebImage */,
 				E2F062321D185AC7008B6168 /* NVSlideMenuController.h */,
 				E2F062331D185AC7008B6168 /* NVSlideMenuController.m */,
@@ -742,13 +795,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2F062091D185601008B6168 /* Build configuration list for PBXNativeTarget "Selekta" */;
 			buildPhases = (
-				9EFAA072AACDCADE691691BC /* [CP] Check Pods Manifest.lock */,
+				266D025D9514756CC8498F11 /* [CP] Check Pods Manifest.lock */,
 				E2F061EE1D185601008B6168 /* Sources */,
 				E2F061EF1D185601008B6168 /* Frameworks */,
 				E2F061F01D185601008B6168 /* Resources */,
-				BC7E957FCACC62CA3B12320A /* [CP] Embed Pods Frameworks */,
-				46ED23CB82E417F6229EFF8E /* [CP] Copy Pods Resources */,
 				E2F078731D605DA70006A811 /* ShellScript */,
+				7B7711C791957E9F6CFBB048 /* [CP] Embed Pods Frameworks */,
+				EB482B1ECEE1C3F07DF9EED6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -765,12 +818,18 @@
 		E2F061EA1D185601008B6168 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Charisse Ann Dirain";
 				TargetAttributes = {
 					E2F061F11D185601008B6168 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = AS6C95T79L;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -814,11 +873,13 @@
 				E2A097F01DA5B209009528E6 /* selektaRecordSpin_White_no_Fill11.png in Resources */,
 				E2FF3BDF1D6F28EA006BFDF1 /* tutorialsets.png in Resources */,
 				E2A097C01DA5B11E009528E6 /* selektaRecordSpin_White10.png in Resources */,
+				91D4D4711F068568000416D9 /* crate_default_button.png in Resources */,
 				E22BCD611D1C9D160068FF16 /* OpenSans-Semibold.ttf in Resources */,
 				E2F062C61D187531008B6168 /* MenuViewController.xib in Resources */,
 				E2A097EC1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill7.png in Resources */,
 				E2A097EF1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill10.png in Resources */,
 				E2A097F81DA5B209009528E6 /* selektaRecordSpin_White_no_Fill19.png in Resources */,
+				91D4D4731F06861A000416D9 /* single_play.png in Resources */,
 				E2A097F61DA5B209009528E6 /* selektaRecordSpin_White_no_Fill17.png in Resources */,
 				E2A097BE1DA5B11E009528E6 /* selektaRecordSpin_White8.png in Resources */,
 				E22BCD601D1C9D160068FF16 /* OpenSans-Regular.ttf in Resources */,
@@ -842,6 +903,7 @@
 				E2A097BD1DA5B11E009528E6 /* selektaRecordSpin_White7.png in Resources */,
 				E2F062B71D1868BE008B6168 /* player-bg-image-pad.jpg in Resources */,
 				E2A097C71DA5B11E009528E6 /* selektaRecordSpin_White17.png in Resources */,
+				91D6BD341ED3FC45007273EA /* filled.png in Resources */,
 				E2A097E81DA5B209009528E6 /* selektaRecordSpin_White_no_Fill3.png in Resources */,
 				E2A097ED1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill8.png in Resources */,
 				E21C78731D862EEB004DBA5F /* selektaRecordSpin.gif in Resources */,
@@ -873,6 +935,7 @@
 				E2A097E71DA5B209009528E6 /* selektaRecordSpin_White_no_Fill2.png in Resources */,
 				E2CEFF9E1D1A053900D84B9C /* GoogleService-Info.plist in Resources */,
 				E2A097F21DA5B209009528E6 /* selektaRecordSpin_White_no_Fill13.png in Resources */,
+				913A39FB1ED28D1300D33037 /* NewCrates.xib in Resources */,
 				E2F062E11D18758C008B6168 /* SetsCell.xib in Resources */,
 				E2FF3BDB1D6F28EA006BFDF1 /* tutorial03.png in Resources */,
 				E2A097C51DA5B11E009528E6 /* selektaRecordSpin_White15.png in Resources */,
@@ -889,6 +952,7 @@
 				E2FF3BDC1D6F28EA006BFDF1 /* tutorialcover.png in Resources */,
 				E2A097FC1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill23.png in Resources */,
 				E2A097E61DA5B209009528E6 /* selektaRecordSpin_White_no_Fill1.png in Resources */,
+				91D6BD321ED3FBC6007273EA /* filled_button.png in Resources */,
 				E2A097CC1DA5B11E009528E6 /* selektaRecordSpin_White22.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -896,22 +960,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		46ED23CB82E417F6229EFF8E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Selekta/Pods-Selekta-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9EFAA072AACDCADE691691BC /* [CP] Check Pods Manifest.lock */ = {
+		266D025D9514756CC8498F11 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -923,10 +972,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		BC7E957FCACC62CA3B12320A /* [CP] Embed Pods Frameworks */ = {
+		7B7711C791957E9F6CFBB048 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -954,6 +1003,21 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" c705d5ce34e8d0941326df2c8d0d4a1bd38a6917 75ca3d5e44c1bd520c7d3d06ba51d8f6cd9a249ef0c71667d4c2fc95dc514631";
 		};
+		EB482B1ECEE1C3F07DF9EED6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Selekta/Pods-Selekta-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -977,7 +1041,9 @@
 				E2F062221D185A61008B6168 /* SetObj.m in Sources */,
 				E2F062561D185AE1008B6168 /* SDWebImageDecoder.m in Sources */,
 				E2F062241D185A61008B6168 /* RecentlyPlayedObj.m in Sources */,
+				B88D1D511DE59BB500BD8874 /* README.mdown in Sources */,
 				E2F062DE1D18758C008B6168 /* CrateCell.m in Sources */,
+				913A39F91ED28CB500D33037 /* NewCrates.m in Sources */,
 				E2F0622A1D185A72008B6168 /* LoginClient.m in Sources */,
 				E2E1F28F1D1EDF7400685E68 /* TracksRealm.m in Sources */,
 				E2F062571D185AE1008B6168 /* SDWebImageDownloader.m in Sources */,
@@ -986,6 +1052,8 @@
 				E2F0625F1D185AE1008B6168 /* UIImageView+WebCache.m in Sources */,
 				E2E1F2951D1EDFD800685E68 /* RecentlyPlayedRealm.m in Sources */,
 				E2F062341D185AC7008B6168 /* NVSlideMenuController.m in Sources */,
+				B88D1D501DE59BB500BD8874 /* MBProgressHUD.m in Sources */,
+				91D6BD301ED3C511007273EA /* NewCrateObj.m in Sources */,
 				E20D50BF1D65E65000579069 /* GiFHUD.m in Sources */,
 				E2F062601D185AE1008B6168 /* UIView+WebCacheOperation.m in Sources */,
 				E2F062E81D18758C008B6168 /* RecentlyPlayedViewController.m in Sources */,
@@ -1045,8 +1113,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1091,8 +1161,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -1119,9 +1191,10 @@
 		};
 		E2F0620A1D185601008B6168 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0006B29E927762BFBA0449C4 /* Pods-Selekta.debug.xcconfig */;
+			baseConfigurationReference = 7778893D77274B10B300A933 /* Pods-Selekta.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Selekta/Selekta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AS6C95T79L;
@@ -1135,14 +1208,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rats.Selekta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		E2F0620B1D185601008B6168 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 22D05E241E4681115173DB22 /* Pods-Selekta.release.xcconfig */;
+			baseConfigurationReference = 1A933948456BE1194DB507D4 /* Pods-Selekta.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Selekta/Selekta.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AS6C95T79L;
@@ -1156,6 +1232,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rats.Selekta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

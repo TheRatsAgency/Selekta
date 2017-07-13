@@ -77,7 +77,7 @@ typedef NS_ENUM(NSUInteger, currentStatus) {
     
     AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     playerLayer.videoGravity = UIViewContentModeScaleToFill;
-    playerLayer.frame = CGRectMake(0, -10, self.view.bounds.size.width+50, self.view.bounds.size.height+50);
+    playerLayer.frame = CGRectMake(-50, 0, self.playerView.bounds.size.width+100, self.playerView.bounds.size.height);
     [self.playerView.layer addSublayer:playerLayer];
     
     [self.player play];
