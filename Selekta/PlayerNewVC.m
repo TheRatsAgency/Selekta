@@ -127,8 +127,6 @@
     
     IBOutlet UIImageView *animatedImageView;
     
-    IBOutlet UIImageView *tutorial1,*tutorial2,*tutorial3;
-    
     IBOutlet UIButton *next1,*next2,*next3;
 }
 
@@ -165,7 +163,7 @@
 - (void)viewDidLoad {
     
     PlayView.hidden=YES;
-   
+    
     if ( IS_IPHONE4 )
     {
         CGRect Frame= coverImg.frame;
@@ -193,46 +191,15 @@
     [tracker set:kGAIScreenName value:@"main"];
     
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-
+    
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
     
-    //tutorial
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"tutorial"]  isEqual: @"0"]){
-        
-        tutorial1.hidden = NO;
-        
-        tutorial2.hidden = YES;
-        
-        tutorial3.hidden = YES;
-        
-        next1.hidden = NO;
-        
-        next2.hidden = YES;
-        
-        next3.hidden = YES;
-        
-    }else{
-        
-        tutorial1.hidden = YES;
-        
-        tutorial2.hidden = YES;
-        
-        tutorial3.hidden = YES;
-        
-        next1.hidden = YES;
-        
-        next2.hidden = YES;
-        
-        next3.hidden = YES;
-        
-    }
-
     crateBtn.hidden = true;
     
     sets=[[NSMutableArray alloc] init];
     self.navigationController.navigationBar.hidden = YES;
-     self.slideMenuController.panGestureEnabled = NO;
+    self.slideMenuController.panGestureEnabled = NO;
     //search functions
     slider.continuous = YES;
     isSearch = false;
@@ -277,7 +244,7 @@
     
     NSString *switchon1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"switch1"];
     if([switchon1 isEqualToString:@"on"]){
-         isPlaying=YES;
+        isPlaying=YES;
         [[AppDelegate sharedInstance].audioPlayer resume];
         
         [AppDelegate sharedInstance].audioPlayer.volume = 0.1;
@@ -289,7 +256,7 @@
         
         [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
         animatedImageView.image = [UIImage imageNamed:@"1.png"];
-
+        
     }
     
     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
@@ -306,9 +273,9 @@
     [[AccountsClient sharedInstance] getSingleSetInfoWithID:setid completion:^(NSError *error, FDataSnapshot *accountInfo)  {
         
         NSLog(@"accountInfo = %@", accountInfo);
- 
+        
         NSString *url = accountInfo.value[@"set_background_pic"];
- 
+        
         [self->bgImg sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@""]];
         NSString *url1 = accountInfo.value[@"set_picture"];
         
@@ -316,13 +283,13 @@
         
         self->settitle.text = accountInfo.value[@"set_title"];
         self->trackurl = accountInfo.value[@"setf_audio_link"];
-
+        
         NSLog(@"trackurl %@",self->trackurl);
-
+        
         self->artist = accountInfo.value[@"set_artist"];
-
+        
         trackurl = accountInfo.value[@"setf_audio_link"];
-       
+        
         
         
         
@@ -340,53 +307,35 @@
             slider.value = sliderval;
             [self observers];
             slider.maximumValue = 1000;
-          
-            //slider.value = [res.firstObject.track_start integerValue];
-            
-            /*if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
-                
-                slider.maximumValue = 1000;
-                
-                slider.value = [res.firstObject.track_start integerValue];
-                
-                [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
-  
-                [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
- 
-            }else{
-                NSLog(@"track start %ld",[res.firstObject.track_start integerValue]);
-                [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
-                
-            }*/
-            
+                        
         }else if([isplayed isEqualToString:@"0"]){
             
-             [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
+            [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
             
             [self observers];
             
             if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
-  
+                
                 slider.maximumValue = 1000;
                 
                 slider.value = [res.firstObject.track_start integerValue];
-  
+                
                 [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
-  
+                
                 [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
-                 isPlaying=YES;
-
+                isPlaying=YES;
+                
             }
             
         }else{
-             [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
+            [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
             
             [self observers];
             
             [self initTracks];
             
             if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
- 
+                
                 slider.maximumValue = 1000;
                 
                 slider.value = [res.firstObject.track_start integerValue];
@@ -398,7 +347,7 @@
                 NSLog(@"slider value %f",slider.value);
                 
                 [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
-                 isPlaying=YES;
+                isPlaying=YES;
                 
             }
             
@@ -413,7 +362,7 @@
             rightRecognizer.delegate=self;
             
             rightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-
+            
             [self.view addGestureRecognizer:rightRecognizer];
             
             UISwipeGestureRecognizer *leftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipeHandle:)];
@@ -421,7 +370,7 @@
             leftRecognizer.delegate=self;
             
             leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-
+            
             [self.view addGestureRecognizer:leftRecognizer];
             UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapFrom:)];
             
@@ -483,60 +432,58 @@
             
             
             animationFramesc = [NSArray arrayWithObjects:
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White1.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White2.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White3.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White4.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White5.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White6.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White7.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White8.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White9.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White10.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White11.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White12.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White13.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White14.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White15.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White16.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White17.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White18.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White19.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White20.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White21.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White22.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White23.png"],
-                               
-                               [UIImage imageNamed:@"selektaRecordSpin_White24.png"],
-                               
-                               //[UIImage imageNamed:@"selektaRecordSpin_White2.png"],
-                               
-                               nil];
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White1.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White2.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White3.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White4.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White5.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White6.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White7.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White8.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White9.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White10.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White11.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White12.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White13.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White14.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White15.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White16.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White17.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White18.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White19.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White20.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White21.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White22.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White23.png"],
+                                
+                                [UIImage imageNamed:@"selektaRecordSpin_White24.png"],
+                                
+                                nil];
             if(res.count>0){
-      
+                
                 animatedImageView.animationImages = animationFramesc;
                 
                 animatedImageView.hidden = false;
@@ -554,26 +501,14 @@
                 animatedImageView.animationDuration = 2.0;
                 
                 [animatedImageView startAnimating];
-
+                
             }
-
+            
             PlayView.hidden=YES;
-//            playButton.hidden = true;
-//            
-//            nextButton.hidden = true;
-//            
-//            prevButton.hidden = true;
-   
             
         }else{
             animatedImageView.hidden=YES;
             PlayView.hidden=NO;
-//            playButton.hidden = false;
-//            
-//            nextButton.hidden = false;
-//            
-//            prevButton.hidden = false;
-            
             
         }
         
@@ -634,11 +569,11 @@
 }
 
 -(void) viewDidDisappear:(BOOL)animated{
-
+    
 }
 
 -(void) viewDidAppear:(BOOL)animated{
-
+    
     self.slideMenuController.panGestureEnabled = NO;
     
     //[crateBtn setImage:[UIImage imageNamed:@"crateoff.png"] forState:UIControlStateNormal];
@@ -659,20 +594,20 @@
         //[res.firstObject.track_start integerValue];
         
         /*if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
-            
-            slider.maximumValue = 1000;
-            
-            slider.value = [res.firstObject.track_start integerValue];
-            
-            [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
-            
-            [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
-            
-        }else{
-            
-            [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
-            
-        }*/
+         
+         slider.maximumValue = 1000;
+         
+         slider.value = [res.firstObject.track_start integerValue];
+         
+         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
+         
+         [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
+         
+         }else{
+         
+         [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
+         
+         }*/
         
     }else if([isplayed isEqualToString:@"0"]){
         
@@ -719,15 +654,15 @@
         [[AppDelegate sharedInstance].audioPlayer resume];
         
         [AppDelegate sharedInstance].audioPlayer.volume = [[[NSUserDefaults standardUserDefaults] objectForKey:@"volume"] doubleValue];
-
+        
     }else{
-    
+        
         [[AppDelegate sharedInstance].audioPlayer pause];
         
         [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
- 
+        
     }
- 
+    
 }
 
 -(BOOL) canBecomeFirstResponder
@@ -744,7 +679,7 @@
     
     NSURL* url = [NSURL URLWithString:url1];
     
-
+    
     [[AppDelegate sharedInstance].audioPlayer playURL:url];
     
     
@@ -758,7 +693,7 @@
         [AppDelegate sharedInstance].audioPlayer.volume = [[[NSUserDefaults standardUserDefaults] objectForKey:@"volume"] doubleValue];
         
     }else{
- 
+        
         [[AppDelegate sharedInstance].audioPlayer pause];
         
         [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
@@ -799,12 +734,12 @@
         
     }
     
-
+    
     
     if (!isPlaying)
         
     {
-         isPlaying=YES;
+        isPlaying=YES;
         [[AppDelegate sharedInstance].audioPlayer resume];
         
         [AppDelegate sharedInstance].audioPlayer.volume = [[[NSUserDefaults standardUserDefaults] objectForKey:@"volume"] doubleValue];
@@ -820,34 +755,15 @@
     else
         
     {
-         isPlaying=NO;
+        isPlaying=NO;
         [[AppDelegate sharedInstance].audioPlayer pause];
         [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
         
         [playButton setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
-
+        
         
     }
     
-    
-    
-    /*NSString *switchon1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"switch1"];
-    
-    
-    
-    if([switchon1 isEqualToString:@"on"]){
-        
-        [[AppDelegate sharedInstance].audioPlayer resume];
-        
-        [AppDelegate sharedInstance].audioPlayer.volume = [[[NSUserDefaults standardUserDefaults] objectForKey:@"volume"] doubleValue];
-        
-    }else{
-        
-        [[AppDelegate sharedInstance].audioPlayer pause];
-        
-        [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
-
-    }*/
     
 }
 
@@ -860,7 +776,7 @@
     int minutes = (totalSeconds / 60) % 60;
     
     int hours = totalSeconds / 3600;
-
+    
     return [NSString stringWithFormat:@"%02d:%02d:%02d", hours, minutes, seconds];
     
 }
@@ -884,49 +800,49 @@
     //NSString *validid =[NSString stringWithFormat:@"%d",recentid];
     
     RLMResults<TracksRealm *> *res = [TracksRealm objectsWhere:@"track_start >= %f and set_id = %@",slider.value,setid];
-
-    if(res.count>0){
     
+    if(res.count>0){
+        
         trackid = res.firstObject.trackID;
         
         trackTitle.text = res.firstObject.track_name;
         
         trackRecord.text = res.firstObject.track_artist;
-    
+        
         trackAlbum.text = res.firstObject.track_label;
-
+        
         [[NSUserDefaults standardUserDefaults] setObject:self->setid forKey:@"recentset"];
-  
+        
         [[NSUserDefaults standardUserDefaults] synchronize];
-
+        
         [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",res.firstObject.trackID] forKey:@"recentid"];
- 
+        
         [[NSUserDefaults standardUserDefaults] synchronize];
-      
+        
         MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
-       
+        
         NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
-       
+        
         MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"cover"]];
-       
+        
         [songInfo setObject:trackTitle.text forKey:MPMediaItemPropertyTitle];
-    
+        
         [songInfo setObject:res.firstObject.track_artist forKey:MPMediaItemPropertyArtist];
-    
+        
         [songInfo setObject:res.firstObject.track_label forKey:MPMediaItemPropertyAlbumTitle];
-      
+        
         [songInfo setObject:[NSNumber numberWithDouble:slider.value] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
-      
+        
         [songInfo setObject:[NSNumber numberWithDouble:200] forKey:MPMediaItemPropertyPlaybackDuration];
-     
+        
         [songInfo setObject:[NSNumber numberWithDouble:([AppDelegate sharedInstance].audioPlayer.state == STKAudioPlayerStatePaused ? 0.0f : 1.0f)] forKey:MPNowPlayingInfoPropertyPlaybackRate];
         
         [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
-      
+        
         [playingInfoCenter setNowPlayingInfo:songInfo];
- 
+        
         RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
-       
+        
         if(res.count>0){
             
             //[crateBtn setImage:[UIImage imageNamed:@"crateon.png"] forState:UIControlStateNormal];
@@ -936,7 +852,7 @@
             //[crateBtn setImage:[UIImage imageNamed:@"crateoff.png"] forState:UIControlStateNormal];
             
         }
- 
+        
     }
     
     
@@ -967,12 +883,12 @@
         label.text = @"";
         
         statusLabel.text = @"";
-
+        
         return;
         
     }
     
-
+    
     if ([AppDelegate sharedInstance].audioPlayer.currentlyPlayingQueueItemId == nil)
         
     {
@@ -1005,7 +921,7 @@
         
         slider.value = [AppDelegate sharedInstance].audioPlayer.progress;
         
-         [[NSUserDefaults standardUserDefaults] setInteger: [AppDelegate sharedInstance].audioPlayer.progress forKey:@"sliderval"];
+        [[NSUserDefaults standardUserDefaults] setInteger: [AppDelegate sharedInstance].audioPlayer.progress forKey:@"sliderval"];
         
         label.text = [NSString stringWithFormat:@"%@ - %@", [self formatTimeFromSeconds:[AppDelegate sharedInstance].audioPlayer.progress], [self formatTimeFromSeconds:[AppDelegate sharedInstance].audioPlayer.duration]];
         
@@ -1022,7 +938,7 @@
         slider.maximumValue =  [AppDelegate sharedInstance].audioPlayer.duration;
         
         
-         [[NSUserDefaults standardUserDefaults] setInteger: [AppDelegate sharedInstance].audioPlayer.progress forKey:@"sliderval"];
+        [[NSUserDefaults standardUserDefaults] setInteger: [AppDelegate sharedInstance].audioPlayer.progress forKey:@"sliderval"];
         label.text =  [NSString stringWithFormat:@"Live stream %@", [self formatTimeFromSeconds:[AppDelegate sharedInstance].audioPlayer.progress]];
         
     }
@@ -1059,7 +975,7 @@
         
     {
         
-    
+        
         [playButton setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
         
     }
@@ -1067,7 +983,7 @@
     else if ([AppDelegate sharedInstance].audioPlayer.state & STKAudioPlayerStatePlaying)
         
     {
-    
+        
         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
         
     }
@@ -1075,7 +991,7 @@
     else
         
     {
-    
+        
         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
         
     }
@@ -1166,7 +1082,7 @@
     if(self.slideMenuController.isMenuOpen==YES){
         
         [self.slideMenuController closeMenuAnimated:YES completion:nil];
-
+        
     }else{
         
         self.slideMenuController.slideDirection = NVSlideMenuControllerSlideFromLeftToRight;
@@ -1176,9 +1092,9 @@
         
     }
     
-
+    
     [_searchField resignFirstResponder];
- 
+    
     
 }
 -(void) handleTapFrom: (UITapGestureRecognizer *) del{
@@ -1194,171 +1110,12 @@
     if (!isPlaying)
         
     {
-         isPlaying=YES;
+        isPlaying=YES;
         
         [[AppDelegate sharedInstance].audioPlayer resume];
         
-      //  RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
         
-        
-//        animationFrames = [NSArray arrayWithObjects:
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill2.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill3.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill4.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill5.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill6.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill7.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill8.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill9.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill10.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill11.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill12.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill13.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill14.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill15.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill16.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill17.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill18.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill19.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill20.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill21.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill22.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill23.png"],
-//                           
-//                           [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill24.png"],
-//                           
-//                           nil];
-//        
-//        
-//        animationFramesc = [NSArray arrayWithObjects:
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White1.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White2.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White3.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White4.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White5.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White6.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White7.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White8.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White9.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White10.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White11.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White12.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White13.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White14.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White15.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White16.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White17.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White18.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White19.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White20.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White21.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White22.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White23.png"],
-//                            
-//                            [UIImage imageNamed:@"selektaRecordSpin_White24.png"],
-//                            
-//                            //[UIImage imageNamed:@"selektaRecordSpin_White2.png"],
-//                            
-//                            nil];
-//        
-//        
-//        
-//        if(res.count>0){
-//            
-//            
-//            
-//            animatedImageView.animationImages = animationFramesc;
-//            
-//            
-//            
-//            animatedImageView.hidden = false;
-//            
-//            animatedImageView.animationDuration = 2.0;
-        
-            [animatedImageView startAnimating];
-            
-            //[GiFHUD setGifWithImageName:@"selektaRecordSpin.gif"];
-            
-            
-            
-//        }else{
-//            
-//            animatedImageView.animationImages = animationFrames;
-//            
-//            
-//            
-//            animatedImageView.hidden = false;
-//            
-//            animatedImageView.animationDuration = 2.0;
-//            
-//            [animatedImageView startAnimating];
-//            
-//            //[GiFHUD setGifWithImageName:@"selektaRecordSpin.gif"];
-//            
-//            
-//            
-//        }
-//        
-//        
-//        
-//        //[GiFHUD show];
-//        
-//        
-//        //PlayView.hidden=YES;
-////        playButton.hidden = true;
-////        
-////        nextButton.hidden = true;
-////        
-////        prevButton.hidden = true;
-//        
-//        //crateBtn.hidden = true;
+        [animatedImageView startAnimating];
         
         
         
@@ -1367,69 +1124,11 @@
     else
         
     {
-         isPlaying=NO;
+        isPlaying=NO;
         [[AppDelegate sharedInstance].audioPlayer pause];
         
-        //[GiFHUD dismiss];
         
-        
-        
-//        RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
-// 
-//        if(res.count>0){
-//            
-//            
-//            
-//            //animatedImageView.animationImages = animationFramesc;
-//            
-//            
-//            
-//            animatedImageView.hidden = false;
-//            
-//            animatedImageView.animationDuration = 2.0;
-        
-            [animatedImageView stopAnimating];
-            
-//            animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White1.png"];
-//            
-//            //[GiFHUD setGifWithImageName:@"selektarecordanimationwhite-version.gif"];
-//            
-//            
-//            
-//        }else{
-//            
-//            //animatedImageView.animationImages = animationFrames;
-//            
-//            
-//            
-//            animatedImageView.hidden = false;
-//            
-//            animatedImageView.animationDuration = 2.0;
-//            
-//            [animatedImageView stopAnimating];
-//            
-//            animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"];
-//            
-//            //[GiFHUD setGifWithImageName:@"selektarecordanimationnoBack.gif"];
-//            
-//            
-//            
-//        }
-//        
-//        //[GiFHUD show];
-//        
-//        
-//        
-//        // PlayView.hidden=NO;
-//        
-////        playButton.hidden = true;
-////        
-////        nextButton.hidden = true;
-////        
-////        prevButton.hidden = true;
-//        
-//        //crateBtn.hidden = true;
-        
+        [animatedImageView stopAnimating];
         
         
         [playButton setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
@@ -1677,7 +1376,7 @@
                                 //[UIImage imageNamed:@"selektaRecordSpin_White2.png"],
                                 
                                 nil];
-
+            
             
             
             
@@ -1725,13 +1424,13 @@
             
             //[GiFHUD show];
             
-             PlayView.hidden=YES;
+            PlayView.hidden=YES;
             
-//            playButton.hidden = true;
-//            
-//            nextButton.hidden = true;
-//            
-//            prevButton.hidden = true;
+            //            playButton.hidden = true;
+            //
+            //            nextButton.hidden = true;
+            //
+            //            prevButton.hidden = true;
             
             crateBtn.hidden = true;
             
@@ -1744,12 +1443,12 @@
             animatedImageView.hidden = true;
             
             
-             PlayView.hidden=NO;
-//            playButton.hidden = false;
-//            
-//            nextButton.hidden = false;
-//            
-//            prevButton.hidden = false;
+            PlayView.hidden=NO;
+            //            playButton.hidden = false;
+            //
+            //            nextButton.hidden = false;
+            //
+            //            prevButton.hidden = false;
             
             crateBtn.hidden = true;
             
@@ -2066,13 +1765,13 @@
             
             
             //[GiFHUD show];
-             PlayView.hidden=YES;
+            PlayView.hidden=YES;
             
-//            playButton.hidden = true;
-//            
-//            nextButton.hidden = true;
-//            
-//            prevButton.hidden = true;
+            //            playButton.hidden = true;
+            //
+            //            nextButton.hidden = true;
+            //
+            //            prevButton.hidden = true;
             
             crateBtn.hidden = true;
             
@@ -2084,13 +1783,13 @@
             
             animatedImageView.hidden = true;
             
-             PlayView.hidden=NO;
+            PlayView.hidden=NO;
             
-//            playButton.hidden = false;
-//            
-//            nextButton.hidden = false;
-//            
-//            prevButton.hidden = false;
+            //            playButton.hidden = false;
+            //
+            //            nextButton.hidden = false;
+            //
+            //            prevButton.hidden = false;
             
             crateBtn.hidden = true;
             
@@ -2130,7 +1829,7 @@
         
         RLMResults<TracksRealm *> *res = [TracksRealm objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
         NSLog(@"res %@",res);
-    
+        
         
         if(res.count>0){
             
@@ -2405,11 +2104,11 @@
                     
                     
                     
-                     animatedImageView.hidden = false;
+                    animatedImageView.hidden = false;
                     
-                     animatedImageView.animationDuration = 2.0;
+                    animatedImageView.animationDuration = 2.0;
                     
-                     [animatedImageView startAnimating];
+                    [animatedImageView startAnimating];
                     
                     
                     
@@ -2418,13 +2117,13 @@
                     
                     
                     //[GiFHUD show];
-                     PlayView.hidden=YES;
+                    PlayView.hidden=YES;
                     
-//                    playButton.hidden = true;
-//                    
-//                    nextButton.hidden = true;
-//                    
-//                    prevButton.hidden = true;
+                    //                    playButton.hidden = true;
+                    //
+                    //                    nextButton.hidden = true;
+                    //
+                    //                    prevButton.hidden = true;
                     
                     crateBtn.hidden = true;
                     
@@ -2437,13 +2136,13 @@
                     animatedImageView.hidden = true;
                     
                     // [GiFHUD dismiss];
-                     PlayView.hidden=NO;
+                    PlayView.hidden=NO;
                     
-//                    playButton.hidden = false;
-//                    
-//                    nextButton.hidden = false;
-//                    
-//                    prevButton.hidden = false;
+                    //                    playButton.hidden = false;
+                    //
+                    //                    nextButton.hidden = false;
+                    //
+                    //                    prevButton.hidden = false;
                     
                     crateBtn.hidden = true;
                     
@@ -2471,7 +2170,7 @@
 }
 
 -(void)observers{
-
+    
     NSLog(@"setid %@",setid);
     
     [[AccountsClient sharedInstance] getAllTracks:setid completion:^(NSError *error, FDataSnapshot *sets1) {
@@ -2559,7 +2258,7 @@
                     
                     
                 }
-    
+                
             }
             
             
@@ -2570,18 +2269,18 @@
             
         }
         
-
+        
     }];
     
-
+    
     
 }
 -(void) removeObserverGetTracks{
     
-
+    
     Firebase *ref = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/tracks", FIREBASE_URL]];
     
-
+    
     [ref removeAllObservers];
     
 }
@@ -2875,13 +2574,13 @@
             
             //[GiFHUD show];
             
-             PlayView.hidden=YES;
+            PlayView.hidden=YES;
             
-//            playButton.hidden = true;
-//            
-//            nextButton.hidden = true;
-//            
-//            prevButton.hidden = true;
+            //            playButton.hidden = true;
+            //
+            //            nextButton.hidden = true;
+            //
+            //            prevButton.hidden = true;
             
             crateBtn.hidden = true;
             
@@ -2894,12 +2593,12 @@
             animatedImageView.hidden = true;
             
             
-             PlayView.hidden=NO;
-//            playButton.hidden = false;
-//            
-//            nextButton.hidden = false;
-//            
-//            prevButton.hidden = false;
+            PlayView.hidden=NO;
+            //            playButton.hidden = false;
+            //
+            //            nextButton.hidden = false;
+            //
+            //            prevButton.hidden = false;
             
             crateBtn.hidden = true;
             
@@ -3187,11 +2886,6 @@
                 
                 [animatedImageView startAnimating];
                 
-                //animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White1.png"];
-                
-                //[GiFHUD setGifWithImageName:@"selektarecordanimationwhite-version.gif"];
-                
-                
                 
             }else{
                 
@@ -3205,23 +2899,17 @@
                 
                 [animatedImageView startAnimating];
                 
-                //animatedImageView.image = [UIImage imageNamed:@"selektaRecordSpin_White_no_Fill1.png"];
-                
-                //[GiFHUD setGifWithImageName:@"selektarecordanimationnoBack.gif"];
-                
-                
-                
             }
             
             
             //[GiFHUD show];
-             PlayView.hidden=YES;
+            PlayView.hidden=YES;
             
-//            playButton.hidden = true;
-//            
-//            nextButton.hidden = true;
-//            
-//            prevButton.hidden = true;
+            //            playButton.hidden = true;
+            //
+            //            nextButton.hidden = true;
+            //
+            //            prevButton.hidden = true;
             
             crateBtn.hidden = true;
             
@@ -3233,31 +2921,9 @@
             
             animatedImageView.hidden = true;
             
-             PlayView.hidden=NO;
-            
-//            playButton.hidden = false;
-//            
-//            nextButton.hidden = false;
-//            
-//            prevButton.hidden = false;
+            PlayView.hidden=NO;
             
             crateBtn.hidden = true;
-            
-            // [GiFHUD dismiss];
-            
-            
-            
-            /*if(res.count>0){
-             
-             
-             
-             [crateBtn setImage:[UIImage imageNamed:@"crateon.png"] forState:UIControlStateNormal];
-             
-             }else{
-             
-             [crateBtn setImage:[UIImage imageNamed:@"crateoff.png"] forState:UIControlStateNormal];
-             
-             }*/
             
         }
         
@@ -3272,7 +2938,7 @@
     }
     
     
-
+    
 }
 
 -(void) saveSets{
@@ -3280,7 +2946,7 @@
 }
 
 -(void) initplayer{
- 
+    
     NSLog(@"trackurl %@",trackurl);
     
     [self audioPlayerViewPlayFromHTTPSelected:self:trackurl];
@@ -3440,7 +3106,7 @@
 }
 
 -(void) initTracks{
- 
+    
     [[AccountsClient sharedInstance] getSingleSetInfoWithID:setid completion:^(NSError *error, FDataSnapshot *accountInfo)  {
         
         
@@ -3483,15 +3149,15 @@
 
 -(void) showTrackData{
     
-
+    
     RLMResults<TracksRealm *> *res = [TracksRealm objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
     
     
     
     if(res.count>0){
-
+        
         //[crateBtn setImage:[UIImage imageNamed:@"crateon.png"] forState:UIControlStateNormal];
- 
+        
         trackTitle.text = res.firstObject.track_name;
         
         
@@ -3519,15 +3185,15 @@
         
         
         [[NSUserDefaults standardUserDefaults] synchronize];
-    
+        
         MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
- 
+        
         NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
         
-
+        
         MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"cover"]];
         
-
+        
         [songInfo setObject:trackTitle.text forKey:MPMediaItemPropertyTitle];
         
         
@@ -3554,9 +3220,9 @@
         
         [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
         
-
+        
         [playingInfoCenter setNowPlayingInfo:songInfo];
- 
+        
     }
     
 }
@@ -3569,8 +3235,6 @@
     //Return YES for supported orientations
     
     return YES;
-    
-    //return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
     
 }
 
@@ -3640,7 +3304,7 @@
     
     cell.backgroundView = [[UIView alloc] init];
     
-
+    
     NSInteger colorIndex = indexPath.row % 3;
     
     switch (colorIndex) {
@@ -3793,7 +3457,7 @@
             
             
         }else{
-    
+            
             
             [[NSUserDefaults standardUserDefaults] setObject:set.set_id forKey:@"recentset"];
             
@@ -3809,7 +3473,7 @@
             
         }
         
-   
+        
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"nowplaying"];
         
         [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"fromcrate"];
@@ -3834,108 +3498,9 @@
     
 }
 
--(IBAction)goTutorialNext:(id)sender{
-    
-    
-    
-    tutorial1.hidden = YES;
-    
-    tutorial2.hidden = NO;
-    
-    tutorial3.hidden = YES;
-    
-    next1.hidden = YES;
-    
-    next2.hidden = NO;
-    
-    next3.hidden = YES;
-    
-    
-    
-}
-
-
-
--(IBAction)goTutorial1Next:(id)sender{
-    
-    
-    
-    tutorial1.hidden = YES;
-    
-    tutorial2.hidden = YES;
-    
-    tutorial3.hidden = NO;
-    
-    
-    
-    next1.hidden = YES;
-    
-    next2.hidden = YES;
-    
-    next3.hidden = NO;
-    
-    
-    
-}
-
-
-
-
-
-
-
--(IBAction)goTutorial2Next:(id)sender{
-    
-    
-    
-    tutorial1.hidden = YES;
-    
-    tutorial2.hidden = YES;
-    
-    tutorial3.hidden = YES;
-    
-    
-    
-    next1.hidden = YES;
-    
-    next2.hidden = YES;
-    
-    next3.hidden = YES;
-    
-    
-    
-}
-
-
-
--(IBAction)hideTutorial1:(id)sender{
-    
-    
-    
-    tutorial1.hidden = YES;
-    
-    tutorial2.hidden = YES;
-    
-    tutorial3.hidden = YES;
-    
-    
-    
-    next1.hidden = YES;
-    
-    next2.hidden = YES;
-    
-    next3.hidden = YES;
-    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"tutorial"];
-    
-}
 
 -(IBAction)goSearch:(id)sender{
-    
-    /*SearchViewController *detailsVC = [SearchViewController new];
-     
-     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
-     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
-    
+        
     if(isSearch == false){
         searchView.hidden = NO;
         self.searchField.hidden = NO;

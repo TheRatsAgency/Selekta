@@ -34,7 +34,6 @@
     NSUserDefaults *defaults;
     NSString *playerID;
     
-    IBOutlet UIImageView *tutorial1;
     IBOutlet UIButton *next1;
 }
 @property (nonatomic, retain) NSMutableArray *crates;
@@ -77,18 +76,6 @@
     playerID = [defaults objectForKey:@"GLOBAL_USER_ID"];
     
     
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"tutorial"]  isEqual: @"0"]){
-        tutorial1.hidden = NO;
-        
-        next1.hidden = NO;
-        
-    }else{
-        tutorial1.hidden = YES;
-        
-        next1.hidden = YES;
-        
-    }
-    
     [[AccountsClient sharedInstance] getSingleAccountInfoWithID:playerID completion:^(NSError *error, FDataSnapshot *accountInfo)  {
         
         NSLog(@"accountInfo = %@", accountInfo);
@@ -116,8 +103,6 @@
     
     
     [self observers];
-    //[self fetchData];
-    // Do any additional setup after loading the view from its nib.
 }
 
 -(void)viewDidUnload{
@@ -189,7 +174,7 @@
         //cell.backgroundView.backgroundColor = [UIColor blackColor];
         [cell.img setImage:[UIImage imageNamed:@"crate_default_button.png"]];
         //[cell.img sd_setImageWithURL:[NSURL URLWithString:@""]
-                    //placeholderImage:[UIImage imageNamed:@"crate_default_button.png"]];
+        //placeholderImage:[UIImage imageNamed:@"crate_default_button.png"]];
         
         return cell;
     }else{
@@ -197,12 +182,9 @@
             cell.artist.text= @"Your Crate";
             cell.title1.text=@"";//[NSString stringWithFormat:@"From: %@", obj.settitle];
             cell.backgroundView = [[UIView alloc] init];
-            //cell.backgroundView.backgroundColor = [UIColor blackColor];
-            //[cell.img sd_setImageWithURL:[NSURL URLWithString:@""]
-                        //placeholderImage:[UIImage imageNamed:@"blackbtn.png"]];
             
             [cell.img setImage:[UIImage imageNamed:@"crate_default_button.png"]];
-
+            
             
             return cell;
         }else{
@@ -212,11 +194,8 @@
             cell.artist.text= ob.set_artist;
             NSLog(@"set title %@",ob.set_title);
             cell.title1.text=@"";//ob.set_title;
-            //cell.img.file=ob.imgfile;
-            //[cell.img loadInBackground];
             [cell.img sd_setImageWithURL:[NSURL URLWithString:ob.set_btn_image]
                         placeholderImage:[UIImage imageNamed:@"blackbtn.png"]];
-            //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             
             NSInteger colorIndex = indexPath.row % 3;
@@ -260,23 +239,6 @@
     
 }
 
-/*-(IBAction)onSearch:(id)sender{
- 
- if(isShown==FALSE){
- self.searchField.hidden=NO;
- self.goBtn.hidden=YES;
- self.searchBtn.hidden=NO;
- [self.searchField becomeFirstResponder];
- isShown=TRUE;
- }else{
- self.searchField.hidden=YES;
- self.goBtn.hidden=YES;
- self.searchBtn.hidden=NO;
- [self.searchField resignFirstResponder];
- isShown=FALSE;
- }
- 
- }*/
 
 -(IBAction)goSearch:(id)sender{
     
@@ -289,47 +251,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(self.slideMenuController.isMenuOpen==NO){
-        
-        
-        /*CrateObj *crate=[self.crates objectAtIndex:indexPath.row];
-        NSLog(@"set id %@",crate.set_id);
-        NSString *recentset=[[NSUserDefaults standardUserDefaults] objectForKey:@"recentset"];
-        NSString *recentid=[[NSUserDefaults standardUserDefaults] objectForKey:@"recentid"];
-        NSString *cid= [NSString stringWithFormat:@"%ld",([crate.trackID integerValue])];
-        NSLog(@"cid %@",cid);
-        if([recentset isEqualToString:crate.set_id]){
-            //check the recent trac
-            
-            [[NSUserDefaults standardUserDefaults] setObject:crate.set_id forKey:@"selectedset"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            NSLog(@"selected set %@",crate.set_id);
-            
-            
-            [[NSUserDefaults standardUserDefaults] setObject:cid forKey:@"recentid"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-        }else{
-            
-            
-            [[NSUserDefaults standardUserDefaults] setObject:crate.set_id forKey:@"selectedset"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:cid forKey:@"recentid"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-        }
-        
-        
-        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"fromcrate"];
-        [[NSUserDefaults standardUserDefaults] setObject:crate.trackID forKey:@"trackstart"];
-        [[NSUserDefaults standardUserDefaults] setObject:crate.set_id forKey:@"trackset"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        PlayerNewVC *signVC = (PlayerNewVC *)[storyboard instantiateViewControllerWithIdentifier:@"PlayerVC"];
-        [[AppDelegate sharedInstance].audioPlayer stop];
-        
-        [self.slideMenuController closeMenuBehindContentViewController:signVC animated:YES completion:nil];*/
         
         [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -456,8 +377,6 @@
                 [self.thisTableView reloadData];
             }
             
-           // self.setLbl.text=[NSString stringWithFormat:@"%lu SELEKTA SETS",(unsigned long)[sets count]];
-            
         }
         
     }];
@@ -472,14 +391,5 @@
 }
 
 
--(IBAction)goTutorialNext:(id)sender{
-    
-    tutorial1.hidden = YES;
-    
-    
-    next1.hidden = YES;
-    
-    
-}
 
 @end

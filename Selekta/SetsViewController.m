@@ -25,10 +25,9 @@
 #import "PlayerNewVC.h"
 
 @interface SetsViewController (){
-       NSUserDefaults *defaults;
-    IBOutlet UIImageView *tutorial1;
+    NSUserDefaults *defaults;
     IBOutlet UIButton *next1;
-
+    
 }
 @property (nonatomic, retain) NSMutableArray *sets;
 @property (nonatomic) BOOL isShown;
@@ -51,8 +50,6 @@
     
     
     
-    //[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    
     [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error: nil];
     [[AVAudioSession sharedInstance] setActive: YES error:nil];
     
@@ -71,20 +68,7 @@
     sets=[[NSMutableArray alloc] init];
     //[self fetchData];
     
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"tutorial"]  isEqual: @"0"]){
-        tutorial1.hidden = NO;
-        
-        next1.hidden = NO;
-        
-    }else{
-        tutorial1.hidden = YES;
-        
-        next1.hidden = YES;
-        
-    }
-    
-     [self observers];
-       // Do any additional setup after loading the view from its nib.
+    [self observers];
 }
 
 -(void)viewDidUnload{
@@ -98,7 +82,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma table delegates
@@ -132,7 +115,7 @@
     //cell.img.file=ob.imgfile;
     //[cell.img loadInBackground];
     [cell.img sd_setImageWithURL:[NSURL URLWithString:ob.set_btn_image]
-                      placeholderImage:[UIImage imageNamed:@"blackbtn.png"]];
+                placeholderImage:[UIImage imageNamed:@"blackbtn.png"]];
     cell.backgroundView = [[UIView alloc] init];
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -169,7 +152,7 @@
         [self.slideMenuController toggleMenuAnimated:nil];
     }
     
-     [_searchField resignFirstResponder];
+    [_searchField resignFirstResponder];
     
 }
 
@@ -196,7 +179,7 @@
 {
     if(self.slideMenuController.isMenuOpen==NO){
         //FSPlayerViewController *detailsVC = [FSPlayerViewController new];
-    
+        
         SetObj *set=[self.sets objectAtIndex:indexPath.row];
         NSLog(@"set id %@",set.set_id);
         [[NSUserDefaults standardUserDefaults] setObject:set.set_id forKey:@"recentset"];
@@ -204,7 +187,7 @@
         
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"recentid"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-       
+        
         
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"nowplaying"];
         [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"fromcrate"];
@@ -221,10 +204,10 @@
 
 -(IBAction)onGo:(id)sender{
     
-        SearchViewController *detailsVC = [SearchViewController new];
-        detailsVC.searchString=self.searchField.text;
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
-        [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
+    SearchViewController *detailsVC = [SearchViewController new];
+    detailsVC.searchString=self.searchField.text;
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField*)textField;
@@ -234,7 +217,7 @@
     self.searchField.hidden=YES;
     self.goBtn.hidden=YES;
     self.searchBtn.hidden=NO;
-
+    
     
     SearchViewController *detailsVC = [SearchViewController new];
     detailsVC.searchString=self.searchField.text;
@@ -250,7 +233,7 @@
     
     NSMutableArray *title=[[NSMutableArray alloc] initWithObjects:@"Crew Love Miami",@"Ibiza Villa Mix",@"Time Warp Live Set",@"Summer Exclusive Mix",@"Busy P's Paris Is Burning Mix", nil];
     
-     NSMutableArray *artist=[[NSMutableArray alloc] initWithObjects:@"Wolf + Lamb",@"Pete Tong",@"Waff",@"Luciano",@"Skrillex", nil];
+    NSMutableArray *artist=[[NSMutableArray alloc] initWithObjects:@"Wolf + Lamb",@"Pete Tong",@"Waff",@"Luciano",@"Skrillex", nil];
     
     NSMutableArray *pic=[[NSMutableArray alloc] initWithObjects:@"http://www.selektamusic.com/app/set_button/Wolflamb.png",@"http://www.selektamusic.com/app/set_button/petetong.png",@"http://www.selektamusic.com/app/set_button/waff.png",@"http://www.selektamusic.com/app/set_button/luciano.png",@"http://www.selektamusic.com/app/set_button/skrillex.png", nil];
     
@@ -258,7 +241,7 @@
         SetObj *setobj = [[SetObj alloc] init];
         NSString *sobjID = [NSString stringWithFormat:@"%d",i];
         setobj.objectId = sobjID;
-    
+        
         setobj.set_artist=artist[i];
         setobj.set_audio_link=sets1[i];
         setobj.set_id=sobjID;
@@ -268,7 +251,7 @@
         setobj.set_picture=pic[i];
         //PFFile *userImageFile = [object objectForKey:@"button_image"];//
         //setobj.imgfile= userImageFile;
-    
+        
         [self.sets addObject:setobj];
     }
     
@@ -288,32 +271,32 @@
         if (sets1.value != (id)[NSNull null]) {
             
             [self.sets removeAllObjects];
-   
-         
             
-             RLMRealm *realm = [RLMRealm defaultRealm];
-
+            
+            
+            RLMRealm *realm = [RLMRealm defaultRealm];
+            
             for (int i=0; i < [sets1.value count]; i++) {
                 
                 NSDictionary *setid = [sets1.value objectAtIndex:i];
                 if(setid != (id)[NSNull null]){
                     NSLog(@"setid = %@", setid[@"set_artist"]);
-                     SetObj *setobj = [[SetObj alloc] init];
-                     NSString *sobjID = [NSString stringWithFormat:@"%d",i];
-                     setobj.objectId = sobjID;
-                     
-                     setobj.set_artist=setid[@"set_artist"];
-                     setobj.set_audio_link=setid[@"setf_audio_link"];
-                     setobj.set_id=setid[@"setid"];
-                     setobj.set_title=setid[@"set_title"];
-                     setobj.created_at=setid[@"dateCreated"];
-                     setobj.updated_at=setid[@"dateCreated"];
-                     setobj.set_picture=setid[@"set_picture"];
-                     setobj.set_background_pic=setid[@"set_background_pic"];
-                     setobj.set_btn_image=setid[@"set_btn_image"];
-                     //[self.sets addObject:setobj];
+                    SetObj *setobj = [[SetObj alloc] init];
+                    NSString *sobjID = [NSString stringWithFormat:@"%d",i];
+                    setobj.objectId = sobjID;
                     
-                   
+                    setobj.set_artist=setid[@"set_artist"];
+                    setobj.set_audio_link=setid[@"setf_audio_link"];
+                    setobj.set_id=setid[@"setid"];
+                    setobj.set_title=setid[@"set_title"];
+                    setobj.created_at=setid[@"dateCreated"];
+                    setobj.updated_at=setid[@"dateCreated"];
+                    setobj.set_picture=setid[@"set_picture"];
+                    setobj.set_background_pic=setid[@"set_background_pic"];
+                    setobj.set_btn_image=setid[@"set_btn_image"];
+                    //[self.sets addObject:setobj];
+                    
+                    
                     SetsRealm *tobjr = [[SetsRealm alloc] init];
                     tobjr.objectId = sobjID;
                     
@@ -332,17 +315,17 @@
                     [realm beginWriteTransaction];
                     [realm addOrUpdateObject:tobjr];
                     [realm commitWriteTransaction];
-
-                     
-            
+                    
+                    
+                    
                 }
-
-               
+                
+                
             }
             
             NSPredicate *billingPredicate = [NSPredicate predicateWithFormat: @"userid = %@", playerid];
             RLMResults<SetsRealm *> *res = [[SetsRealm objectsWithPredicate: billingPredicate]
-                                                      sortedResultsUsingProperty:@"created_at" ascending:NO];
+                                            sortedResultsUsingProperty:@"created_at" ascending:NO];
             NSLog(@"crates %@",res);
             [sets removeAllObjects];
             
@@ -369,7 +352,7 @@
                 [self.thisTableView reloadData];
             }
             
-               self.setLbl.text=[NSString stringWithFormat:@"%lu SELEKTA SETS",(unsigned long)[sets count]];
+            self.setLbl.text=[NSString stringWithFormat:@"%lu SELEKTA SETS",(unsigned long)[sets count]];
             
         }
         
@@ -382,16 +365,6 @@
     Firebase *ref = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/sets", FIREBASE_URL]];
     
     [ref removeAllObservers];
-}
-
--(IBAction)goTutorialNext:(id)sender{
-    
-    tutorial1.hidden = YES;
-    
-    
-    next1.hidden = YES;
-    
-    
 }
 
 @end

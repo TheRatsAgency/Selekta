@@ -54,7 +54,7 @@
     NSArray *animationFrames;
     NSArray *animationFramesc;
     IBOutlet UIImageView *animatedImageView;
-
+    
 }
 
 @property (nonatomic, retain) NSMutableArray *sets;
@@ -104,7 +104,6 @@
                forControlEvents:UIControlEventEditingChanged];
     self.searchField.returnKeyType = UIReturnKeyGo;
     self.slideMenuController.panGestureEnabled = NO;
-    RLMRealm *realm = [RLMRealm defaultRealm];
     allTracks = [[NSMutableArray alloc] init];
     
     defaults = [NSUserDefaults standardUserDefaults];
@@ -118,30 +117,30 @@
         
     }
     animationFrames = [[NSArray alloc] init];
-
+    
     animationFramesc = [[NSArray alloc] init];
-  
+    
     [self saveTracksSet1];
     
- if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
-    UISwipeGestureRecognizer *rightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipeHandle:)];
-    rightRecognizer.delegate=self;
-    rightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    [self.view addGestureRecognizer:rightRecognizer];
-    
-    UISwipeGestureRecognizer *leftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipeHandle:)];
-    leftRecognizer.delegate=self;
-    leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    [self.view addGestureRecognizer:leftRecognizer];
-    
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapFrom:)];
-    tapGestureRecognizer.delegate=self;
-    //[self.view addGestureRecognizer:tapGestureRecognizer];
-    
-  
-     
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
+        UISwipeGestureRecognizer *rightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rightSwipeHandle:)];
+        rightRecognizer.delegate=self;
+        rightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+        
+        [self.view addGestureRecognizer:rightRecognizer];
+        
+        UISwipeGestureRecognizer *leftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(leftSwipeHandle:)];
+        leftRecognizer.delegate=self;
+        leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+        
+        [self.view addGestureRecognizer:leftRecognizer];
+        
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapFrom:)];
+        tapGestureRecognizer.delegate=self;
+        //[self.view addGestureRecognizer:tapGestureRecognizer];
+        
+        
+        
     }
     
     UISwipeGestureRecognizer *upRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(upSwipeHandle:)];
@@ -149,66 +148,16 @@
     upRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
     [self.view addGestureRecognizer:upRecognizer];
     
-
+    
     RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
- 
+    
     
     
     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
         
-        animationFrames = [NSArray arrayWithObjects:
-                           [UIImage imageNamed:@"1.png"],
-                           [UIImage imageNamed:@"2.png"],
-                           [UIImage imageNamed:@"3.png"],
-                           [UIImage imageNamed:@"4.png"],
-                           [UIImage imageNamed:@"5.png"],
-                           [UIImage imageNamed:@"6.png"],
-                           [UIImage imageNamed:@"7.png"],
-                           [UIImage imageNamed:@"8.png"],
-                           [UIImage imageNamed:@"9.png"],
-                           [UIImage imageNamed:@"10.png"],
-                           [UIImage imageNamed:@"11.png"],
-                           [UIImage imageNamed:@"12.png"],
-                           [UIImage imageNamed:@"13.png"],
-                           [UIImage imageNamed:@"14.png"],
-                           [UIImage imageNamed:@"15.png"],
-                           [UIImage imageNamed:@"16.png"],
-                           [UIImage imageNamed:@"17.png"],
-                           [UIImage imageNamed:@"18.png"],
-                           [UIImage imageNamed:@"19.png"],
-                           [UIImage imageNamed:@"20.png"],
-                           [UIImage imageNamed:@"21.png"],
-                           [UIImage imageNamed:@"22.png"],
-                           [UIImage imageNamed:@"23.png"],
-                           [UIImage imageNamed:@"24.png"],
-                           nil];
+        animationFrames = [self animationFramesArray];
         
-        animationFramesc = [NSArray arrayWithObjects:
-                            [UIImage imageNamed:@"whitegif1.png"],
-                            [UIImage imageNamed:@"whitegif2.png"],
-                            [UIImage imageNamed:@"whitegif3.png"],
-                            [UIImage imageNamed:@"whitegif4.png"],
-                            [UIImage imageNamed:@"whitegif5.png"],
-                            [UIImage imageNamed:@"whitegif6.png"],
-                            [UIImage imageNamed:@"whitegif7.png"],
-                            [UIImage imageNamed:@"whitegif8.png"],
-                            [UIImage imageNamed:@"whitegif9.png"],
-                            [UIImage imageNamed:@"whitegif10.png"],
-                            [UIImage imageNamed:@"whitegif11.png"],
-                            [UIImage imageNamed:@"whitegif12.png"],
-                            [UIImage imageNamed:@"whitegif13.png"],
-                            [UIImage imageNamed:@"whitegif14.png"],
-                            [UIImage imageNamed:@"whitegif15.png"],
-                            [UIImage imageNamed:@"whitegif16.png"],
-                            [UIImage imageNamed:@"whitegif17.png"],
-                            [UIImage imageNamed:@"whitegif18.png"],
-                            [UIImage imageNamed:@"whitegif19.png"],
-                            [UIImage imageNamed:@"whitegif20.png"],
-                            [UIImage imageNamed:@"whitegif21.png"],
-                            [UIImage imageNamed:@"whitegif22.png"],
-                            [UIImage imageNamed:@"whitegif23.png"],
-                            [UIImage imageNamed:@"whitegif24.png"],
-                            nil];
+        animationFramesc = [self animationFramescArray];
         
         if(res.count>0){
             
@@ -249,7 +198,7 @@
             [crateBtn setImage:[UIImage imageNamed:@"crateoff.png"] forState:UIControlStateNormal];
         }
     }
-   
+    
     
     
     
@@ -259,7 +208,7 @@
         
         defaults = [NSUserDefaults standardUserDefaults];
         
-       
+        
         
         if(![[defaults objectForKey:@"recentset"]  isEqual: @""]){
             
@@ -273,7 +222,7 @@
                 
                 [[AccountsClient sharedInstance] getSingleSetInfoWithID:setid completion:^(NSError *error, FDataSnapshot *accountInfo)  {
                     
-        
+                    
                     
                     NSLog(@"accountInfo = %@", accountInfo);
                     
@@ -327,11 +276,6 @@
                     
                     //only if added to crate
                     
-                    
-    
-                    
-                    
-                    
                     trackTitle.text = res.firstObject.track_name;
                     
                     NSLog(@"track artist %@",res.firstObject.track_artist);
@@ -345,45 +289,20 @@
                     trackurl = res.firstObject.seturl;
                     
                     
-                    
                     //[self initplayer];
                     
                     NSLog(@"trackurl %@",res.firstObject.track_start);
                     
-                     NSLog(@"trackurl1 %@",res.firstObject.seturl);
+                    NSLog(@"trackurl1 %@",res.firstObject.seturl);
                     
                     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
                         slider.value = [res.firstObject.track_start integerValue];
                         //slider.maximumValue = [AppDelegate sharedInstance].audioPlayer.duration;
-
-                         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
-                         NSLog(@"slider value %f",slider.value);
+                        
+                        [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
+                        NSLog(@"slider value %f",slider.value);
                         [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
                     }
-
-                    
-                    
-                    /*if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
-                        NSLog(@"trackurl %ld",[res.firstObject.track_start integerValue]);
-                        slider.continuous = YES;
-                        slider.minimumValue = 0;
-                        slider.maximumValue = [AppDelegate sharedInstance].audioPlayer.duration;
-                        [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
-                        slider.value = [res.firstObject.track_start floatValue];
-                        [slider setValue:[res.firstObject.track_start floatValue] animated:YES];
-                        
-                        NSLog(@"slider value %f",slider.value);
-                        [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start floatValue]];
-                        [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
-
-                    }*/
-  
-                    
-                }else{
-                    
-                   
-                    
-                    
                     
                 }
             }else{
@@ -429,7 +348,7 @@
                     
                     
                     trackurl = accountInfo.value[@"set_audio_link"];
-                     [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
+                    [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
                     slider.value = [res.firstObject.track_start integerValue];
                     //slider.maximumValue = [AppDelegate sharedInstance].audioPlayer.duration;
                     
@@ -443,9 +362,9 @@
                 if(res.count>0){
                     
                     
-
                     
-                   
+                    
+                    
                     
                     
                     
@@ -467,46 +386,25 @@
                     
                     NSLog(@"trackurl %@",res.firstObject.track_start);
                     
-                     NSLog(@"trackurl1 %@",res.firstObject.seturl);
+                    NSLog(@"trackurl1 %@",res.firstObject.seturl);
                     
                     
-
+                    
                     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
                         slider.value = [res.firstObject.track_start integerValue];
                         //slider.maximumValue = [AppDelegate sharedInstance].audioPlayer.duration;
-
+                        
                         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
                         NSLog(@"slider value %f",slider.value);
                         [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start integerValue]];
                     }
-                    /*if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
-                        NSLog(@"trackurl %ld",[res.firstObject.track_start integerValue]);
-                        slider.continuous = YES;
-                        slider.minimumValue = 0;
-                        slider.maximumValue = [AppDelegate sharedInstance].audioPlayer.duration;
-                        [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
-                        slider.value = [res.firstObject.track_start floatValue];
-                        [slider setValue:[res.firstObject.track_start floatValue] animated:YES];
-                        
-                        NSLog(@"slider value %f",slider.value);
-                        [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start floatValue]];
-                     
-
-
-                    }*/
-
                     
-                    
-                    
-                }else{
-                    
-                                       
                 }
                 
             }
             
         }
-    
+        
         
     }else{
         [self observers];
@@ -521,10 +419,10 @@
 
 -(void) viewDidAppear:(BOOL)animated{
     
-   
+    
     setid = [defaults objectForKey:@"recentset"];
     trackid = [defaults objectForKey:@"recentid"];
-        
+    
     
     
     RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
@@ -533,59 +431,9 @@
     
     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
         
-        animationFrames = [NSArray arrayWithObjects:
-                           [UIImage imageNamed:@"1.png"],
-                           [UIImage imageNamed:@"2.png"],
-                           [UIImage imageNamed:@"3.png"],
-                           [UIImage imageNamed:@"4.png"],
-                           [UIImage imageNamed:@"5.png"],
-                           [UIImage imageNamed:@"6.png"],
-                           [UIImage imageNamed:@"7.png"],
-                           [UIImage imageNamed:@"8.png"],
-                           [UIImage imageNamed:@"9.png"],
-                           [UIImage imageNamed:@"10.png"],
-                           [UIImage imageNamed:@"11.png"],
-                           [UIImage imageNamed:@"12.png"],
-                           [UIImage imageNamed:@"13.png"],
-                           [UIImage imageNamed:@"14.png"],
-                           [UIImage imageNamed:@"15.png"],
-                           [UIImage imageNamed:@"16.png"],
-                           [UIImage imageNamed:@"17.png"],
-                           [UIImage imageNamed:@"18.png"],
-                           [UIImage imageNamed:@"19.png"],
-                           [UIImage imageNamed:@"20.png"],
-                           [UIImage imageNamed:@"21.png"],
-                           [UIImage imageNamed:@"22.png"],
-                           [UIImage imageNamed:@"23.png"],
-                           [UIImage imageNamed:@"24.png"],
-                           nil];
+        animationFrames = [self animationFramesArray];
         
-        animationFramesc = [NSArray arrayWithObjects:
-                            [UIImage imageNamed:@"whitegif1.png"],
-                            [UIImage imageNamed:@"whitegif2.png"],
-                            [UIImage imageNamed:@"whitegif3.png"],
-                            [UIImage imageNamed:@"whitegif4.png"],
-                            [UIImage imageNamed:@"whitegif5.png"],
-                            [UIImage imageNamed:@"whitegif6.png"],
-                            [UIImage imageNamed:@"whitegif7.png"],
-                            [UIImage imageNamed:@"whitegif8.png"],
-                            [UIImage imageNamed:@"whitegif9.png"],
-                            [UIImage imageNamed:@"whitegif10.png"],
-                            [UIImage imageNamed:@"whitegif11.png"],
-                            [UIImage imageNamed:@"whitegif12.png"],
-                            [UIImage imageNamed:@"whitegif13.png"],
-                            [UIImage imageNamed:@"whitegif14.png"],
-                            [UIImage imageNamed:@"whitegif15.png"],
-                            [UIImage imageNamed:@"whitegif16.png"],
-                            [UIImage imageNamed:@"whitegif17.png"],
-                            [UIImage imageNamed:@"whitegif18.png"],
-                            [UIImage imageNamed:@"whitegif19.png"],
-                            [UIImage imageNamed:@"whitegif20.png"],
-                            [UIImage imageNamed:@"whitegif21.png"],
-                            [UIImage imageNamed:@"whitegif22.png"],
-                            [UIImage imageNamed:@"whitegif23.png"],
-                            [UIImage imageNamed:@"whitegif24.png"],
-                            nil];
+        animationFramesc = [self animationFramescArray];
         
         if(res.count>0){
             
@@ -601,7 +449,7 @@
             [animatedImageView startAnimating];
             
         }
-    
+        
         
         
         playButton.hidden = true;
@@ -627,33 +475,19 @@
         }
     }
     
-     /* [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
-        slider.continuous = YES;
-        slider.minimumValue = 0;
-        slider.maximumValue = [AppDelegate sharedInstance].audioPlayer.duration;
-        [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
-        slider.value = [res.firstObject.track_start floatValue];
-        [slider setValue:[res.firstObject.track_start floatValue] animated:YES];
-        
-        NSLog(@"slider value %f",slider.value);
-        [[AppDelegate sharedInstance].audioPlayer seekToTime:[res.firstObject.track_start floatValue]];
-        [[AppDelegate sharedInstance].audioPlayer playURL:[NSURL URLWithString:trackurl]];
-      
-    }*/
     
     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"fromcrate"]  isEqual: @"1"] ){
         NSLog(@"value %@", res.firstObject);
         NSLog(@"value %ld", [res.firstObject.track_start integerValue]);
         //slider.maximumValue = [AppDelegate sharedInstance].audioPlayer.duration;
-
+        
         slider.value = [res.firstObject.track_start integerValue];
         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
         NSLog(@"slider value %f",slider.value);
         [[AppDelegate sharedInstance].audioPlayer seekToTime:slider.value];
     }
-
-
+    
+    
 }
 
 -(BOOL) canBecomeFirstResponder
@@ -667,10 +501,10 @@
     NSURL* url = [NSURL URLWithString:url1];
     
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-
+    
     [[AppDelegate sharedInstance].audioPlayer playURL:url];
     
-     //[audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+    //[audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
 }
 
 -(IBAction)goPlay:(id)sender{
@@ -800,9 +634,9 @@
             [crateBtn setImage:[UIImage imageNamed:@"crateoff.png"] forState:UIControlStateNormal];
         }
         
-    
-      
-   
+        
+        
+        
         
     }else{
         
@@ -868,7 +702,7 @@
 {
     if ([AppDelegate sharedInstance].audioPlayer == nil)
     {
-          [playButton setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        [playButton setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
         
     }
     else if ([AppDelegate sharedInstance].audioPlayer.state == STKAudioPlayerStatePaused)
@@ -880,12 +714,12 @@
     else if ([AppDelegate sharedInstance].audioPlayer.state & STKAudioPlayerStatePlaying)
     {
         //[playButton setTitle:@"Pause" forState:UIControlStateNormal];
-         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
+        [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
     }
     else
     {
         //[playButton setTitle:@"" forState:UIControlStateNormal];
-         [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
+        [playButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
     }
     
     [self tick];
@@ -1023,78 +857,28 @@
         
         if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
             
-            animationFrames = [NSArray arrayWithObjects:
-                               [UIImage imageNamed:@"1.png"],
-                               [UIImage imageNamed:@"2.png"],
-                               [UIImage imageNamed:@"3.png"],
-                               [UIImage imageNamed:@"4.png"],
-                               [UIImage imageNamed:@"5.png"],
-                               [UIImage imageNamed:@"6.png"],
-                               [UIImage imageNamed:@"7.png"],
-                               [UIImage imageNamed:@"8.png"],
-                               [UIImage imageNamed:@"9.png"],
-                               [UIImage imageNamed:@"10.png"],
-                               [UIImage imageNamed:@"11.png"],
-                               [UIImage imageNamed:@"12.png"],
-                               [UIImage imageNamed:@"13.png"],
-                               [UIImage imageNamed:@"14.png"],
-                               [UIImage imageNamed:@"15.png"],
-                               [UIImage imageNamed:@"16.png"],
-                               [UIImage imageNamed:@"17.png"],
-                               [UIImage imageNamed:@"18.png"],
-                               [UIImage imageNamed:@"19.png"],
-                               [UIImage imageNamed:@"20.png"],
-                               [UIImage imageNamed:@"21.png"],
-                               [UIImage imageNamed:@"22.png"],
-                               [UIImage imageNamed:@"23.png"],
-                               [UIImage imageNamed:@"24.png"],
-                               nil];
+            animationFrames = [self animationFramesArray];
             
-            animationFramesc = [NSArray arrayWithObjects:
-                                [UIImage imageNamed:@"whitegif1.png"],
-                                [UIImage imageNamed:@"whitegif2.png"],
-                                [UIImage imageNamed:@"whitegif3.png"],
-                                [UIImage imageNamed:@"whitegif4.png"],
-                                [UIImage imageNamed:@"whitegif5.png"],
-                                [UIImage imageNamed:@"whitegif6.png"],
-                                [UIImage imageNamed:@"whitegif7.png"],
-                                [UIImage imageNamed:@"whitegif8.png"],
-                                [UIImage imageNamed:@"whitegif9.png"],
-                                [UIImage imageNamed:@"whitegif10.png"],
-                                [UIImage imageNamed:@"whitegif11.png"],
-                                [UIImage imageNamed:@"whitegif12.png"],
-                                [UIImage imageNamed:@"whitegif13.png"],
-                                [UIImage imageNamed:@"whitegif14.png"],
-                                [UIImage imageNamed:@"whitegif15.png"],
-                                [UIImage imageNamed:@"whitegif16.png"],
-                                [UIImage imageNamed:@"whitegif17.png"],
-                                [UIImage imageNamed:@"whitegif18.png"],
-                                [UIImage imageNamed:@"whitegif19.png"],
-                                [UIImage imageNamed:@"whitegif20.png"],
-                                [UIImage imageNamed:@"whitegif21.png"],
-                                [UIImage imageNamed:@"whitegif22.png"],
-                                [UIImage imageNamed:@"whitegif23.png"],
-                                [UIImage imageNamed:@"whitegif24.png"],
-                                nil];
-
+            animationFramesc = [self animationFramescArray];
+            
             if(res.count>0){
                 
                 animatedImageView.animationImages = animationFramesc;
-               
+                
                 animatedImageView.hidden = false;
                 animatedImageView.animationDuration = 2.0;
                 [animatedImageView startAnimating];
                 
             }else{
                 animatedImageView.animationImages = animationFrames;
-               
+                
                 animatedImageView.hidden = false;
                 animatedImageView.animationDuration = 2.0;
                 [animatedImageView startAnimating];
                 
             }
             
-
+            
             
             playButton.hidden = true;
             nextButton.hidden = true;
@@ -1189,77 +973,27 @@
         
         RLMResults<CrateRealm1 *> *res = [CrateRealm1 objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
         
-       
+        
         
         if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
             
-            animationFrames = [NSArray arrayWithObjects:
-                               [UIImage imageNamed:@"1.png"],
-                               [UIImage imageNamed:@"2.png"],
-                               [UIImage imageNamed:@"3.png"],
-                               [UIImage imageNamed:@"4.png"],
-                               [UIImage imageNamed:@"5.png"],
-                               [UIImage imageNamed:@"6.png"],
-                               [UIImage imageNamed:@"7.png"],
-                               [UIImage imageNamed:@"8.png"],
-                               [UIImage imageNamed:@"9.png"],
-                               [UIImage imageNamed:@"10.png"],
-                               [UIImage imageNamed:@"11.png"],
-                               [UIImage imageNamed:@"12.png"],
-                               [UIImage imageNamed:@"13.png"],
-                               [UIImage imageNamed:@"14.png"],
-                               [UIImage imageNamed:@"15.png"],
-                               [UIImage imageNamed:@"16.png"],
-                               [UIImage imageNamed:@"17.png"],
-                               [UIImage imageNamed:@"18.png"],
-                               [UIImage imageNamed:@"19.png"],
-                               [UIImage imageNamed:@"20.png"],
-                               [UIImage imageNamed:@"21.png"],
-                               [UIImage imageNamed:@"22.png"],
-                               [UIImage imageNamed:@"23.png"],
-                               [UIImage imageNamed:@"24.png"],
-                               nil];
+            animationFrames = [self animationFramesArray];
             
-            animationFramesc = [NSArray arrayWithObjects:
-                                [UIImage imageNamed:@"whitegif1.png"],
-                                [UIImage imageNamed:@"whitegif2.png"],
-                                [UIImage imageNamed:@"whitegif3.png"],
-                                [UIImage imageNamed:@"whitegif4.png"],
-                                [UIImage imageNamed:@"whitegif5.png"],
-                                [UIImage imageNamed:@"whitegif6.png"],
-                                [UIImage imageNamed:@"whitegif7.png"],
-                                [UIImage imageNamed:@"whitegif8.png"],
-                                [UIImage imageNamed:@"whitegif9.png"],
-                                [UIImage imageNamed:@"whitegif10.png"],
-                                [UIImage imageNamed:@"whitegif11.png"],
-                                [UIImage imageNamed:@"whitegif12.png"],
-                                [UIImage imageNamed:@"whitegif13.png"],
-                                [UIImage imageNamed:@"whitegif14.png"],
-                                [UIImage imageNamed:@"whitegif15.png"],
-                                [UIImage imageNamed:@"whitegif16.png"],
-                                [UIImage imageNamed:@"whitegif17.png"],
-                                [UIImage imageNamed:@"whitegif18.png"],
-                                [UIImage imageNamed:@"whitegif19.png"],
-                                [UIImage imageNamed:@"whitegif20.png"],
-                                [UIImage imageNamed:@"whitegif21.png"],
-                                [UIImage imageNamed:@"whitegif22.png"],
-                                [UIImage imageNamed:@"whitegif23.png"],
-                                [UIImage imageNamed:@"whitegif24.png"],
-                                nil];
-
+            animationFramesc = [self animationFramescArray];
+            
             if(res.count>0){
                 
                 animatedImageView.animationImages = animationFramesc;
                 animatedImageView.hidden = false;
                 animatedImageView.animationDuration = 2.0;
                 [animatedImageView startAnimating];
-
+                
             }else{
                 animatedImageView.animationImages = animationFrames;
                 animatedImageView.hidden = false;
                 animatedImageView.animationDuration = 2.0;
                 [animatedImageView startAnimating];
-
+                
             }
             
             
@@ -1294,7 +1028,7 @@
 }
 
 -(void) upSwipeHandle: (UISwipeGestureRecognizer *) del{
-   
+    
     if(![trackid  isEqual: @""] || ![setid isEqual: @""]){
         
         RLMResults<TracksRealm *> *res = [TracksRealm objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
@@ -1379,59 +1113,9 @@
                 
                 if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
                     
-                    animationFrames = [NSArray arrayWithObjects:
-                                       [UIImage imageNamed:@"1.png"],
-                                       [UIImage imageNamed:@"2.png"],
-                                       [UIImage imageNamed:@"3.png"],
-                                       [UIImage imageNamed:@"4.png"],
-                                       [UIImage imageNamed:@"5.png"],
-                                       [UIImage imageNamed:@"6.png"],
-                                       [UIImage imageNamed:@"7.png"],
-                                       [UIImage imageNamed:@"8.png"],
-                                       [UIImage imageNamed:@"9.png"],
-                                       [UIImage imageNamed:@"10.png"],
-                                       [UIImage imageNamed:@"11.png"],
-                                       [UIImage imageNamed:@"12.png"],
-                                       [UIImage imageNamed:@"13.png"],
-                                       [UIImage imageNamed:@"14.png"],
-                                       [UIImage imageNamed:@"15.png"],
-                                       [UIImage imageNamed:@"16.png"],
-                                       [UIImage imageNamed:@"17.png"],
-                                       [UIImage imageNamed:@"18.png"],
-                                       [UIImage imageNamed:@"19.png"],
-                                       [UIImage imageNamed:@"20.png"],
-                                       [UIImage imageNamed:@"21.png"],
-                                       [UIImage imageNamed:@"22.png"],
-                                       [UIImage imageNamed:@"23.png"],
-                                       [UIImage imageNamed:@"24.png"],
-                                       nil];
+                    animationFrames = [self animationFramesArray];
                     
-                    animationFramesc = [NSArray arrayWithObjects:
-                                        [UIImage imageNamed:@"whitegif1.png"],
-                                        [UIImage imageNamed:@"whitegif2.png"],
-                                        [UIImage imageNamed:@"whitegif3.png"],
-                                        [UIImage imageNamed:@"whitegif4.png"],
-                                        [UIImage imageNamed:@"whitegif5.png"],
-                                        [UIImage imageNamed:@"whitegif6.png"],
-                                        [UIImage imageNamed:@"whitegif7.png"],
-                                        [UIImage imageNamed:@"whitegif8.png"],
-                                        [UIImage imageNamed:@"whitegif9.png"],
-                                        [UIImage imageNamed:@"whitegif10.png"],
-                                        [UIImage imageNamed:@"whitegif11.png"],
-                                        [UIImage imageNamed:@"whitegif12.png"],
-                                        [UIImage imageNamed:@"whitegif13.png"],
-                                        [UIImage imageNamed:@"whitegif14.png"],
-                                        [UIImage imageNamed:@"whitegif15.png"],
-                                        [UIImage imageNamed:@"whitegif16.png"],
-                                        [UIImage imageNamed:@"whitegif17.png"],
-                                        [UIImage imageNamed:@"whitegif18.png"],
-                                        [UIImage imageNamed:@"whitegif19.png"],
-                                        [UIImage imageNamed:@"whitegif20.png"],
-                                        [UIImage imageNamed:@"whitegif21.png"],
-                                        [UIImage imageNamed:@"whitegif22.png"],
-                                        [UIImage imageNamed:@"whitegif23.png"],
-                                        [UIImage imageNamed:@"whitegif24.png"],
-                                        nil];
+                    animationFramesc = [self animationFramescArray];
                     
                     animatedImageView.animationImages = animationFramesc;
                     
@@ -1466,17 +1150,17 @@
         }
     }
     
-
+    
 }
 
 -(void)observers{
     
     NSLog(@"setid %@",setid);
     [[AccountsClient sharedInstance] getAllTracks:setid completion:^(NSError *error, FDataSnapshot *sets1) {
-
+        
         if (sets1.value != (id)[NSNull null]) {
             RLMRealm *realm = [RLMRealm defaultRealm];
-       
+            
             for (int i=0; i <sets1.childrenCount; i++) {
                 
                 NSDictionary *setid1 = [sets1.value objectAtIndex:i];
@@ -1523,12 +1207,12 @@
             [self showTrackData];
         }
         
-       
+        
         
         
     }];
     
-  
+    
     
 }
 
@@ -1540,7 +1224,7 @@
 }
 
 -(IBAction)saveToCrateAction:(id)sender{
-
+    
     
     if(![trackid  isEqual: @""] || ![setid isEqual: @""]){
         
@@ -1628,67 +1312,17 @@
                 
                 if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
                     
-                    animationFrames = [NSArray arrayWithObjects:
-                                       [UIImage imageNamed:@"1.png"],
-                                       [UIImage imageNamed:@"2.png"],
-                                       [UIImage imageNamed:@"3.png"],
-                                       [UIImage imageNamed:@"4.png"],
-                                       [UIImage imageNamed:@"5.png"],
-                                       [UIImage imageNamed:@"6.png"],
-                                       [UIImage imageNamed:@"7.png"],
-                                       [UIImage imageNamed:@"8.png"],
-                                       [UIImage imageNamed:@"9.png"],
-                                       [UIImage imageNamed:@"10.png"],
-                                       [UIImage imageNamed:@"11.png"],
-                                       [UIImage imageNamed:@"12.png"],
-                                       [UIImage imageNamed:@"13.png"],
-                                       [UIImage imageNamed:@"14.png"],
-                                       [UIImage imageNamed:@"15.png"],
-                                       [UIImage imageNamed:@"16.png"],
-                                       [UIImage imageNamed:@"17.png"],
-                                       [UIImage imageNamed:@"18.png"],
-                                       [UIImage imageNamed:@"19.png"],
-                                       [UIImage imageNamed:@"20.png"],
-                                       [UIImage imageNamed:@"21.png"],
-                                       [UIImage imageNamed:@"22.png"],
-                                       [UIImage imageNamed:@"23.png"],
-                                       [UIImage imageNamed:@"24.png"],
-                                       nil];
+                    animationFrames = [self animationFramesArray];
                     
-                    animationFramesc = [NSArray arrayWithObjects:
-                                        [UIImage imageNamed:@"whitegif1.png"],
-                                        [UIImage imageNamed:@"whitegif2.png"],
-                                        [UIImage imageNamed:@"whitegif3.png"],
-                                        [UIImage imageNamed:@"whitegif4.png"],
-                                        [UIImage imageNamed:@"whitegif5.png"],
-                                        [UIImage imageNamed:@"whitegif6.png"],
-                                        [UIImage imageNamed:@"whitegif7.png"],
-                                        [UIImage imageNamed:@"whitegif8.png"],
-                                        [UIImage imageNamed:@"whitegif9.png"],
-                                        [UIImage imageNamed:@"whitegif10.png"],
-                                        [UIImage imageNamed:@"whitegif11.png"],
-                                        [UIImage imageNamed:@"whitegif12.png"],
-                                        [UIImage imageNamed:@"whitegif13.png"],
-                                        [UIImage imageNamed:@"whitegif14.png"],
-                                        [UIImage imageNamed:@"whitegif15.png"],
-                                        [UIImage imageNamed:@"whitegif16.png"],
-                                        [UIImage imageNamed:@"whitegif17.png"],
-                                        [UIImage imageNamed:@"whitegif18.png"],
-                                        [UIImage imageNamed:@"whitegif19.png"],
-                                        [UIImage imageNamed:@"whitegif20.png"],
-                                        [UIImage imageNamed:@"whitegif21.png"],
-                                        [UIImage imageNamed:@"whitegif22.png"],
-                                        [UIImage imageNamed:@"whitegif23.png"],
-                                        [UIImage imageNamed:@"whitegif24.png"],
-                                        nil];
+                    animationFramesc = [self animationFramescArray];
                     
-                        animatedImageView.animationImages = animationFramesc;
-                        
-                        animatedImageView.hidden = false;
-                        animatedImageView.animationDuration = 2.0;
-                        [animatedImageView startAnimating];
-                        
-    
+                    animatedImageView.animationImages = animationFramesc;
+                    
+                    animatedImageView.hidden = false;
+                    animatedImageView.animationDuration = 2.0;
+                    [animatedImageView startAnimating];
+                    
+                    
                     
                     playButton.hidden = true;
                     nextButton.hidden = true;
@@ -1708,12 +1342,12 @@
                     [crateBtn setImage:[UIImage imageNamed:@"crateon.png"] forState:UIControlStateNormal];
                 }
                 
-              
+                
                 
             }];
         }
-     }
-        
+    }
+    
     
     
 }
@@ -1728,7 +1362,7 @@
     if(res.count>0){
         
         trackid = validid;
-       
+        
         trackTitle.text = res.firstObject.track_name;
         
         NSLog(@"track artist %@",res.firstObject.track_artist);
@@ -1785,59 +1419,9 @@
         
         if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
             
-            animationFrames = [NSArray arrayWithObjects:
-                               [UIImage imageNamed:@"1.png"],
-                               [UIImage imageNamed:@"2.png"],
-                               [UIImage imageNamed:@"3.png"],
-                               [UIImage imageNamed:@"4.png"],
-                               [UIImage imageNamed:@"5.png"],
-                               [UIImage imageNamed:@"6.png"],
-                               [UIImage imageNamed:@"7.png"],
-                               [UIImage imageNamed:@"8.png"],
-                               [UIImage imageNamed:@"9.png"],
-                               [UIImage imageNamed:@"10.png"],
-                               [UIImage imageNamed:@"11.png"],
-                               [UIImage imageNamed:@"12.png"],
-                               [UIImage imageNamed:@"13.png"],
-                               [UIImage imageNamed:@"14.png"],
-                               [UIImage imageNamed:@"15.png"],
-                               [UIImage imageNamed:@"16.png"],
-                               [UIImage imageNamed:@"17.png"],
-                               [UIImage imageNamed:@"18.png"],
-                               [UIImage imageNamed:@"19.png"],
-                               [UIImage imageNamed:@"20.png"],
-                               [UIImage imageNamed:@"21.png"],
-                               [UIImage imageNamed:@"22.png"],
-                               [UIImage imageNamed:@"23.png"],
-                               [UIImage imageNamed:@"24.png"],
-                               nil];
+            animationFrames = [self animationFramesArray];
             
-            animationFramesc = [NSArray arrayWithObjects:
-                                [UIImage imageNamed:@"whitegif1.png"],
-                                [UIImage imageNamed:@"whitegif2.png"],
-                                [UIImage imageNamed:@"whitegif3.png"],
-                                [UIImage imageNamed:@"whitegif4.png"],
-                                [UIImage imageNamed:@"whitegif5.png"],
-                                [UIImage imageNamed:@"whitegif6.png"],
-                                [UIImage imageNamed:@"whitegif7.png"],
-                                [UIImage imageNamed:@"whitegif8.png"],
-                                [UIImage imageNamed:@"whitegif9.png"],
-                                [UIImage imageNamed:@"whitegif10.png"],
-                                [UIImage imageNamed:@"whitegif11.png"],
-                                [UIImage imageNamed:@"whitegif12.png"],
-                                [UIImage imageNamed:@"whitegif13.png"],
-                                [UIImage imageNamed:@"whitegif14.png"],
-                                [UIImage imageNamed:@"whitegif15.png"],
-                                [UIImage imageNamed:@"whitegif16.png"],
-                                [UIImage imageNamed:@"whitegif17.png"],
-                                [UIImage imageNamed:@"whitegif18.png"],
-                                [UIImage imageNamed:@"whitegif19.png"],
-                                [UIImage imageNamed:@"whitegif20.png"],
-                                [UIImage imageNamed:@"whitegif21.png"],
-                                [UIImage imageNamed:@"whitegif22.png"],
-                                [UIImage imageNamed:@"whitegif23.png"],
-                                [UIImage imageNamed:@"whitegif24.png"],
-                                nil];
+            animationFramesc = [self animationFramescArray];
             
             if(res.count>0){
                 
@@ -1884,7 +1468,7 @@
     }else{
         
     }
-   
+    
 }
 
 -(IBAction)goBck:(id)sender{
@@ -1951,59 +1535,9 @@
         
         if([[[NSUserDefaults standardUserDefaults] objectForKey:@"switch"]  isEqual: @"on"]){
             
-            animationFrames = [NSArray arrayWithObjects:
-                               [UIImage imageNamed:@"1.png"],
-                               [UIImage imageNamed:@"2.png"],
-                               [UIImage imageNamed:@"3.png"],
-                               [UIImage imageNamed:@"4.png"],
-                               [UIImage imageNamed:@"5.png"],
-                               [UIImage imageNamed:@"6.png"],
-                               [UIImage imageNamed:@"7.png"],
-                               [UIImage imageNamed:@"8.png"],
-                               [UIImage imageNamed:@"9.png"],
-                               [UIImage imageNamed:@"10.png"],
-                               [UIImage imageNamed:@"11.png"],
-                               [UIImage imageNamed:@"12.png"],
-                               [UIImage imageNamed:@"13.png"],
-                               [UIImage imageNamed:@"14.png"],
-                               [UIImage imageNamed:@"15.png"],
-                               [UIImage imageNamed:@"16.png"],
-                               [UIImage imageNamed:@"17.png"],
-                               [UIImage imageNamed:@"18.png"],
-                               [UIImage imageNamed:@"19.png"],
-                               [UIImage imageNamed:@"20.png"],
-                               [UIImage imageNamed:@"21.png"],
-                               [UIImage imageNamed:@"22.png"],
-                               [UIImage imageNamed:@"23.png"],
-                               [UIImage imageNamed:@"24.png"],
-                               nil];
+            animationFrames = [self animationFramesArray];
             
-            animationFramesc = [NSArray arrayWithObjects:
-                                [UIImage imageNamed:@"whitegif1.png"],
-                                [UIImage imageNamed:@"whitegif2.png"],
-                                [UIImage imageNamed:@"whitegif3.png"],
-                                [UIImage imageNamed:@"whitegif4.png"],
-                                [UIImage imageNamed:@"whitegif5.png"],
-                                [UIImage imageNamed:@"whitegif6.png"],
-                                [UIImage imageNamed:@"whitegif7.png"],
-                                [UIImage imageNamed:@"whitegif8.png"],
-                                [UIImage imageNamed:@"whitegif9.png"],
-                                [UIImage imageNamed:@"whitegif10.png"],
-                                [UIImage imageNamed:@"whitegif11.png"],
-                                [UIImage imageNamed:@"whitegif12.png"],
-                                [UIImage imageNamed:@"whitegif13.png"],
-                                [UIImage imageNamed:@"whitegif14.png"],
-                                [UIImage imageNamed:@"whitegif15.png"],
-                                [UIImage imageNamed:@"whitegif16.png"],
-                                [UIImage imageNamed:@"whitegif17.png"],
-                                [UIImage imageNamed:@"whitegif18.png"],
-                                [UIImage imageNamed:@"whitegif19.png"],
-                                [UIImage imageNamed:@"whitegif20.png"],
-                                [UIImage imageNamed:@"whitegif21.png"],
-                                [UIImage imageNamed:@"whitegif22.png"],
-                                [UIImage imageNamed:@"whitegif23.png"],
-                                [UIImage imageNamed:@"whitegif24.png"],
-                                nil];
+            animationFramesc = [self animationFramescArray];
             
             if(res.count>0){
                 
@@ -2807,14 +2341,14 @@
     
     
     
-
-  
+    
+    
     
 }
 
 -(void) initplayer{
     
-
+    
     NSLog(@"trackurl %@",trackurl);
     [self audioPlayerViewPlayFromHTTPSelected:self:trackurl];
     
@@ -2822,7 +2356,7 @@
     
     [self becomeFirstResponder];
     
-   
+    
     
     slider.continuous = YES;
     [slider addTarget:self action:@selector(sliderChanged) forControlEvents:UIControlEventValueChanged];
@@ -2880,7 +2414,7 @@
                 
             }];
         }
-
+        
     }
     
 }
@@ -2905,13 +2439,13 @@
         self->artist = accountInfo.value[@"set_artist"];
         
         trackurl = accountInfo.value[@"set_audio_link"];
-          [self initplayer];
+        [self initplayer];
     }];
 }
 
 -(void) showTrackData{
     
-
+    
     RLMResults<TracksRealm *> *res = [TracksRealm objectsWhere:@"trackID = %@ and set_id = %@",trackid,setid];
     
     if(res.count>0){
@@ -2934,7 +2468,7 @@
         
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-
+        
         [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",trackid] forKey:@"recentid"];
         
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -2977,16 +2511,16 @@
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
-
+    
 }
 
 -(IBAction)goSearch:(id)sender{
     
     /*SearchViewController *detailsVC = [SearchViewController new];
+     
+     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
+     [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
     
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
-    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
-
     if(isSearch == false){
         searchView.hidden = NO;
         self.searchField.hidden = NO;
@@ -3002,8 +2536,8 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-     //Return YES for supported orientations
-       return YES;
+    //Return YES for supported orientations
+    return YES;
     //return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
@@ -3097,20 +2631,6 @@
         [self.thisTableView reloadData];
     }
     
-    
-    
-    /*Firebase *ref = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/sets", FIREBASE_URL]];
-     [[[ref queryOrderedByChild:@"set_title"] queryEqualToValue:theTextField.text] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
-     NSLog(@"%@", snapshot.key);
-     
-     NSLog(@"All Sets = %@", snapshot.value);
-     if (snapshot.value != (id)[NSNull null]) {
-     self.setLbl.text=[NSString stringWithFormat:@"%lu RESULT(S) FOUND",(unsigned long)[snapshot.value count]-1];
-     
-     [self.thisTableView reloadData];
-     }
-     
-     }];*/
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -3160,73 +2680,72 @@
 -(void) setCrate {
     
     
-    NSArray *animationFrames = [NSArray arrayWithObjects:
-                                [UIImage imageNamed:@"1.png"],
-                                [UIImage imageNamed:@"2.png"],
-                                [UIImage imageNamed:@"3.png"],
-                                [UIImage imageNamed:@"4.png"],
-                                [UIImage imageNamed:@"5.png"],
-                                [UIImage imageNamed:@"6.png"],
-                                [UIImage imageNamed:@"7.png"],
-                                [UIImage imageNamed:@"8.png"],
-                                [UIImage imageNamed:@"9.png"],
-                                [UIImage imageNamed:@"10.png"],
-                                [UIImage imageNamed:@"11.png"],
-                                [UIImage imageNamed:@"12.png"],
-                                [UIImage imageNamed:@"13.png"],
-                                [UIImage imageNamed:@"14.png"],
-                                [UIImage imageNamed:@"15.png"],
-                                [UIImage imageNamed:@"16.png"],
-                                [UIImage imageNamed:@"17.png"],
-                                [UIImage imageNamed:@"18.png"],
-                                [UIImage imageNamed:@"19.png"],
-                                [UIImage imageNamed:@"20.png"],
-                                [UIImage imageNamed:@"21.png"],
-                                [UIImage imageNamed:@"22.png"],
-                                [UIImage imageNamed:@"23.png"],
-                                [UIImage imageNamed:@"24.png"],
-                                nil];
+    NSArray *animationFrames = [self animationFramesArray];
     
-    NSArray *animationFramesc = [NSArray arrayWithObjects:
-                                 [UIImage imageNamed:@"whitegif1.png"],
-                                 [UIImage imageNamed:@"whitegif2.png"],
-                                 [UIImage imageNamed:@"whitegif3.png"],
-                                 [UIImage imageNamed:@"whitegif4.png"],
-                                 [UIImage imageNamed:@"whitegif5.png"],
-                                 [UIImage imageNamed:@"whitegif6.png"],
-                                 [UIImage imageNamed:@"whitegif7.png"],
-                                 [UIImage imageNamed:@"whitegif8.png"],
-                                 [UIImage imageNamed:@"whitegif9.png"],
-                                 [UIImage imageNamed:@"whitegif10.png"],
-                                 [UIImage imageNamed:@"whitegif11.png"],
-                                 [UIImage imageNamed:@"whitegif12.png"],
-                                 [UIImage imageNamed:@"whitegif13.png"],
-                                 [UIImage imageNamed:@"whitegif14.png"],
-                                 [UIImage imageNamed:@"whitegif15.png"],
-                                 [UIImage imageNamed:@"whitegif16.png"],
-                                 [UIImage imageNamed:@"whitegif17.png"],
-                                 [UIImage imageNamed:@"whitegif18.png"],
-                                 [UIImage imageNamed:@"whitegif19.png"],
-                                 [UIImage imageNamed:@"whitegif20.png"],
-                                 [UIImage imageNamed:@"whitegif21.png"],
-                                 [UIImage imageNamed:@"whitegif22.png"],
-                                 [UIImage imageNamed:@"whitegif23.png"],
-                                 [UIImage imageNamed:@"whitegif24.png"],
-                                 nil];
+    NSArray *animationFramesc = [self animationFramescArray];
     
     animatedImageView.animationImages = animationFrames;
     animatedImageView.animationDuration = 2.0;
 }
 
+- (NSArray *) animationFramesArray {
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    return [NSArray arrayWithObjects:
+            [UIImage imageNamed:@"1.png"],
+            [UIImage imageNamed:@"2.png"],
+            [UIImage imageNamed:@"3.png"],
+            [UIImage imageNamed:@"4.png"],
+            [UIImage imageNamed:@"5.png"],
+            [UIImage imageNamed:@"6.png"],
+            [UIImage imageNamed:@"7.png"],
+            [UIImage imageNamed:@"8.png"],
+            [UIImage imageNamed:@"9.png"],
+            [UIImage imageNamed:@"10.png"],
+            [UIImage imageNamed:@"11.png"],
+            [UIImage imageNamed:@"12.png"],
+            [UIImage imageNamed:@"13.png"],
+            [UIImage imageNamed:@"14.png"],
+            [UIImage imageNamed:@"15.png"],
+            [UIImage imageNamed:@"16.png"],
+            [UIImage imageNamed:@"17.png"],
+            [UIImage imageNamed:@"18.png"],
+            [UIImage imageNamed:@"19.png"],
+            [UIImage imageNamed:@"20.png"],
+            [UIImage imageNamed:@"21.png"],
+            [UIImage imageNamed:@"22.png"],
+            [UIImage imageNamed:@"23.png"],
+            [UIImage imageNamed:@"24.png"],
+            nil];
 }
-*/
+
+- (NSArray *) animationFramescArray {
+    
+    return [NSArray arrayWithObjects:
+            [UIImage imageNamed:@"whitegif1.png"],
+            [UIImage imageNamed:@"whitegif2.png"],
+            [UIImage imageNamed:@"whitegif3.png"],
+            [UIImage imageNamed:@"whitegif4.png"],
+            [UIImage imageNamed:@"whitegif5.png"],
+            [UIImage imageNamed:@"whitegif6.png"],
+            [UIImage imageNamed:@"whitegif7.png"],
+            [UIImage imageNamed:@"whitegif8.png"],
+            [UIImage imageNamed:@"whitegif9.png"],
+            [UIImage imageNamed:@"whitegif10.png"],
+            [UIImage imageNamed:@"whitegif11.png"],
+            [UIImage imageNamed:@"whitegif12.png"],
+            [UIImage imageNamed:@"whitegif13.png"],
+            [UIImage imageNamed:@"whitegif14.png"],
+            [UIImage imageNamed:@"whitegif15.png"],
+            [UIImage imageNamed:@"whitegif16.png"],
+            [UIImage imageNamed:@"whitegif17.png"],
+            [UIImage imageNamed:@"whitegif18.png"],
+            [UIImage imageNamed:@"whitegif19.png"],
+            [UIImage imageNamed:@"whitegif20.png"],
+            [UIImage imageNamed:@"whitegif21.png"],
+            [UIImage imageNamed:@"whitegif22.png"],
+            [UIImage imageNamed:@"whitegif23.png"],
+            [UIImage imageNamed:@"whitegif24.png"],
+            nil];
+}
 
 @end

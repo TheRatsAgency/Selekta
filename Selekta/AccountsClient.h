@@ -33,4 +33,5 @@
 - (void)savetoRecent:(NSDictionary *)info accountID: (NSString *) aID setID: (NSString *) sID  trackID: (NSString *) tID completion:(void(^)(NSError *error, NSDictionary *accountInfo))completion;
 -(void)getAllRecents: (NSString *) accountID completion:(void (^)(NSError *error, FDataSnapshot *scores))completion;
 -(void)getAllCrates: (NSString *) accountID   completion:(void (^)(NSError *error, FDataSnapshot *scores))completion;
+-(void)getAllArtistCrates: (NSString *) accountID   completion:(void (^)(NSError *error, FDataSnapshot *scores))completion;
 @end

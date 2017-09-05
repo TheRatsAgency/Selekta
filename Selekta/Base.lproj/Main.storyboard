@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="QaY-FH-ZEg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="QaY-FH-ZEg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -28,7 +28,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="spl.png" id="eKm-CJ-y8v">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="spl" id="eKm-CJ-y8v">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -40,7 +40,7 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Uwm-sH-Bay">
                                 <rect key="frame" x="140" y="159" width="95" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="selekta_black.png"/>
+                                <state key="normal" image="selekta_black"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1UM-mm-KeG">
                                 <rect key="frame" x="103" y="314" width="168" height="38"/>
@@ -125,9 +125,9 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AGz-yP-qCs">
                                 <rect key="frame" x="34" y="398" width="306" height="80"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="filled.png"/>
+                                <state key="normal" image="filled"/>
                                 <connections>
                                     <action selector="loginWithEmail:" destination="M14-z1-i0s" eventType="touchUpInside" id="u1n-c5-dmO"/>
                                 </connections>
@@ -263,7 +263,7 @@
                                 <rect key="frame" x="37" y="415" width="300" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" backgroundImage="filled.png"/>
+                                <state key="normal" backgroundImage="filled"/>
                                 <connections>
                                     <action selector="loginWithEmail:" destination="qoL-JP-FRf" eventType="touchUpInside" id="7PM-vr-rPu"/>
                                 </connections>
@@ -325,7 +325,7 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6QB-lj-VZg">
                                 <rect key="frame" x="339" y="27" width="29" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="ic_search_white_48pt_3x.png"/>
+                                <state key="normal" title="Button" image="ic_search_white_48pt_3x"/>
                                 <connections>
                                     <action selector="goSearch:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="qla-e5-XnV"/>
                                 </connections>
@@ -437,66 +437,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial01.png" id="9p5-NK-nrM">
-                                <rect key="frame" x="59" y="118" width="255" height="334"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial02.png" id="Dv4-NR-dK4">
-                                <rect key="frame" x="58" y="118" width="256" height="255"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial03.png" id="krf-d2-SWi">
-                                <rect key="frame" x="59" y="118" width="255" height="227"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="waz-pF-ydn">
-                                <rect key="frame" x="129" y="308" width="101" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
-                                <state key="normal" title="Next Tip">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="goTutorial1Next:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="WcR-1s-l36"/>
-                                    <action selector="goTutorial2Next:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="iIF-J9-rXd"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="IC2-Lk-ajv">
-                                <rect key="frame" x="129" y="331" width="99" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
-                                <state key="normal" title="Next Tip">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="goTutorial1Next:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="lyL-ab-nTo"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="V3Y-OV-tq5">
-                                <rect key="frame" x="120" y="411" width="135" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
-                                <state key="normal" title="Next Tip">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="goTutorialNext:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="RX5-FH-PS6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4zd-8M-Weu">
-                                <rect key="frame" x="268" y="126" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="hideTutorial1:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="Bj8-1N-n0o"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U71-Pl-tyZ">
-                                <rect key="frame" x="268" y="126" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="hideTutorial1:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="POg-hl-7pX"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" misplaced="YES" id="1rf-3m-K2D">
                                 <rect key="frame" x="-2" y="513" width="378" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -538,9 +478,6 @@
                         <outlet property="bgImg" destination="y7j-zQ-4MO" id="EIx-ff-poX"/>
                         <outlet property="coverImg" destination="Un5-pe-c16" id="Ib3-fb-9aS"/>
                         <outlet property="meter" destination="5ZC-fo-B24" id="H9g-4P-pCR"/>
-                        <outlet property="next1" destination="V3Y-OV-tq5" id="oFB-yo-89X"/>
-                        <outlet property="next2" destination="IC2-Lk-ajv" id="Jxb-SO-IhL"/>
-                        <outlet property="next3" destination="waz-pF-ydn" id="00T-kE-X1e"/>
                         <outlet property="nextButton" destination="o2Q-jC-MIl" id="Zxo-wN-KVr"/>
                         <outlet property="playButton" destination="EYK-YE-Iwa" id="PAR-ub-FHp"/>
                         <outlet property="prevButton" destination="XcA-cC-lPD" id="dAR-Hg-KJA"/>
@@ -554,9 +491,6 @@
                         <outlet property="trackAlbum" destination="tve-d2-j2c" id="1ov-RB-Jij"/>
                         <outlet property="trackRecord" destination="2lg-hm-gUd" id="PLr-1C-WuL"/>
                         <outlet property="trackTitle" destination="GNO-2c-FFd" id="Vkr-pE-hX6"/>
-                        <outlet property="tutorial1" destination="9p5-NK-nrM" id="m1P-7p-Jqp"/>
-                        <outlet property="tutorial2" destination="Dv4-NR-dK4" id="5Jm-N5-4Of"/>
-                        <outlet property="tutorial3" destination="krf-d2-SWi" id="a4s-Dg-DZb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ps3-6A-wQH" sceneMemberID="firstResponder"/>
@@ -567,20 +501,17 @@
     <resources>
         <image name="back_btn" width="48" height="48"/>
         <image name="backbtn" width="26" height="23"/>
-        <image name="filled.png" width="326" height="115"/>
-        <image name="ic_search_white_48pt_3x.png" width="144" height="144"/>
+        <image name="filled" width="326" height="115"/>
+        <image name="ic_search_white_48pt_3x" width="144" height="144"/>
         <image name="line" width="520" height="1"/>
         <image name="logowhite" width="174" height="174"/>
         <image name="menuwhite" width="30" height="21"/>
         <image name="next_btn" width="48" height="48"/>
         <image name="pause_btn" width="48" height="48"/>
-        <image name="selekta_black.png" width="635" height="635"/>
+        <image name="selekta_black" width="635" height="635"/>
         <image name="signupFBbtn" width="474" height="80"/>
         <image name="signupbtnsmall" width="310" height="80"/>
-        <image name="spl.png" width="367" height="609"/>
-        <image name="tutorial01.png" width="540" height="799"/>
-        <image name="tutorial02.png" width="1620" height="1425"/>
-        <image name="tutorial03.png" width="1620" height="1425"/>
+        <image name="spl" width="367" height="609"/>
         <image name="whitearrow" width="41" height="45"/>
         <image name="whitebtn" width="930" height="240"/>
     </resources>

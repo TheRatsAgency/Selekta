@@ -77,9 +77,7 @@
     
     playerID = [defaults objectForKey:@"GLOBAL_USER_ID"];
     
-        [self observers];
-    //[self fetchData];
-    // Do any additional setup after loading the view from its nib.
+    [self observers];
 }
 
 -(void) viewDidAppear:(BOOL)animated{
@@ -126,8 +124,6 @@
     cell.artist.text= obj.set_artist;
     NSLog(@"set title %@",obj.set_artist);
     cell.title1.text=obj.settitle;
-   // cell.artist.text= [NSString stringWithFormat:@"%@ - %@", obj.track_artist, obj.track_name];
-   // cell.title1.text=[NSString stringWithFormat:@"From: %@", obj.settitle];
     cell.backgroundView = [[UIView alloc] init];
     
     [cell.img sd_setImageWithURL:[NSURL URLWithString:obj.setbg]
@@ -153,7 +149,7 @@
         [self.slideMenuController openMenuAnimated:YES completion:nil];
     }
     
-     [_searchField resignFirstResponder];
+    [_searchField resignFirstResponder];
     
 }
 
@@ -204,7 +200,6 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         PlayerNewVC *signVC = (PlayerNewVC *)[storyboard instantiateViewControllerWithIdentifier:@"PlayerVC"];
         [[AppDelegate sharedInstance].audioPlayer stop];
-        //[AppDelegate sharedInstance].audioPlayer  = nil;
         [self.slideMenuController closeMenuBehindContentViewController:signVC animated:YES completion:nil];
     }
 }
@@ -252,7 +247,7 @@
             
             NSArray *setid = sets1.value;
             NSLog(@"setid %@",setid);
-                            //NSDictionary *setid1 = [sets1.value objectAtIndex:i];
+            //NSDictionary *setid1 = [sets1.value objectAtIndex:i];
             //NSArray *all = setid.allValues;
             for (int i=0; i < setid.count; i++) {
                 NSDictionary *setme1 = [setid objectAtIndex:i];
@@ -271,7 +266,7 @@
                     setobj.track_artist=[setme1 objectForKey:@"track_artists"];
                     setobj.set_artist=[setme1 objectForKey:@"set_artist"];
                     setobj.setbg=[setme1 objectForKey:@"setbg"];
-                   
+                    
                     
                     
                     RecentlyPlayedRealm *tobjr = [[RecentlyPlayedRealm alloc] init];
@@ -294,7 +289,6 @@
                     [realm addOrUpdateObject:tobjr];
                     [realm commitWriteTransaction];
                     
-                     //[self.crates addObject:tobjr];
                 }
                 
                 
@@ -302,12 +296,12 @@
             
             NSPredicate *billingPredicate = [NSPredicate predicateWithFormat: @"userid = %@", playerid];
             RLMResults<RecentlyPlayedRealm *> *res = [[RecentlyPlayedRealm objectsWithPredicate: billingPredicate]
-                                                                            sortedResultsUsingProperty:@"created_at" ascending:NO];
+                                                      sortedResultsUsingProperty:@"created_at" ascending:NO];
             NSLog(@"crates %@",res);
             [crates removeAllObjects];
             
             if(res.count>0){
-               
+                
                 for (int i=0;i<res.count;i++){
                     RecentlyPlayedRealm *r = (RecentlyPlayedRealm *)[res objectAtIndex:i];
                     RecentlyPlayedObj *tobjr = [[RecentlyPlayedObj alloc] init];
@@ -324,43 +318,12 @@
                     tobjr.set_artist=r.set_artist;
                     tobjr.setbg=r.setbg;
                     [crates addObject:tobjr];
-                 
+                    
                 }
                 [self.thisTableView reloadData];
             }
             
-            self.setLbl.text=[NSString stringWithFormat:@"%lu SETS RECENTLY PLAYED",(unsigned long)[crates count]];
-            /*for (int i=0; i < setid.count; i++) {
-             NSArray *setme = [setid objectAtIndex:i];
-             // NSLog(@"setid %@",[setid objectAtIndex:1]);
-             for(int j = 0; j< setme.count;j++){
-             NSDictionary *setme1 = [setme objectAtIndex:j];
-             if(setme1 != (id)[NSNull null]){
-             NSLog(@"setid = %@", setme1.allValues);
-             
-             NSArray *setme2 = setme1.allValues;
-             NSLog(@"setme1 = %@", setme2);
-             CrateObj *setobj = [[CrateObj alloc] init];
-             NSString *sobjID = [NSString stringWithFormat:@"%d",i];
-             setobj.objectId = sobjID;
-             
-             setobj.set_id=[setme2[0] objectForKey:@"set_id"];
-             setobj.crate_id=sobjID;
-             setobj.trackID=[setme2[0] objectForKey:@"trackID"];
-             setobj.settitle=[setme2[0] objectForKey:@"set_title"];
-             setobj.created_at=[setme2[0] objectForKey:@"dateCreated"];
-             setobj.updated_at=[setme2[0] objectForKey:@"dateCreated"];
-             setobj.track_name=[setme2[0] objectForKey:@"track_name"];
-             setobj.track_artist=[setme2[0] objectForKey:@"track_artists"];
-             setobj.setbg=[setme2[0] objectForKey:@"setbg"];
-             [self.crates addObject:setobj];
-             
-             }
-             }
-             
-             
-             }*/
-            
+            self.setLbl.text=[NSString stringWithFormat:@"%lu SETS RECENTLY PLAYED",(unsigned long)[crates count]];            
             
             [self.thisTableView reloadData];
             

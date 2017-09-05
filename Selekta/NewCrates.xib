@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,12 +18,10 @@
             <connections>
                 <outlet property="crateTitle" destination="4h5-jn-ywg" id="x27-mi-mjg"/>
                 <outlet property="goBtn" destination="1GL-za-xTK" id="xna-Uj-uZL"/>
-                <outlet property="next1" destination="GcH-nN-8EI" id="eG5-kE-Qom"/>
                 <outlet property="profImg" destination="5CV-TQ-YQ4" id="e9k-G0-tEV"/>
                 <outlet property="searchField" destination="1qZ-vT-Hpg" id="I0f-3r-E3e"/>
                 <outlet property="setLbl" destination="I5n-f3-Bh1" id="iJL-5z-aPd"/>
                 <outlet property="thisTableView" destination="b8e-x9-L63" id="TrW-Fo-Nef"/>
-                <outlet property="tutorial1" destination="5Ej-rr-hWo" id="yPF-Le-eUl"/>
                 <outlet property="view" destination="Pgv-Eg-rE8" id="bPh-2t-PGe"/>
             </connections>
         </placeholder>
@@ -45,10 +43,6 @@
                                 <outlet property="delegate" destination="-1" id="fdu-aI-362"/>
                             </connections>
                         </tableView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorialcrates.png" id="5Ej-rr-hWo">
-                            <rect key="frame" x="49" y="429" width="280" height="211"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 TRACKS IN YOUR CRATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I5n-f3-Bh1">
                             <rect key="frame" x="29" y="192" width="291" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -76,23 +70,6 @@
                             <rect key="frame" x="152" y="38" width="72" height="72"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GcH-nN-8EI">
-                            <rect key="frame" x="157" y="599" width="63" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Next Tip">
-                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="goTutorialNext:" destination="-1" eventType="touchUpInside" id="m83-E3-z3b"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fXF-eb-qb9">
-                            <rect key="frame" x="49" y="434" width="280" height="157"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <connections>
-                                <action selector="goTutorialNext:" destination="-1" eventType="touchUpInside" id="Vjd-D5-Kg0"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BJR-Q9-DFO">
                             <rect key="frame" x="8" y="32" width="21" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -104,7 +81,7 @@
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1GL-za-xTK">
                             <rect key="frame" x="339" y="29" width="28" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="ic_search_white_48pt_3x.png"/>
+                            <state key="normal" image="ic_search_white_48pt_3x"/>
                             <connections>
                                 <action selector="goSearch:" destination="-1" eventType="touchUpInside" id="7Tp-jQ-a5o"/>
                             </connections>
@@ -118,10 +95,9 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_search_white_48pt_3x.png" width="144" height="144"/>
+        <image name="ic_search_white_48pt_3x" width="144" height="144"/>
         <image name="menuwhite" width="30" height="21"/>
         <image name="molly" width="626" height="427"/>
-        <image name="tutorialcrates.png" width="1620" height="1425"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -18,9 +18,7 @@
             <connections>
                 <outlet property="myswitch" destination="TuB-dm-mzo" id="AMb-el-bQU"/>
                 <outlet property="myswitch1" destination="zal-S8-Z9P" id="fnu-Pl-nQw"/>
-                <outlet property="next1" destination="dNN-WI-4Az" id="f3J-Zz-nNh"/>
                 <outlet property="stepper" destination="S00-ut-zRa" id="Dg3-0y-Cje"/>
-                <outlet property="tutorial1" destination="TuS-sf-ldr" id="0Qt-fA-fzN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -81,28 +79,6 @@
                         <action selector="valueDidChanged:" destination="-1" eventType="valueChanged" id="bG0-r7-tTa"/>
                     </connections>
                 </stepper>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="tutorialsettingsfinish.png" id="TuS-sf-ldr">
-                    <rect key="frame" x="38" y="195" width="242" height="208"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dNN-WI-4Az">
-                    <rect key="frame" x="126" y="353" width="66" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
-                    <state key="normal" title="Finish">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="goTutorialNext:" destination="-1" eventType="touchUpInside" id="VbJ-LR-78j"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4IK-vP-9xr">
-                    <rect key="frame" x="212" y="201" width="48" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <connections>
-                        <action selector="goTutorialNext:" destination="-1" eventType="touchUpInside" id="ChZ-pP-qGj"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gwK-cS-uXR">
                     <rect key="frame" x="16" y="20" width="21" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -118,7 +94,6 @@
     </objects>
     <resources>
         <image name="menuwhite" width="30" height="21"/>
-        <image name="tutorialsettingsfinish.png" width="1620" height="1425"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
