@@ -22,17 +22,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- A block called when opening a Realm for the first time during the life
- of a process to determine if it should be compacted before being returned
- to the user. It is passed the total file size (data + free space) and the total
- bytes used by data in the file.
-
- Return `YES` to indicate that an attempt to compact the file should be made.
- The compaction will be skipped if another process is accessing it.
- */
-typedef BOOL (^RLMShouldCompactOnLaunchBlock)(NSUInteger totalBytes, NSUInteger bytesUsed);
-
-/**
  An `RLMRealmConfiguration` instance describes the different options used to
  create an instance of a Realm.
 
@@ -102,18 +91,7 @@ typedef BOOL (^RLMShouldCompactOnLaunchBlock)(NSUInteger totalBytes, NSUInteger 
  */
 @property (nonatomic) BOOL deleteRealmIfMigrationNeeded;
 
-/**
- A block called when opening a Realm for the first time during the life
- of a process to determine if it should be compacted before being returned
- to the user. It is passed the total file size (data + free space) and the total
- bytes used by data in the file.
-
- Return `YES` to indicate that an attempt to compact the file should be made.
- The compaction will be skipped if another process is accessing it.
- */
-@property (nonatomic, copy, nullable) RLMShouldCompactOnLaunchBlock shouldCompactOnLaunch;
-
-/// The classes managed by the Realm.
+/// The classes persisted in the Realm.
 @property (nonatomic, copy, nullable) NSArray *objectClasses;
 
 @end

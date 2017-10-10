@@ -20,13 +20,13 @@
 #import "RLMOptionalBase.h"
 #import "RLMObject_Private.h"
 #import "RLMObjectStore.h"
-#import "RLMProperty_Private.h"
+#import "RLMProperty.h"
 #import "RLMUtil.hpp"
 
 #import <objc/runtime.h>
 
 @interface RLMOptionalBase ()
-@property (nonatomic) id unmanagedValue;
+@property (nonatomic) id standaloneValue;
 @end
 
 @implementation RLMOptionalBase
@@ -40,21 +40,18 @@
         return RLMDynamicGet(_object, _property);
     }
     else {
-        return _unmanagedValue;
+        return _standaloneValue;
     }
 }
 
 - (void)setUnderlyingValue:(id)underlyingValue {
     if ((_object && _object->_realm) || _object.isInvalidated) {
-        if (_property.isPrimary) {
-            @throw RLMException(@"Primary key can't be changed after an object is inserted.");
-        }
-        RLMDynamicSet(_object, _property, underlyingValue);
+        RLMDynamicSet(_object, _property, underlyingValue, RLMCreationOptionsNone);
     }
     else {
         NSString *propertyName = _property.name;
         [_object willChangeValueForKey:propertyName];
-        _unmanagedValue = underlyingValue;
+        _standaloneValue = underlyingValue;
         [_object didChangeValueForKey:propertyName];
     }
 }

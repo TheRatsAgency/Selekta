@@ -26,6 +26,7 @@
     NSUserDefaults *defaults;
     NSString *playerID;
     
+    IBOutlet UIImageView *tutorial1;
     IBOutlet UIButton *next1;
 }
 
@@ -44,39 +45,67 @@
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
     
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"tutorial"]  isEqual: @"0"]){
+        tutorial1.hidden = NO;
+       
+        next1.hidden = NO;
+     
+    }else{
+        tutorial1.hidden = YES;
+       
+        next1.hidden = YES;
+      
+    }
+    
     defaults = [NSUserDefaults standardUserDefaults];
     
     playerID = [defaults objectForKey:@"GLOBAL_USER_ID"];
     NSString *PhotoLink = [defaults objectForKey:@"profilePic"];
     if( [[defaults objectForKey:@"GLOBAL_IS_FB"] boolValue] ){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:PhotoLink]];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:PhotoLink]];
+        
+        //set your image on main thread.
+        dispatch_async(dispatch_get_main_queue(), ^{
             
-            //set your image on main thread.
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if(data)[self.profImg setImage:[UIImage imageWithData:data]];
-                self.profImg.layer.cornerRadius = 35;
-                self.profImg.clipsToBounds = YES;
-            });
+            if(data)[self.profImg setImage:[UIImage imageWithData:data]];
+            self.profImg.layer.cornerRadius = 35;
+            self.profImg.clipsToBounds = YES;
         });
+    });
     }
-    
+
     [[AccountsClient sharedInstance] getSingleAccountInfoWithID:playerID completion:^(NSError *error, FDataSnapshot *accountInfo)  {
         
         //NSLog(@"accountInfo = %@", accountInfo);
         //NSLog(@"accountInfo = %@", accountInfo.value[@"profilePic_url"]);
         if(accountInfo != (id) [NSNull null]){
-            
-            self.profName.text = accountInfo.value[@"name"];
+
+        self.profName.text = accountInfo.value[@"name"];
+//        if( [[defaults objectForKey:@"GLOBAL_IS_FB"] boolValue] ){
+//            //[cell.avatar setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:person[@"picture"]]]]];
+//            
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:accountInfo.value[@"profilePic_url"]]];
+//                
+//                //set your image on main thread.
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    
+//                    NSLog(@"profile pic url %@",accountInfo.value[@"profilePic_url"]);
+//                    [self.profImg setImage:[UIImage imageWithData:data]];
+//                    self.profImg.layer.cornerRadius = 36;
+//                    self.profImg.clipsToBounds = YES;
+//                });
+//            });
+//        }
         }
         
     }];
     
     //self.profImg.image=[UIImage imageNamed:@"molly.png"];
-    
+   
     self.navigationController.navigationBar.hidden=YES;
-    
+
 }
 
 
@@ -139,6 +168,14 @@
 
 -(IBAction)goCrates:(id)sender{
     
+    
+    /*[[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    TableViewController *detailsVC = [TableViewController new];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
+    [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];*/
+    
     [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NewCrates *detailsVC = [NewCrates new];
@@ -179,7 +216,7 @@
     }
     [self.slideMenuController closeMenuBehindContentViewController:signVC animated:YES completion:nil];
     
-    
+   
 }
 
 -(IBAction)goLogout:(id)sender{
@@ -195,24 +232,51 @@
     
 }
 
-//-(IBAction)goTips:(id)sender{
-//    
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    PlayerNewVC *signVC = (PlayerNewVC *)[storyboard instantiateViewControllerWithIdentifier:@"PlayerVC"];
-//    NSString *switchon1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"switch1"];
-//    
-//    if([switchon1 isEqualToString:@"on"]){
-//        [[AppDelegate sharedInstance].audioPlayer resume];
-//        [AppDelegate sharedInstance].audioPlayer.volume = [[[NSUserDefaults standardUserDefaults] objectForKey:@"volume"] doubleValue];
-//        // meter.backgroundColor = [UIColor blueColor];
-//    }else{
-//        //audioPlayer.meteringEnabled = NO;
-//        [[AppDelegate sharedInstance].audioPlayer pause];
-//        [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
-//        //meter.backgroundColor = [UIColor clearColor];
-//    }
-//    [self.slideMenuController closeMenuBehindContentViewController:signVC animated:YES completion:nil];
-//    
-//}
+-(IBAction)goTutorialNext:(id)sender{
+    
+    tutorial1.hidden = YES;
+ 
+    
+    next1.hidden = YES;
+
+    
+}
+
+-(IBAction)goTips:(id)sender{
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"tutorial"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PlayerNewVC *signVC = (PlayerNewVC *)[storyboard instantiateViewControllerWithIdentifier:@"PlayerVC"];
+    NSString *switchon1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"switch1"];
+    
+    if([switchon1 isEqualToString:@"on"]){
+        [[AppDelegate sharedInstance].audioPlayer resume];
+        [AppDelegate sharedInstance].audioPlayer.volume = [[[NSUserDefaults standardUserDefaults] objectForKey:@"volume"] doubleValue];
+        // meter.backgroundColor = [UIColor blueColor];
+    }else{
+        //audioPlayer.meteringEnabled = NO;
+        [[AppDelegate sharedInstance].audioPlayer pause];
+        [AppDelegate sharedInstance].audioPlayer.volume = 0.0;
+        //meter.backgroundColor = [UIColor clearColor];
+    }
+    [self.slideMenuController closeMenuBehindContentViewController:signVC animated:YES completion:nil];
+
+    //tutorial1.hidden = NO;
+    
+    
+    //next1.hidden = NO;
+    
+    
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

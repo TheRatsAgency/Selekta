@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="QaY-FH-ZEg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="QaY-FH-ZEg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13137.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-        </array>
         <array key="OpenSans-Light.ttf">
             <string>OpenSans-Light</string>
         </array>
@@ -31,7 +28,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="spl" id="eKm-CJ-y8v">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="spl.png" id="eKm-CJ-y8v">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -43,7 +40,7 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Uwm-sH-Bay">
                                 <rect key="frame" x="140" y="159" width="95" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="selekta_black"/>
+                                <state key="normal" image="selekta_black.png"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1UM-mm-KeG">
                                 <rect key="frame" x="103" y="314" width="168" height="38"/>
@@ -128,9 +125,9 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AGz-yP-qCs">
                                 <rect key="frame" x="34" y="398" width="306" height="80"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="filled"/>
+                                <state key="normal" image="filled.png"/>
                                 <connections>
                                     <action selector="loginWithEmail:" destination="M14-z1-i0s" eventType="touchUpInside" id="u1n-c5-dmO"/>
                                 </connections>
@@ -266,7 +263,7 @@
                                 <rect key="frame" x="37" y="415" width="300" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" backgroundImage="filled"/>
+                                <state key="normal" backgroundImage="filled.png"/>
                                 <connections>
                                     <action selector="loginWithEmail:" destination="qoL-JP-FRf" eventType="touchUpInside" id="7PM-vr-rPu"/>
                                 </connections>
@@ -328,7 +325,7 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6QB-lj-VZg">
                                 <rect key="frame" x="339" y="27" width="29" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="ic_search_white_48pt_3x"/>
+                                <state key="normal" title="Button" image="ic_search_white_48pt_3x.png"/>
                                 <connections>
                                     <action selector="goSearch:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="qla-e5-XnV"/>
                                 </connections>
@@ -362,7 +359,7 @@
                                     <outlet property="delegate" destination="2E1-bz-6Cm" id="Mct-lv-ZRz"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vab-CG-1nt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brodinski Live @ Paris Social Club" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vab-CG-1nt">
                                 <rect key="frame" x="8" y="58" width="341" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="18"/>
@@ -440,6 +437,20 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4zd-8M-Weu">
+                                <rect key="frame" x="268" y="126" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="hideTutorial1:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="Bj8-1N-n0o"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U71-Pl-tyZ">
+                                <rect key="frame" x="268" y="126" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="hideTutorial1:" destination="2E1-bz-6Cm" eventType="touchUpInside" id="POg-hl-7pX"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" misplaced="YES" id="1rf-3m-K2D">
                                 <rect key="frame" x="-2" y="513" width="378" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -504,18 +515,23 @@
     <resources>
         <image name="back_btn" width="48" height="48"/>
         <image name="backbtn" width="26" height="23"/>
-        <image name="filled" width="326" height="115"/>
-        <image name="ic_search_white_48pt_3x" width="144" height="144"/>
+        <image name="filled.png" width="326" height="115"/>
+        <image name="ic_search_white_48pt_3x.png" width="144" height="144"/>
         <image name="line" width="520" height="1"/>
         <image name="logowhite" width="174" height="174"/>
         <image name="menuwhite" width="30" height="21"/>
         <image name="next_btn" width="48" height="48"/>
         <image name="pause_btn" width="48" height="48"/>
-        <image name="selekta_black" width="635" height="635"/>
+        <image name="selekta_black.png" width="635" height="635"/>
         <image name="signupFBbtn" width="474" height="80"/>
         <image name="signupbtnsmall" width="310" height="80"/>
-        <image name="spl" width="367" height="609"/>
+        <image name="spl.png" width="367" height="609"/>
         <image name="whitearrow" width="41" height="45"/>
         <image name="whitebtn" width="930" height="240"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>

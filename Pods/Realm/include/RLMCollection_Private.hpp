@@ -27,11 +27,11 @@ namespace realm {
     struct CollectionChangeSet;
     struct NotificationToken;
 }
-class RLMClassInfo;
+@class RLMObjectSchema;
 
 @protocol RLMFastEnumerable
 @property (nonatomic, readonly) RLMRealm *realm;
-@property (nonatomic, readonly) RLMClassInfo *objectInfo;
+@property (nonatomic, readonly) RLMObjectSchema *objectSchema;
 @property (nonatomic, readonly) NSUInteger count;
 
 - (NSUInteger)indexInSource:(NSUInteger)index;
@@ -43,7 +43,7 @@ class RLMClassInfo;
 // set of enumerated items
 @interface RLMFastEnumerator : NSObject
 - (instancetype)initWithCollection:(id<RLMFastEnumerable>)collection
-                      objectSchema:(RLMClassInfo&)objectSchema;
+                      objectSchema:(RLMObjectSchema *)objectSchema;
 
 // Detach this enumerator from the source collection. Must be called before the
 // source collection is changed.
@@ -53,13 +53,8 @@ class RLMClassInfo;
                                     count:(NSUInteger)len;
 @end
 
-@interface RLMNotificationToken ()
-- (void)suppressNextNotification;
-- (RLMRealm *)realm;
-@end
-
 @interface RLMCancellationToken : RLMNotificationToken
-- (instancetype)initWithToken:(realm::NotificationToken)token realm:(RLMRealm *)realm;
+- (instancetype)initWithToken:(realm::NotificationToken)token;
 @end
 
 @interface RLMCollectionChange ()

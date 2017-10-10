@@ -19,11 +19,31 @@
 #import "RLMObjectSchema_Private.h"
 
 #import "object_schema.hpp"
+#import "RLMObject_Private.hpp"
 
-@interface RLMObjectSchema ()
+#import <realm/row.hpp>
+#import <vector>
+
+namespace realm {
+    class Table;
+}
+
+class RLMObservationInfo;
+
+// RLMObjectSchema private
+@interface RLMObjectSchema () {
+    @public
+    std::vector<RLMObservationInfo *> _observedObjects;
+}
+@property (nonatomic) realm::Table *table;
+
+// shallow copy reusing properties and property map
+- (instancetype)shallowCopy;
+
 // create realm::ObjectSchema copy
 - (realm::ObjectSchema)objectStoreCopy;
 
 // initialize with realm::ObjectSchema
-+ (instancetype)objectSchemaForObjectStoreSchema:(realm::ObjectSchema const&)objectSchema;
++ (instancetype)objectSchemaForObjectStoreSchema:(realm::ObjectSchema &)objectSchema;
+
 @end

@@ -19,8 +19,7 @@
 #import "RLMMigration_Private.h"
 
 #import "RLMAccessor.h"
-#import "RLMObject_Private.h"
-#import "RLMObject_Private.hpp"
+#import "RLMObject.h"
 #import "RLMObjectSchema_Private.hpp"
 #import "RLMObjectStore.h"
 #import "RLMProperty_Private.h"
@@ -28,13 +27,10 @@
 #import "RLMRealm_Private.hpp"
 #import "RLMResults_Private.h"
 #import "RLMSchema_Private.hpp"
-#import "RLMUtil.hpp"
 
 #import "object_store.hpp"
 #import "shared_realm.hpp"
 #import "schema.hpp"
-
-#import <realm/table.hpp>
 
 using namespace realm;
 
@@ -54,19 +50,15 @@ using namespace realm;
 }
 @end
 
-@implementation RLMMigration {
-    realm::Schema *_schema;
-    NSMutableDictionary *deletedObjectIndices;
-}
+@implementation RLMMigration
 
-- (instancetype)initWithRealm:(RLMRealm *)realm oldRealm:(RLMRealm *)oldRealm schema:(realm::Schema &)schema {
+- (instancetype)initWithRealm:(RLMRealm *)realm oldRealm:(RLMRealm *)oldRealm {
     self = [super init];
     if (self) {
+        // create rw realm to migrate with current on disk table
         _realm = realm;
         _oldRealm = oldRealm;
-        _schema = &schema;
         object_setClass(_oldRealm, RLMMigrationRealm.class);
-        deletedObjectIndices = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -85,17 +77,8 @@ using namespace realm;
     RLMResults *oldObjects = [_oldRealm.schema schemaForClassName:className] ? [_oldRealm allObjects:className] : nil;
 
     if (objects && oldObjects) {
-        NSArray *deletedObjects = deletedObjectIndices[className];
-        if (!deletedObjects) {
-            deletedObjects = [NSMutableArray array];
-            deletedObjectIndices[className] = deletedObjects;
-        }
-
         for (long i = oldObjects.count - 1; i >= 0; i--) {
             @autoreleasepool {
-                if ([deletedObjects containsObject:@(i)]) {
-                    continue;
-                }
                 block(oldObjects[i], objects[i]);
             }
         }
@@ -118,17 +101,14 @@ using namespace realm;
 
 - (void)execute:(RLMMigrationBlock)block {
     @autoreleasepool {
-        // disable all primary keys for migration and use DynamicObject for all types
+        // disable all primary keys for migration
         for (RLMObjectSchema *objectSchema in _realm.schema.objectSchema) {
-            objectSchema.accessorClass = RLMDynamicObject.class;
             objectSchema.primaryKeyProperty.isPrimary = NO;
         }
-        for (RLMObjectSchema *objectSchema in _oldRealm.schema.objectSchema) {
-            objectSchema.accessorClass = RLMDynamicObject.class;
-        }
 
-        block(self, _oldRealm->_realm->schema_version());
-        [self deleteObjectsMarkedForDeletion];
+        // apply block and set new schema version
+        uint64_t oldVersion = _oldRealm->_realm->config().schema_version;
+        block(self, oldVersion);
 
         _oldRealm = nil;
         _realm = nil;
@@ -144,17 +124,7 @@ using namespace realm;
 }
 
 - (void)deleteObject:(RLMObject *)object {
-    [deletedObjectIndices[object.objectSchema.className] addObject:@(object->_row.get_index())];
-}
-
-- (void)deleteObjectsMarkedForDeletion {
-    for (NSString *className in deletedObjectIndices.allKeys) {
-        RLMResults *objects = [_realm allObjects:className];
-        for (NSNumber *index in deletedObjectIndices[className]) {
-            RLMObject *object = objects[index.longValue];
-            [_realm deleteObject:object];
-        }
-    }
+    [_realm deleteObject:object];
 }
 
 - (BOOL)deleteDataForClassName:(NSString *)name {
@@ -178,8 +148,17 @@ using namespace realm;
 }
 
 - (void)renamePropertyForClass:(NSString *)className oldName:(NSString *)oldName newName:(NSString *)newName {
-    const char *objectType = className.UTF8String;
-    realm::ObjectStore::rename_property(_realm.group, *_schema, objectType, oldName.UTF8String, newName.UTF8String);
+    realm::ObjectStore::rename_property(_realm.group, *_realm->_realm->config().schema, className.UTF8String, oldName.UTF8String, newName.UTF8String);
+    ObjectSchema objectStoreSchema(_realm.group, className.UTF8String);
+    RLMObjectSchema *objectSchema = [RLMObjectSchema objectSchemaForObjectStoreSchema:objectStoreSchema];
+    NSMutableArray *mutableObjectSchemas = [NSMutableArray arrayWithArray:_realm.schema.objectSchema];
+    [mutableObjectSchemas replaceObjectAtIndex:[mutableObjectSchemas indexOfObject:_realm.schema[className]]
+                                    withObject:objectSchema];
+    objectSchema.realm = _realm;
+    _realm.schema.objectSchema = [mutableObjectSchemas copy];
+    for (RLMProperty *property in objectSchema.properties) {
+        property.column = objectStoreSchema.property_for_name(property.name.UTF8String)->table_column;
+    }
 }
 
 @end

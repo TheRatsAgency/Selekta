@@ -9,12 +9,19 @@
 /* Begin PBXBuildFile section */
 		913A39F91ED28CB500D33037 /* NewCrates.m in Sources */ = {isa = PBXBuildFile; fileRef = 913A39F81ED28CB500D33037 /* NewCrates.m */; };
 		913A39FB1ED28D1300D33037 /* NewCrates.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913A39FA1ED28D1300D33037 /* NewCrates.xib */; };
+		91D4D4711F068568000416D9 /* crate_default_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D4D4701F068568000416D9 /* crate_default_button.png */; };
+		91D4D4731F06861A000416D9 /* single_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D4D4721F06861A000416D9 /* single_play.png */; };
 		91D6BD301ED3C511007273EA /* NewCrateObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D6BD2F1ED3C511007273EA /* NewCrateObj.m */; };
+		91D6BD321ED3FBC6007273EA /* filled_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D6BD311ED3FBC6007273EA /* filled_button.png */; };
+		91D6BD341ED3FC45007273EA /* filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D6BD331ED3FC45007273EA /* filled.png */; };
 		98A01D6E81CFBD7469C7B056 /* libPods-Selekta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1456FA2943E21750A9E83A /* libPods-Selekta.a */; };
 		B88D1D501DE59BB500BD8874 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B88D1D4E1DE59BB500BD8874 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B88D1D511DE59BB500BD8874 /* README.mdown in Sources */ = {isa = PBXBuildFile; fileRef = B88D1D4F1DE59BB500BD8874 /* README.mdown */; };
 		E20D50BF1D65E65000579069 /* GiFHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E20D50BE1D65E65000579069 /* GiFHUD.m */; };
+		E212B62C1D5382C3005B3A4A /* launchpage copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E212B62B1D5382C3005B3A4A /* launchpage copy.jpg */; };
 		E21C78731D862EEB004DBA5F /* selektaRecordSpin.gif in Resources */ = {isa = PBXBuildFile; fileRef = E21C78721D862EEB004DBA5F /* selektaRecordSpin.gif */; };
+		E2240AAA1D63C3F3003F8DB8 /* selekta_black.png in Resources */ = {isa = PBXBuildFile; fileRef = E2240AA91D63C3F3003F8DB8 /* selekta_black.png */; };
+		E2240AAC1D63C504003F8DB8 /* spl.png in Resources */ = {isa = PBXBuildFile; fileRef = E2240AAB1D63C504003F8DB8 /* spl.png */; };
 		E22BCD591D1C9D160068FF16 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E22BCD4F1D1C9D160068FF16 /* OpenSans-Bold.ttf */; };
 		E22BCD5A1D1C9D160068FF16 /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E22BCD501D1C9D160068FF16 /* OpenSans-BoldItalic.ttf */; };
 		E22BCD5B1D1C9D160068FF16 /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E22BCD511D1C9D160068FF16 /* OpenSans-ExtraBold.ttf */; };
@@ -78,6 +85,8 @@
 		E2E1F28F1D1EDF7400685E68 /* TracksRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1F28E1D1EDF7400685E68 /* TracksRealm.m */; };
 		E2E1F2951D1EDFD800685E68 /* RecentlyPlayedRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1F2941D1EDFD800685E68 /* RecentlyPlayedRealm.m */; };
 		E2E1F2981D1EE5E000685E68 /* CrateRealm1.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1F2971D1EE5E000685E68 /* CrateRealm1.m */; };
+		E2EAF0451D3D0C5800083183 /* next_button copy.png in Resources */ = {isa = PBXBuildFile; fileRef = E2EAF0441D3D0C5800083183 /* next_button copy.png */; };
+		E2EAF0471D3D0ED300083183 /* back_button60.png in Resources */ = {isa = PBXBuildFile; fileRef = E2EAF0461D3D0ED300083183 /* back_button60.png */; };
 		E2F061F71D185601008B6168 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F061F61D185601008B6168 /* main.m */; };
 		E2F061FA1D185601008B6168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F061F91D185601008B6168 /* AppDelegate.m */; };
 		E2F061FD1D185601008B6168 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F061FC1D185601008B6168 /* ViewController.m */; };
@@ -126,6 +135,11 @@
 		E2F062801D185F6D008B6168 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F0627F1D185F6D008B6168 /* UIKit.framework */; };
 		E2F062821D185F79008B6168 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F062811D185F79008B6168 /* Foundation.framework */; };
 		E2F062841D185F97008B6168 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F062831D185F97008B6168 /* Firebase.framework */; };
+		E2F062B11D1868BE008B6168 /* ic_search_white_48pt_3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F062A81D1868BE008B6168 /* ic_search_white_48pt_3x.png */; };
+		E2F062B61D1868BE008B6168 /* player-bg-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F062AD1D1868BE008B6168 /* player-bg-bottom.png */; };
+		E2F062B71D1868BE008B6168 /* player-bg-image-pad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2F062AE1D1868BE008B6168 /* player-bg-image-pad.jpg */; };
+		E2F062B81D1868BE008B6168 /* player-bg-image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2F062AF1D1868BE008B6168 /* player-bg-image.jpg */; };
+		E2F062B91D1868BE008B6168 /* player-top-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F062B01D1868BE008B6168 /* player-top-bg.png */; };
 		E2F062BC1D186971008B6168 /* PlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F062BB1D186971008B6168 /* PlayerVC.m */; };
 		E2F062BF1D186995008B6168 /* AudioPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F062BE1D186995008B6168 /* AudioPlayerView.m */; };
 		E2F062C21D186AD6008B6168 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F062C11D186AD6008B6168 /* SampleQueueId.m */; };
@@ -165,8 +179,12 @@
 		913A39F71ED28CB500D33037 /* NewCrates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCrates.h; sourceTree = "<group>"; };
 		913A39F81ED28CB500D33037 /* NewCrates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCrates.m; sourceTree = "<group>"; };
 		913A39FA1ED28D1300D33037 /* NewCrates.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCrates.xib; sourceTree = "<group>"; };
+		91D4D4701F068568000416D9 /* crate_default_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crate_default_button.png; sourceTree = "<group>"; };
+		91D4D4721F06861A000416D9 /* single_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = single_play.png; sourceTree = "<group>"; };
 		91D6BD2E1ED3C511007273EA /* NewCrateObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCrateObj.h; sourceTree = "<group>"; };
 		91D6BD2F1ED3C511007273EA /* NewCrateObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCrateObj.m; sourceTree = "<group>"; };
+		91D6BD311ED3FBC6007273EA /* filled_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filled_button.png; sourceTree = "<group>"; };
+		91D6BD331ED3FC45007273EA /* filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filled.png; sourceTree = "<group>"; };
 		B8886F861DE4D30F00D56D56 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../MyComputer/MyProjects/Other Clients/Mathias/Sushi/SourceCode/Sushi/Sushi/Frameworks/Bolts.framework"; sourceTree = "<group>"; };
 		B8886F871DE4D30F00D56D56 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../MyComputer/MyProjects/Other Clients/Mathias/Sushi/SourceCode/Sushi/Sushi/Frameworks/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		B8886F881DE4D30F00D56D56 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../MyComputer/MyProjects/Other Clients/Mathias/Sushi/SourceCode/Sushi/Sushi/Frameworks/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
@@ -178,7 +196,10 @@
 		B88D1D4F1DE59BB500BD8874 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.mdown; sourceTree = "<group>"; };
 		E20D50BD1D65E65000579069 /* GiFHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiFHUD.h; sourceTree = "<group>"; };
 		E20D50BE1D65E65000579069 /* GiFHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiFHUD.m; sourceTree = "<group>"; };
+		E212B62B1D5382C3005B3A4A /* launchpage copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "launchpage copy.jpg"; sourceTree = "<group>"; };
 		E21C78721D862EEB004DBA5F /* selektaRecordSpin.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = selektaRecordSpin.gif; sourceTree = "<group>"; };
+		E2240AA91D63C3F3003F8DB8 /* selekta_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selekta_black.png; sourceTree = "<group>"; };
+		E2240AAB1D63C504003F8DB8 /* spl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spl.png; sourceTree = "<group>"; };
 		E22BCD4F1D1C9D160068FF16 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		E22BCD501D1C9D160068FF16 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		E22BCD511D1C9D160068FF16 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -246,6 +267,8 @@
 		E2E1F2941D1EDFD800685E68 /* RecentlyPlayedRealm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentlyPlayedRealm.m; sourceTree = "<group>"; };
 		E2E1F2961D1EE5E000685E68 /* CrateRealm1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrateRealm1.h; sourceTree = "<group>"; };
 		E2E1F2971D1EE5E000685E68 /* CrateRealm1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrateRealm1.m; sourceTree = "<group>"; };
+		E2EAF0441D3D0C5800083183 /* next_button copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "next_button copy.png"; sourceTree = "<group>"; };
+		E2EAF0461D3D0ED300083183 /* back_button60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_button60.png; sourceTree = "<group>"; };
 		E2F061F21D185601008B6168 /* Selekta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selekta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2F061F61D185601008B6168 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E2F061F81D185601008B6168 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -326,6 +349,11 @@
 		E2F0627F1D185F6D008B6168 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E2F062811D185F79008B6168 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E2F062831D185F97008B6168 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		E2F062A81D1868BE008B6168 /* ic_search_white_48pt_3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_search_white_48pt_3x.png; sourceTree = "<group>"; };
+		E2F062AD1D1868BE008B6168 /* player-bg-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player-bg-bottom.png"; sourceTree = "<group>"; };
+		E2F062AE1D1868BE008B6168 /* player-bg-image-pad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "player-bg-image-pad.jpg"; sourceTree = "<group>"; };
+		E2F062AF1D1868BE008B6168 /* player-bg-image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "player-bg-image.jpg"; sourceTree = "<group>"; };
+		E2F062B01D1868BE008B6168 /* player-top-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player-top-bg.png"; sourceTree = "<group>"; };
 		E2F062BA1D186971008B6168 /* PlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerVC.h; sourceTree = "<group>"; };
 		E2F062BB1D186971008B6168 /* PlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerVC.m; sourceTree = "<group>"; };
 		E2F062BD1D186995008B6168 /* AudioPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayerView.h; sourceTree = "<group>"; };
@@ -506,8 +534,24 @@
 				E2F062151D185A52008B6168 /* Manager */,
 				E2F062111D1857EB008B6168 /* Controller */,
 				E2F0620E1D18564F008B6168 /* Assets */,
+				E2F061F81D185601008B6168 /* AppDelegate.h */,
+				E2F061F91D185601008B6168 /* AppDelegate.m */,
+				E2EAF0441D3D0C5800083183 /* next_button copy.png */,
 				E2F061FB1D185601008B6168 /* ViewController.h */,
+				91D6BD311ED3FBC6007273EA /* filled_button.png */,
+				91D6BD331ED3FC45007273EA /* filled.png */,
 				E2F061FC1D185601008B6168 /* ViewController.m */,
+				E2F061FE1D185601008B6168 /* Main.storyboard */,
+				E2F062A81D1868BE008B6168 /* ic_search_white_48pt_3x.png */,
+				E2F062AD1D1868BE008B6168 /* player-bg-bottom.png */,
+				E2F062AE1D1868BE008B6168 /* player-bg-image-pad.jpg */,
+				E2F062AF1D1868BE008B6168 /* player-bg-image.jpg */,
+				E2F062B01D1868BE008B6168 /* player-top-bg.png */,
+				E2EAF0461D3D0ED300083183 /* back_button60.png */,
+				E2F062011D185601008B6168 /* Assets.xcassets */,
+				E212B62B1D5382C3005B3A4A /* launchpage copy.jpg */,
+				E2F062031D185601008B6168 /* LaunchScreen.storyboard */,
+				E2F062061D185601008B6168 /* Info.plist */,
 				E2F061F51D185601008B6168 /* Supporting Files */,
 			);
 			path = Selekta;
@@ -516,12 +560,6 @@
 		E2F061F51D185601008B6168 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E2F061F81D185601008B6168 /* AppDelegate.h */,
-				E2F061F91D185601008B6168 /* AppDelegate.m */,
-				E2F061FE1D185601008B6168 /* Main.storyboard */,
-				E2F062011D185601008B6168 /* Assets.xcassets */,
-				E2F062031D185601008B6168 /* LaunchScreen.storyboard */,
-				E2F062061D185601008B6168 /* Info.plist */,
 				E2F061F61D185601008B6168 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -530,11 +568,15 @@
 		E2F0620E1D18564F008B6168 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				91D4D4701F068568000416D9 /* crate_default_button.png */,
+				91D4D4721F06861A000416D9 /* single_play.png */,
 				E21C78721D862EEB004DBA5F /* selektaRecordSpin.gif */,
+				E2FF3BD01D6F2822006BFDF1 /* Tutorial */,
 				E2F1DD8E1D68FCB6001EC3BA /* selektarecordanimationnoBack.gif */,
 				E2F1DD8F1D68FCB6001EC3BA /* selektarecordanimationwhite-version.gif */,
-				E2FF3BD01D6F2822006BFDF1 /* Tutorial */,
 				E2F0620F1D185676008B6168 /* Images.xcassets */,
+				E2240AAB1D63C504003F8DB8 /* spl.png */,
+				E2240AA91D63C3F3003F8DB8 /* selekta_black.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -815,11 +857,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2F1DD911D68FCB6001EC3BA /* selektarecordanimationwhite-version.gif in Resources */,
+				E2240AAA1D63C3F3003F8DB8 /* selekta_black.png in Resources */,
 				E22BCD5D1D1C9D160068FF16 /* OpenSans-Italic.ttf in Resources */,
 				E2FF3BE01D6F28EA006BFDF1 /* tutorialsettingsfinish.png in Resources */,
 				E22BCD5E1D1C9D160068FF16 /* OpenSans-Light.ttf in Resources */,
 				E2F062DD1D18758C008B6168 /* TableViewController.xib in Resources */,
 				E2F062051D185601008B6168 /* LaunchScreen.storyboard in Resources */,
+				E2EAF0451D3D0C5800083183 /* next_button copy.png in Resources */,
 				E2F062101D185676008B6168 /* Images.xcassets in Resources */,
 				E2A097B71DA5B11E009528E6 /* selektaRecordSpin_White1.png in Resources */,
 				E2A097C61DA5B11E009528E6 /* selektaRecordSpin_White16.png in Resources */,
@@ -829,15 +873,18 @@
 				E2A097F01DA5B209009528E6 /* selektaRecordSpin_White_no_Fill11.png in Resources */,
 				E2FF3BDF1D6F28EA006BFDF1 /* tutorialsets.png in Resources */,
 				E2A097C01DA5B11E009528E6 /* selektaRecordSpin_White10.png in Resources */,
+				91D4D4711F068568000416D9 /* crate_default_button.png in Resources */,
 				E22BCD611D1C9D160068FF16 /* OpenSans-Semibold.ttf in Resources */,
 				E2F062C61D187531008B6168 /* MenuViewController.xib in Resources */,
 				E2A097EC1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill7.png in Resources */,
 				E2A097EF1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill10.png in Resources */,
 				E2A097F81DA5B209009528E6 /* selektaRecordSpin_White_no_Fill19.png in Resources */,
+				91D4D4731F06861A000416D9 /* single_play.png in Resources */,
 				E2A097F61DA5B209009528E6 /* selektaRecordSpin_White_no_Fill17.png in Resources */,
 				E2A097BE1DA5B11E009528E6 /* selektaRecordSpin_White8.png in Resources */,
 				E22BCD601D1C9D160068FF16 /* OpenSans-Regular.ttf in Resources */,
 				E2A097B91DA5B11E009528E6 /* selektaRecordSpin_White3.png in Resources */,
+				E212B62C1D5382C3005B3A4A /* launchpage copy.jpg in Resources */,
 				E2A097CB1DA5B11E009528E6 /* selektaRecordSpin_White21.png in Resources */,
 				E2A097BF1DA5B11E009528E6 /* selektaRecordSpin_White9.png in Resources */,
 				E2A097C91DA5B11E009528E6 /* selektaRecordSpin_White19.png in Resources */,
@@ -845,6 +892,7 @@
 				E2FF3BDA1D6F28EA006BFDF1 /* tutorial02.png in Resources */,
 				E22BCD5C1D1C9D160068FF16 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				E2A097BC1DA5B11E009528E6 /* selektaRecordSpin_White6.png in Resources */,
+				E2F062B81D1868BE008B6168 /* player-bg-image.jpg in Resources */,
 				E2A097FB1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill22.png in Resources */,
 				E2A097F31DA5B209009528E6 /* selektaRecordSpin_White_no_Fill14.png in Resources */,
 				E2A097B81DA5B11E009528E6 /* selektaRecordSpin_White2.png in Resources */,
@@ -853,14 +901,19 @@
 				E2F1DD901D68FCB6001EC3BA /* selektarecordanimationnoBack.gif in Resources */,
 				E2A097CD1DA5B11E009528E6 /* selektaRecordSpin_White23.png in Resources */,
 				E2A097BD1DA5B11E009528E6 /* selektaRecordSpin_White7.png in Resources */,
+				E2F062B71D1868BE008B6168 /* player-bg-image-pad.jpg in Resources */,
 				E2A097C71DA5B11E009528E6 /* selektaRecordSpin_White17.png in Resources */,
+				91D6BD341ED3FC45007273EA /* filled.png in Resources */,
 				E2A097E81DA5B209009528E6 /* selektaRecordSpin_White_no_Fill3.png in Resources */,
 				E2A097ED1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill8.png in Resources */,
 				E21C78731D862EEB004DBA5F /* selektaRecordSpin.gif in Resources */,
+				E2F062B91D1868BE008B6168 /* player-top-bg.png in Resources */,
 				E2A097FA1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill21.png in Resources */,
 				E2A097F41DA5B209009528E6 /* selektaRecordSpin_White_no_Fill15.png in Resources */,
 				E22BCD5B1D1C9D160068FF16 /* OpenSans-ExtraBold.ttf in Resources */,
 				E2F0786D1D5FF6D90006A811 /* selekta.mp4 in Resources */,
+				E2240AAC1D63C504003F8DB8 /* spl.png in Resources */,
+				E2EAF0471D3D0ED300083183 /* back_button60.png in Resources */,
 				E22BCD5F1D1C9D160068FF16 /* OpenSans-LightItalic.ttf in Resources */,
 				E2A097C41DA5B11E009528E6 /* selektaRecordSpin_White14.png in Resources */,
 				E2A097FD1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill24.png in Resources */,
@@ -877,6 +930,8 @@
 				E2A097FF1DA5B4B7009528E6 /* selektaRecordSpin_White24.png in Resources */,
 				E2F062DF1D18758C008B6168 /* CrateCell.xib in Resources */,
 				E2F062E31D18758C008B6168 /* SearchViewController.xib in Resources */,
+				E2F062B61D1868BE008B6168 /* player-bg-bottom.png in Resources */,
+				E2F062B11D1868BE008B6168 /* ic_search_white_48pt_3x.png in Resources */,
 				E2A097E71DA5B209009528E6 /* selektaRecordSpin_White_no_Fill2.png in Resources */,
 				E2CEFF9E1D1A053900D84B9C /* GoogleService-Info.plist in Resources */,
 				E2A097F21DA5B209009528E6 /* selektaRecordSpin_White_no_Fill13.png in Resources */,
@@ -897,6 +952,7 @@
 				E2FF3BDC1D6F28EA006BFDF1 /* tutorialcover.png in Resources */,
 				E2A097FC1DA5B209009528E6 /* selektaRecordSpin_White_no_Fill23.png in Resources */,
 				E2A097E61DA5B209009528E6 /* selektaRecordSpin_White_no_Fill1.png in Resources */,
+				91D6BD321ED3FBC6007273EA /* filled_button.png in Resources */,
 				E2A097CC1DA5B11E009528E6 /* selektaRecordSpin_White22.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1147,7 +1203,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Selekta/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rats.Selekta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1171,7 +1227,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Selekta/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rats.Selekta;
 				PRODUCT_NAME = "$(TARGET_NAME)";

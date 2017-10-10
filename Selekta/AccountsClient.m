@@ -219,6 +219,8 @@
     //}
 }
 
+
+
 - (void)saveTracks:(NSDictionary *)info accountID: (NSString *) aID setID: (NSString *) sID completion:(void(^)(NSError *error, NSDictionary *accountInfo))completion{
     Firebase *ref = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/tracks/%@", FIREBASE_URL,sID]];
     
@@ -335,5 +337,52 @@
     //}
 }
 
+
+-(void)getArtistcrates: (NSString *) gameID completion:(void (^)(NSError *error, FDataSnapshot *scores))completion{
+    Firebase *ref = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/artistcrates", FIREBASE_URL]];
+    
+    //if(ref != nil){
+    
+    [ref observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        
+        //NSLog(@"Snapshot = %@", snapshot);
+        
+        if( completion ){
+            completion(nil, snapshot);
+        }
+        
+    } withCancelBlock:^(NSError *error) {
+        
+        if( completion ){
+            completion(error, nil);
+        }
+    }];
+    
+    //}
+}
+
+
+-(void)getArtistcratesSelectedCreatId: (NSString *) selectedCretID completion:(void (^)(NSError *error, FDataSnapshot *scores))completion{
+    Firebase *ref = [[Firebase alloc] initWithUrl:[NSString stringWithFormat:@"%@/artistcrates/%@/tracks", FIREBASE_URL,selectedCretID]];
+    
+    //if(ref != nil){
+    
+    [ref observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        
+        //NSLog(@"Snapshot = %@", snapshot);
+        
+        if( completion ){
+            completion(nil, snapshot);
+        }
+        
+    } withCancelBlock:^(NSError *error) {
+        
+        if( completion ){
+            completion(error, nil);
+        }
+    }];
+    
+    //}
+}
 
 @end

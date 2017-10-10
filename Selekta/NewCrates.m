@@ -34,9 +34,12 @@
     NSUserDefaults *defaults;
     NSString *playerID;
     
+    IBOutlet UIImageView *tutorial1;
     IBOutlet UIButton *next1;
 }
 @property (nonatomic, retain) NSMutableArray *crates;
+
+@property (nonatomic, retain) NSMutableDictionary *dicAllCrates;
 @property (nonatomic) BOOL isShown;
 @end
 
@@ -76,6 +79,18 @@
     playerID = [defaults objectForKey:@"GLOBAL_USER_ID"];
     
     
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"tutorial"]  isEqual: @"0"]){
+        tutorial1.hidden = NO;
+        
+        next1.hidden = NO;
+        
+    }else{
+        tutorial1.hidden = YES;
+        
+        next1.hidden = YES;
+        
+    }
+    
     [[AccountsClient sharedInstance] getSingleAccountInfoWithID:playerID completion:^(NSError *error, FDataSnapshot *accountInfo)  {
         
         NSLog(@"accountInfo = %@", accountInfo);
@@ -103,6 +118,8 @@
     
     
     [self observers];
+    //[self fetchData];
+    // Do any additional setup after loading the view from its nib.
 }
 
 -(void)viewDidUnload{
@@ -112,7 +129,7 @@
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:YES];
     self.navigationController.navigationBar.hidden=YES;
-    [self observers];
+//    [self observers];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -174,7 +191,7 @@
         //cell.backgroundView.backgroundColor = [UIColor blackColor];
         [cell.img setImage:[UIImage imageNamed:@"crate_default_button.png"]];
         //[cell.img sd_setImageWithURL:[NSURL URLWithString:@""]
-        //placeholderImage:[UIImage imageNamed:@"crate_default_button.png"]];
+                    //placeholderImage:[UIImage imageNamed:@"crate_default_button.png"]];
         
         return cell;
     }else{
@@ -182,9 +199,12 @@
             cell.artist.text= @"Your Crate";
             cell.title1.text=@"";//[NSString stringWithFormat:@"From: %@", obj.settitle];
             cell.backgroundView = [[UIView alloc] init];
+            //cell.backgroundView.backgroundColor = [UIColor blackColor];
+            //[cell.img sd_setImageWithURL:[NSURL URLWithString:@""]
+                        //placeholderImage:[UIImage imageNamed:@"blackbtn.png"]];
             
             [cell.img setImage:[UIImage imageNamed:@"crate_default_button.png"]];
-            
+
             
             return cell;
         }else{
@@ -192,10 +212,11 @@
             NSLog(@"indexpath %ld",(long)indexPath.row);
             SetObj *ob=(SetObj *)[crates objectAtIndex:(indexPath.row-1)];
             cell.artist.text= ob.set_artist;
-            NSLog(@"set title %@",ob.set_title);
-            cell.title1.text=@"";//ob.set_title;
+            cell.title1.text=@"";
             [cell.img sd_setImageWithURL:[NSURL URLWithString:ob.set_btn_image]
                         placeholderImage:[UIImage imageNamed:@"blackbtn.png"]];
+            
+            
             
             
             NSInteger colorIndex = indexPath.row % 3;
@@ -239,6 +260,23 @@
     
 }
 
+/*-(IBAction)onSearch:(id)sender{
+ 
+ if(isShown==FALSE){
+ self.searchField.hidden=NO;
+ self.goBtn.hidden=YES;
+ self.searchBtn.hidden=NO;
+ [self.searchField becomeFirstResponder];
+ isShown=TRUE;
+ }else{
+ self.searchField.hidden=YES;
+ self.goBtn.hidden=YES;
+ self.searchBtn.hidden=NO;
+ [self.searchField resignFirstResponder];
+ isShown=FALSE;
+ }
+ 
+ }*/
 
 -(IBAction)goSearch:(id)sender{
     
@@ -252,12 +290,34 @@
 {
     if(self.slideMenuController.isMenuOpen==NO){
         
-        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        TableViewController *detailsVC = [TableViewController new];
+        if([crates count]==0){
+            
+        }else{
+            if(indexPath.row == 0){
+                
+                
+                [[NSUserDefaults standardUserDefaults] setObject:playerID forKey:@"selectedCret"];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"nowplaying"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+               
+            }
+            else{
+                 SetObj *ob=(SetObj *)[crates objectAtIndex:(indexPath.row-1)];
+                [[NSUserDefaults standardUserDefaults] setObject:ob.set_id forKey:@"selectedCret"];
+                
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            
+            TableViewController *detailsVC = [TableViewController new];
+            
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
+            [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
+        }
         
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailsVC];
-        [self.slideMenuController closeMenuBehindContentViewController:navController animated:YES completion:nil];
+       
+       
     }
 }
 
@@ -287,7 +347,7 @@
 
 -(void)observers{
     
-    [[AccountsClient sharedInstance] getAllSets:@"ALL" completion:^(NSError *error, FDataSnapshot *sets1) {
+    /*[[AccountsClient sharedInstance] getAllSets:@"ALL" completion:^(NSError *error, FDataSnapshot *sets1) {
         
         NSLog(@"All Sets = %@", sets1.value);
         
@@ -377,8 +437,44 @@
                 [self.thisTableView reloadData];
             }
             
+           // self.setLbl.text=[NSString stringWithFormat:@"%lu SELEKTA SETS",(unsigned long)[sets count]];
+            
         }
         
+    }];*/
+    
+    [[AccountsClient sharedInstance] getArtistcrates:@"" completion:^(NSError *error, FDataSnapshot *sets1) {
+        
+        
+        self.dicAllCrates =  sets1.value;
+        NSArray *keys = [ self.dicAllCrates allKeys];
+//        NSLog(@"All Sets = %@", sets1.value);
+        [self.crates removeAllObjects];
+        
+        NSLog(@"All Sets Count = %d", [keys count]);
+        for (int i=0; i < [keys count]; i++) {
+            
+            NSString *strId = [keys objectAtIndex:i];
+            [[AccountsClient sharedInstance] getSingleAccountInfoWithID:strId completion:^(NSError *error, FDataSnapshot *accountInfo)  {
+                
+                
+                if(accountInfo != (id) [NSNull null]){
+                    
+                    NSLog(@"accountInfo = %@", accountInfo);
+                    
+                    SetObj *tobjr = [[SetObj alloc] init];
+                    tobjr.set_id=accountInfo.key;
+                    tobjr.set_artist=[accountInfo.value objectForKey:@"name"];
+                    tobjr.set_btn_image=[accountInfo.value objectForKey:@"artistbutton"];
+                    [self.crates addObject:tobjr];
+                }
+                
+                  [self.thisTableView reloadData];
+            }];
+
+        }
+        
+    
     }];
     
 }
@@ -391,5 +487,14 @@
 }
 
 
+-(IBAction)goTutorialNext:(id)sender{
+    
+    tutorial1.hidden = YES;
+    
+    
+    next1.hidden = YES;
+    
+    
+}
 
 @end

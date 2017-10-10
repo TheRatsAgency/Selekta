@@ -21,8 +21,7 @@
 #import "RLMArray_Private.h"
 #import "RLMObjectSchema_Private.hpp"
 #import "RLMObjectStore.h"
-#import "RLMObject_Private.hpp"
-#import "RLMProperty_Private.h"
+#import "RLMObject_Private.h"
 
 #import "collection_notifications.hpp"
 #import "list.hpp"
@@ -40,7 +39,7 @@ static const int RLMEnumerationBufferSize = 16;
     id _strongBuffer[RLMEnumerationBufferSize];
 
     RLMRealm *_realm;
-    RLMClassInfo *_info;
+    RLMObjectSchema *_objectSchema;
 
     // Collection being enumerated. Only one of these two will be valid: when
     // possible we enumerate the collection directly, but when in a write
@@ -50,11 +49,11 @@ static const int RLMEnumerationBufferSize = 16;
     realm::TableView _tableView;
 }
 
-- (instancetype)initWithCollection:(id<RLMFastEnumerable>)collection objectSchema:(RLMClassInfo&)info {
+- (instancetype)initWithCollection:(id<RLMFastEnumerable>)collection objectSchema:(RLMObjectSchema *)objectSchema {
     self = [super init];
     if (self) {
         _realm = collection.realm;
-        _info = &info;
+        _objectSchema = objectSchema;
 
         if (_realm.inWriteTransaction) {
             _tableView = [collection tableView];
@@ -93,14 +92,14 @@ static const int RLMEnumerationBufferSize = 16;
 
     NSUInteger batchCount = 0, count = state->extra[1];
 
-    Class accessorClass = _info->rlmObjectSchema.accessorClass;
+    Class accessorClass = _objectSchema.accessorClass;
     for (NSUInteger index = state->state; index < count && batchCount < len; ++index) {
-        RLMObject *accessor = RLMCreateManagedAccessor(accessorClass, _realm, _info);
+        RLMObject *accessor = [[accessorClass alloc] initWithRealm:_realm schema:_objectSchema];
         if (_collection) {
-            accessor->_row = (*_info->table())[[_collection indexInSource:index]];
+            accessor->_row = (*_objectSchema.table)[[_collection indexInSource:index]];
         }
         else if (_tableView.is_row_attached(index)) {
-            accessor->_row = (*_info->table())[_tableView.get_source_ndx(index)];
+            accessor->_row = (*_objectSchema.table)[_tableView.get_source_ndx(index)];
         }
         RLMInitializeSwiftAccessorGenerics(accessor);
         _strongBuffer[batchCount] = accessor;
@@ -139,30 +138,19 @@ NSArray *RLMCollectionValueForKey(id<RLMFastEnumerable> collection, NSString *ke
     }
 
     RLMRealm *realm = collection.realm;
-    RLMClassInfo *info = collection.objectInfo;
+    RLMObjectSchema *objectSchema = collection.objectSchema;
 
     NSMutableArray *results = [NSMutableArray arrayWithCapacity:count];
     if ([key isEqualToString:@"self"]) {
         for (size_t i = 0; i < count; i++) {
             size_t rowIndex = [collection indexInSource:i];
-            [results addObject:RLMCreateObjectAccessor(realm, *info, rowIndex) ?: NSNull.null];
+            [results addObject:RLMCreateObjectAccessor(realm, objectSchema, rowIndex) ?: NSNull.null];
         }
         return results;
     }
 
-    for (RLMProperty *prop in info->rlmObjectSchema.swiftGenericProperties) {
-        if ([prop.name isEqual:key] && !prop.optional) {
-            for (size_t i = 0; i < count; i++) {
-                size_t rowIndex = [collection indexInSource:i];
-                RLMObjectBase *accessor = RLMCreateObjectAccessor(realm, *info, rowIndex);
-                [results addObject:[accessor valueForKey:key] ?: NSNull.null];
-            }
-            return results;
-        }
-    }
-
-    RLMObject *accessor = RLMCreateManagedAccessor(info->rlmObjectSchema.accessorClass, realm, info);
-    realm::Table *table = info->table();
+    RLMObjectBase *accessor = [[objectSchema.accessorClass alloc] initWithRealm:realm schema:objectSchema];
+    realm::Table *table = objectSchema.table;
     for (size_t i = 0; i < count; i++) {
         size_t rowIndex = [collection indexInSource:i];
         accessor->_row = (*table)[rowIndex];
@@ -180,8 +168,8 @@ void RLMCollectionSetValueForKey(id<RLMFastEnumerable> collection, NSString *key
     }
 
     RLMRealm *realm = collection.realm;
-    RLMClassInfo *info = collection.objectInfo;
-    RLMObject *accessor = RLMCreateManagedAccessor(info->rlmObjectSchema.accessorClass, realm, info);
+    RLMObjectSchema *objectSchema = collection.objectSchema;
+    RLMObjectBase *accessor = [[objectSchema.accessorClass alloc] initWithRealm:realm schema:objectSchema];
     for (size_t i = 0; i < tv.size(); i++) {
         accessor->_row = tv[i];
         RLMInitializeSwiftAccessorGenerics(accessor);
@@ -231,23 +219,13 @@ NSString *RLMDescriptionWithMaxDepth(NSString *name,
 
 @implementation RLMCancellationToken {
     realm::NotificationToken _token;
-    __unsafe_unretained RLMRealm *_realm;
 }
-- (instancetype)initWithToken:(realm::NotificationToken)token realm:(RLMRealm *)realm {
+- (instancetype)initWithToken:(realm::NotificationToken)token {
     self = [super init];
     if (self) {
         _token = std::move(token);
-        _realm = realm;
     }
     return self;
-}
-
-- (RLMRealm *)realm {
-    return _realm;
-}
-
-- (void)suppressNextNotification {
-    _token.suppress_next();
 }
 
 - (void)stop {
@@ -326,16 +304,14 @@ RLMNotificationToken *RLMAddNotificationBlock(id objcCollection,
             return true;
         }
     };
-
-    auto skip = suppressInitialChange ? std::make_shared<bool>(true) : nullptr;
     auto cb = [=, &collection](realm::CollectionChangeSet const& changes,
-                               std::exception_ptr err) {
+                               std::exception_ptr err) mutable {
         if (err) {
             try {
                 rethrow_exception(err);
             }
             catch (...) {
-                NSError *error = nil;
+                NSError *error;
                 RLMRealmTranslateException(&error);
                 block(nil, nil, error);
                 return;
@@ -346,20 +322,16 @@ RLMNotificationToken *RLMAddNotificationBlock(id objcCollection,
             return;
         }
 
-        if (skip && *skip) {
-            *skip = false;
+        if (changes.empty() || suppressInitialChange) {
             block(objcCollection, nil, nil);
-        }
-        else if (changes.empty()) {
-            block(objcCollection, nil, nil);
+            suppressInitialChange = false;
         }
         else {
             block(objcCollection, [[RLMCollectionChange alloc] initWithChanges:changes], nil);
         }
     };
 
-    return [[RLMCancellationToken alloc] initWithToken:collection.add_notification_callback(cb)
-                                                 realm:(RLMRealm *)[objcCollection realm]];
+    return [[RLMCancellationToken alloc] initWithToken:collection.add_notification_callback(cb)];
 }
 
 // Explicitly instantiate the templated function for the two types we'll use it on

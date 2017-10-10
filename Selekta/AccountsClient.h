@@ -18,6 +18,7 @@
 - (void) getAccountInfoWithID: (NSString *) accountID completion:(void(^)(NSError *error, NSDictionary *accountInfo))completion;
 -(void) getSingleAccountInfoWithID:(NSString *)accountID completion:(void (^)(NSError *error, FDataSnapshot *accounts))completion;
 
+
 - (void)saveEmailWithID: (NSString *) aID email: (NSString *) email completion:(void(^)(NSError *error, NSString *email))completion;
 - (void)isEmailExist: (NSMutableArray *) emailsArr completion:(void(^)(NSError *error,  bool isExist))completion;
 
@@ -33,5 +34,8 @@
 - (void)savetoRecent:(NSDictionary *)info accountID: (NSString *) aID setID: (NSString *) sID  trackID: (NSString *) tID completion:(void(^)(NSError *error, NSDictionary *accountInfo))completion;
 -(void)getAllRecents: (NSString *) accountID completion:(void (^)(NSError *error, FDataSnapshot *scores))completion;
 -(void)getAllCrates: (NSString *) accountID   completion:(void (^)(NSError *error, FDataSnapshot *scores))completion;
--(void)getAllArtistCrates: (NSString *) accountID   completion:(void (^)(NSError *error, FDataSnapshot *scores))completion;
+
+-(void)getArtistcrates: (NSString *) gameID completion:(void (^)(NSError *error, FDataSnapshot *scores))completion;
+
+-(void)getArtistcratesSelectedCreatId: (NSString *) selectedCretID completion:(void (^)(NSError *error, FDataSnapshot *scores))completion;
 @end

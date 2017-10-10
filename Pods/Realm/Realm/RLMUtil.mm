@@ -27,8 +27,6 @@
 #import "RLMSchema_Private.h"
 #import "RLMSwiftSupport.h"
 
-#import "shared_realm.hpp"
-
 #import <realm/mixed.hpp>
 #import <realm/table_view.hpp>
 
@@ -82,8 +80,8 @@ static inline bool nsnumber_is_like_float(__unsafe_unretained NSNumber *const ob
            data_type == *@encode(unsigned int) ||
            data_type == *@encode(unsigned long) ||
            data_type == *@encode(unsigned long long) ||
-           // A double is like float if it fits within float bounds or is NaN.
-           (data_type == *@encode(double) && (ABS([obj doubleValue]) <= FLT_MAX || isnan([obj doubleValue])));
+           // A double is like float if it fits within float bounds
+           (data_type == *@encode(double) && ABS([obj doubleValue]) <= FLT_MAX);
 }
 
 static inline bool nsnumber_is_like_double(__unsafe_unretained NSNumber *const obj)
@@ -136,9 +134,8 @@ BOOL RLMIsObjectValidForProperty(__unsafe_unretained id const obj,
             return [obj isKindOfClass:[NSData class]];
         case RLMPropertyTypeAny:
             return NO;
-        case RLMPropertyTypeLinkingObjects:
-            return YES;
-        case RLMPropertyTypeObject: {
+        case RLMPropertyTypeObject:
+        case RLMPropertyTypeLinkingObjects: {
             // only NSNull, nil, or objects which derive from RLMObject and match the given
             // object class are valid
             RLMObjectBase *objBase = RLMDynamicCast<RLMObjectBase>(obj);
@@ -168,36 +165,6 @@ BOOL RLMIsObjectValidForProperty(__unsafe_unretained id const obj,
         }
     }
     @throw RLMException(@"Invalid RLMPropertyType specified");
-}
-
-void RLMValidateValueForProperty(__unsafe_unretained id const obj,
-                                 __unsafe_unretained RLMProperty *const prop) {
-    switch (prop.type) {
-        case RLMPropertyTypeString:
-        case RLMPropertyTypeBool:
-        case RLMPropertyTypeDate:
-        case RLMPropertyTypeInt:
-        case RLMPropertyTypeFloat:
-        case RLMPropertyTypeDouble:
-        case RLMPropertyTypeData:
-            if (!RLMIsObjectValidForProperty(obj, prop)) {
-                @throw RLMException(@"Invalid value '%@' for property '%@'", obj, prop.name);
-            }
-            break;
-        case RLMPropertyTypeObject:
-            break;
-        case RLMPropertyTypeArray: {
-            if (obj && obj != NSNull.null && ![obj conformsToProtocol:@protocol(NSFastEnumeration)]) {
-                @throw RLMException(@"Array property value (%@) is not enumerable.", obj);
-            }
-            break;
-        }
-        case RLMPropertyTypeAny:
-        case RLMPropertyTypeLinkingObjects:
-            // It should not be possible to have either of these property types
-            // in the persisted properties array
-            REALM_UNREACHABLE();
-    }
 }
 
 NSDictionary *RLMDefaultValuesForObjectSchema(__unsafe_unretained RLMObjectSchema *const objectSchema) {
@@ -242,7 +209,7 @@ NSException *RLMException(NSString *fmt, ...) {
 }
 
 NSException *RLMException(std::exception const& exception) {
-    return RLMException(@"%s", exception.what());
+    return RLMException(@"%@", @(exception.what()));
 }
 
 NSError *RLMMakeError(RLMError code, std::exception const& exception) {
@@ -381,38 +348,4 @@ id RLMMixedToObjc(realm::Mixed const& mixed) {
         default:
             @throw RLMException(@"Invalid data type for RLMPropertyTypeAny property.");
     }
-}
-
-NSString *RLMDefaultDirectoryForBundleIdentifier(NSString *bundleIdentifier) {
-#if TARGET_OS_TV
-    (void)bundleIdentifier;
-    // tvOS prohibits writing to the Documents directory, so we use the Library/Caches directory instead.
-    return NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
-#elif TARGET_OS_IPHONE
-    (void)bundleIdentifier;
-    // On iOS the Documents directory isn't user-visible, so put files there
-    return NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-#else
-    // On OS X it is, so put files in Application Support. If we aren't running
-    // in a sandbox, put it in a subdirectory based on the bundle identifier
-    // to avoid accidentally sharing files between applications
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES)[0];
-    if (![[NSProcessInfo processInfo] environment][@"APP_SANDBOX_CONTAINER_ID"]) {
-        if (!bundleIdentifier) {
-            bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
-        }
-        if (!bundleIdentifier) {
-            bundleIdentifier = [NSBundle mainBundle].executablePath.lastPathComponent;
-        }
-
-        path = [path stringByAppendingPathComponent:bundleIdentifier];
-
-        // create directory
-        [[NSFileManager defaultManager] createDirectoryAtPath:path
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:nil];
-    }
-    return path;
-#endif
 }

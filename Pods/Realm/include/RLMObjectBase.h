@@ -33,10 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)className;
 
-// Returns whether the class is included in the default set of classes managed by a Realm.
+// Returns whether the class is included in the default set of classes persisted in a Realm.
 + (BOOL)shouldIncludeInDefaultSchema;
-
-+ (nullable NSString *)_realmObjectName;
 
 @end
 

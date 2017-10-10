@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *email,*password;
 @end
 
-@implementation SigninVC
+@implementation SigninVC 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,87 +47,73 @@
 
 - (IBAction)loginWithEmail:(id)sender {
     
-    if(_email.text.length == 0 || _password.text.length == 0){
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Please input all required fields." preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    }else{
-        NSMutableArray *emails = [[NSMutableArray alloc] initWithObjects:_email.text, nil];
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [[AccountsClient sharedInstance] isEmailExist:emails completion:^(NSError *error, bool isExist) {
-            if(isExist){
-                //check Password
+     if(_email.text.length == 0 || _password.text.length == 0){
+         
+         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please input all required fields." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+         [alertView show];
+     }else{
+    NSMutableArray *emails = [[NSMutableArray alloc] initWithObjects:_email.text, nil];
+         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [[AccountsClient sharedInstance] isEmailExist:emails completion:^(NSError *error, bool isExist) {
+        if(isExist){
+            //check Password
+            
+            [[LoginClient sharedInstance] loginWithEmail:_email.text success:^(id result) {
                 
-                [[LoginClient sharedInstance] loginWithEmail:_email.text success:^(id result) {
-                    
-                    [self.view endEditing:YES];
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    
-                    NSMutableDictionary *resDict = [[NSMutableDictionary alloc] initWithDictionary:result];
-                    
-                    NSLog(@"RES = %@", resDict);
-                    
-                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                    
-                    //NSString *firstName = [[resDict[@"name"] componentsSeparatedByString:@" "] firstObject];
-                    
-                    [userDefaults setObject:self->_email.text       forKey:@"GLOBAL_USER_NAME"];
-                    [userDefaults setObject:resDict[@"uid"]  forKey:@"GLOBAL_USER_ID"];
-                    [userDefaults setBool:NO               forKey:@"GLOBAL_IS_FB"];
-                    [userDefaults setBool:YES forKey:@"LOGGEDIN"];
-                    [userDefaults synchronize];
-                    
-                    NSLog(@"UID = %@", resDict[@"uid"]);
-                    
-                    /*id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-                     [tracker set:kGAIScreenName value:@"signin"];
-                     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];*/
-                    
-                    [self openMainScreen];
-                    
-                } failure:^(NSError *error, NSDictionary *result) {
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    NSLog(@"ERROR: %@", error);
-                    
-                    NSString *errorStr = [NSString stringWithFormat:@"%@", error];
-                    
-                    if ([errorStr rangeOfString:@"INVALID_EMAIL"].location != NSNotFound) {
-                        
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Email" message:@"Please try again." preferredStyle:UIAlertControllerStyleAlert];
-                        
-                        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
-                        [alert addAction:ok];
-                        [self presentViewController:alert animated:YES completion:nil];
-                        
-                    }
-                    
-                }];
-                
-            }else{
+                [self.view endEditing:YES];
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Email" message:@"Account does not exist." preferredStyle:UIAlertControllerStyleAlert];
+                NSMutableDictionary *resDict = [[NSMutableDictionary alloc] initWithDictionary:result];
                 
-                UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
-                [alert addAction:ok];
-                [self presentViewController:alert animated:YES completion:nil];
+                NSLog(@"RES = %@", resDict);
                 
-            }
-            
-            
-        }];
-    }
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                
+                //NSString *firstName = [[resDict[@"name"] componentsSeparatedByString:@" "] firstObject];
+                
+                [userDefaults setObject:self->_email.text       forKey:@"GLOBAL_USER_NAME"];
+                [userDefaults setObject:resDict[@"uid"]  forKey:@"GLOBAL_USER_ID"];
+                [userDefaults setBool:NO               forKey:@"GLOBAL_IS_FB"];
+                [userDefaults setBool:YES forKey:@"LOGGEDIN"];
+                [userDefaults synchronize];
+                
+                NSLog(@"UID = %@", resDict[@"uid"]);
+                
+                /*id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+                [tracker set:kGAIScreenName value:@"signin"];
+                [tracker send:[[GAIDictionaryBuilder createScreenView] build]];*/
+                
+                [self openMainScreen];
+                
+            } failure:^(NSError *error, NSDictionary *result) {
+                 [MBProgressHUD hideHUDForView:self.view animated:YES];
+                NSLog(@"ERROR: %@", error);
+                
+                NSString *errorStr = [NSString stringWithFormat:@"%@", error];
+                
+                if ([errorStr rangeOfString:@"INVALID_EMAIL"].location != NSNotFound) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:@"Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alertView show];
+                }
+                
+            }];
+
+        }else{
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:@"Account does not exist." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+        
+    
+    }];
+     }
     
 }
 
 
 - (IBAction)loginWithFacebook:(id)sender {
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[LoginClient sharedInstance] facebookLoginWithReadPermissions:@[@"email",@"public_profile",@"user_friends"] fromViewController:self success:^(id result) {
         
         NSMutableDictionary *resDict = [[NSMutableDictionary alloc] initWithDictionary:result];
@@ -147,7 +133,7 @@
         NSString *profPic = [[[resDict objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
         
         [[AccountsClient sharedInstance] isAccountExistWithID:resDict[@"id"] completion:^(NSError *error, bool isExist) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if (!isExist) {
                 NSDictionary *userInfo = @{
                                            @"name" : resDict[@"name"],
@@ -169,7 +155,7 @@
         [self openMainScreen];
         
     } failure:^(NSError *error, NSDictionary *result) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSLog(@"ERROR: %@", error);
     }];
     
@@ -181,7 +167,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"nowplaying"];
     [[NSUserDefaults standardUserDefaults] setObject:@"on" forKey:@"switch"];
     [[NSUserDefaults standardUserDefaults] setObject:@"on" forKey:@"switch1"];
-    
+
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     MenuViewController *menuVC = [[MenuViewController alloc] init];
@@ -194,5 +180,15 @@
     NVSlideMenuController *slideMenuVC = [[NVSlideMenuController alloc] initWithMenuViewController:menuNavigationController andContentViewController:signVC];
     [self.navigationController pushViewController:slideMenuVC animated:YES];
 }
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end
